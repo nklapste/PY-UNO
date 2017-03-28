@@ -4,7 +4,14 @@ from random import shuffle
 
 def generate_cards():
     '''
-    generate 1 set of all uno cards
+    Generate one set of all uno cards by iterating through all the possible
+    subtrings that relate to the filepath of the cards image in small_cards.
+    This method thus limits to only having the PY-UNO game run within its own
+    containing folder.
+
+    Returns: An "ordered" list of all cards that are possible to create with
+    the images within small_cards. Cards are defined by the Card class in
+    game_classes.
     '''
     cards = []
     # predefined cards substrings
@@ -19,6 +26,7 @@ def generate_cards():
             filename_str = "small_cards/" + colors[i] + ct + ".png"
             name_str = colors_name[i] + "_" + ct
             cards.append(game_classes.Card(name_str, filename_str, None))
+
     # make four wild pick 4
     cards.append(game_classes.Card(
         "w_d1", "small_cards/wild_pick_four.png", None))
@@ -28,6 +36,7 @@ def generate_cards():
         "w_d3", "small_cards/wild_pick_four.png", None))
     cards.append(game_classes.Card(
         "w_d4", "small_cards/wild_pick_four.png", None))
+
     # make four wild color
     cards.append(game_classes.Card(
         "w_c1", "small_cards/wild_color_changer.png", None))
@@ -43,7 +52,13 @@ def generate_cards():
 
 def card_shuffler(cards):
     '''
-    shufles a list of cards "randomly"
+    Shufles a list of cards "randomly".
+
+    Note: that shuffle is sudorandom thus behavour is not perfect, but is
+    acceptable for game use.
+
+    Returns:  A randomly shuffed list of cards. Output list contains the same
+    elements as the input list.
     '''
     print("\n\nSHUFFLING CARDLIST...", end="   ")
     shuffle(cards)
@@ -54,7 +69,13 @@ def card_shuffler(cards):
 
 def build_deck(deckname, card_list):
     '''
-    builds an uno game class deck from a list of uno game cards
+    Function call that builds an uno game class deck from a list of uno game
+    cards.
+
+    Note: the output of build_deck is not shuffled, gen_rand_deck handels random
+    card list generation.
+
+    Returns: a Deck class using the cards defined in card_list
     '''
     deckout = game_classes.Deck(deckname, card_list)
     print("deck generated named: ", end="")
@@ -64,8 +85,8 @@ def build_deck(deckname, card_list):
 
 def gen_rand_deck(deckname, size):
     '''
-    generate random uno deck with assigned size (how many copies of one deck is
-    included) and with name specified as input deckname
+    Function that Generates random uno deck with assigned size (how many copies
+    of one deck is included) and with name specified as input deckname
     '''
     cards = []
     for i in range(size):
