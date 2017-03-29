@@ -3,16 +3,12 @@ import pygame
 import display_funct
 
 ########################################################
-
-
 def wild_pick_4(board, deck, player, players):
     board.color = game_control.player_choice_color()
     print("New color: ", board.color)
-
     players_temp = players[:]
     players_temp.remove(player)
     target = game_control.player_choice_target(players_temp)
-
     print("Targeted player: ", target.name)
     print("Trageted players hand size before: ", len(target.hand))
     target.grab_cards(deck, 4)
@@ -28,7 +24,6 @@ def draw_2(board, deck, player, players):
     players_temp = players[:]
     players_temp.remove(player)
     target = game_control.player_choice_target(players_temp)
-
     print("Targeted player: ", target.name)
     print("Trageted players hand size before: ", len(target.hand))
     target.grab_cards(deck, 2)
@@ -39,8 +34,6 @@ def skip(board, deck, player, players):
     players_temp = players[:]
     players_temp.remove(player)
     target = game_control.player_choice_target(players_temp)
-
-    print("Choosing player: ", player.name)
     print("Targeted player skipping: ", target.name)
     target.skip = True
 

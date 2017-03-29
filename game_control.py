@@ -22,6 +22,7 @@ def get_keypress(event):
 
     return (select_L, select_R, select_UP)
 
+
 ########################################################
 def select_move_color(select_L, select_R, selected):
     if selected is None:
