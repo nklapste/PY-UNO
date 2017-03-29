@@ -134,13 +134,20 @@ def game_loop(board, deck, players):  # gameplay loop structure
             if player.skip:
                 print("skipping", player.name, "turn")
                 player.skip = False
-
             else:
                 turn_done = False
                 selected = None
+                skipping = False
 
                 allowed_card_list = card_allowed(board, player)
                 print("allowed cards: ", allowed_card_list)
+
+                # if no cards can be played skip turn
+                if allowed_card_list == []:
+                    print("no playable cards, drawing and skipping")
+                    player.grab_card(deck)
+                    turn_done = True
+                    skipping = True
 
                 display_funct.redraw_screen([(player, None)], board, players)
 
@@ -162,9 +169,9 @@ def game_loop(board, deck, players):  # gameplay loop structure
                         else:
                             display_funct.redraw_screen(
                                 [(player, allowed_card_list[selected])], board, players)
-
-                (turn_iterator, drop_again) = card_logic.card_played_type(
-                    board, deck, player, players, turn_iterator)
+                if not skipping:
+                    (turn_iterator, drop_again) = card_logic.card_played_type(
+                        board, deck, player, players, turn_iterator)
 
             if drop_again:  # if the player plays a drop agian card dont iterate turn
                 drop_again = False
