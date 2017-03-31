@@ -153,3 +153,66 @@ def player_choice_target(players):
             target = players[selected]
             return target
 ########################################################
+def select_choose(player, board, selected=0):
+    player.play_card(board, selected)
+    selected = None
+    return selected
+
+
+def select_move_hand(select_L, select_R, allowed_card_list, selected):
+    if selected is None:
+        selected = 0
+    if select_R:
+        selected += 1
+        if selected >= len(allowed_card_list):  # catch
+            selected = len(allowed_card_list) - 1
+            return selected
+    elif select_L:
+        selected -= 1
+        if selected < 0:  # catch
+            selected = 0
+            return selected
+    return selected
+
+
+def player_LR_selection_hand(player, selected, board=None, allowed_card_list=None):
+    '''
+    Function that is a modification of player_LR_selection that decides the card
+    the player is hovering over, additionally if the player selects the card
+    they are hovering over; turn_done will be turned to true allowing for further
+    progress within outside functions.
+
+    '''
+    select_L = False
+    select_R = False
+    select_UP = False
+    update = False
+    turn_done = False
+
+    for event in pygame.event.get():
+        (select_L, select_R, select_UP) = get_keypress(event)
+
+    if select_R or select_L:  # if  keystoke to pick card was entered
+
+        selectednew = select_move_hand(
+            select_L, select_R, allowed_card_list, selected)
+
+        if selected == selectednew:
+            pass
+        else:
+            selected = selectednew
+            update = True
+
+        select_L = False
+        select_R = False
+
+    elif select_UP:  # if  keystoke to play card was entered
+        if selected is None:  # catch for index nonetype error in allowed_card_list
+            selected = 0
+
+        selected = select_choose(player, board, allowed_card_list[selected])
+        update = True
+        turn_done = True
+
+    return (update, selected, turn_done)
+########################################################

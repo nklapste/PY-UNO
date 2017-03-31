@@ -2,6 +2,24 @@ import game_control
 import pygame
 import display_funct
 
+
+def card_allowed(board, player):  # return list of cards allowed to be played
+    i = 0
+    allowed = []
+
+    for card in player.hand:
+        if board.card_stack == [] or board.color == "w":
+            allowed = range(len(player.hand))
+            return allowed
+        if card.color == "w":
+            allowed.append(i)
+        elif card.type == board.type or card.color == board.color:
+            allowed.append(i)
+        i += 1
+    return allowed
+
+
+
 ########################################################
 def wild_pick_4(board, deck, player, players):
     board.color = game_control.player_choice_color()
