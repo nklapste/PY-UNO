@@ -33,7 +33,7 @@ card.rect = card.rect.move(0, -100)
 
 ########################################################
 
-# loop function that actually plays the game
+# loop function that enteres into playing the game
 game_logic.game_loop(board1, deck1, [player1, player2AI, player3AI])
 
 ########################################################
