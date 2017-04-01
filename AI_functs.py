@@ -1,14 +1,13 @@
 
 
-
 def travel_Main_Decision_Tree(Dec_Tree):
     '''
     TODO: SHOULD READ QUESTIUON THEN PROCEED LEFT OR RIGHT
     '''
     (left_tree, right_tree) = read_Dec_tree(Dec_Tree)
 
-    if left_tree is False: # catchi if Dec_Tree is actually a Leaf
-        #TODO do leaf instruction
+    if left_tree is False:  # catchi if Dec_Tree is actually a Leaf
+        # TODO do leaf instruction
         read_Dec_leaf_instruction(right_tree)
         pass
     else:
@@ -50,6 +49,7 @@ def read_Dec_tree_question(question):
 
     return (left_yes, right_yes)
 
+
 def read_Dec_leaf_instruction(leaf_val):
     if leaf_val == "1":
         pass
@@ -74,13 +74,14 @@ def read_Dec_leaf_instruction(leaf_val):
 
 #########################################################
 
+
 def read_Dec_tree(Dec_Tree):
 
-    try: # check if Dec_Tree is actually is
+    try:  # check if Dec_Tree is actually is
         leaf_val = Dec_Tree.value
-        return (False, leaf_val) # return special case
+        return (False, leaf_val)  # return special case
 
-    except TypeError: # Dec_Tree is not a Leaf
+    except TypeError:  # Dec_Tree is not a Leaf
         (left_tree, right_tree) = Dec_Tree.get_offshoots()
         return (left_tree, right_tree)
 
@@ -88,14 +89,18 @@ def read_Dec_tree(Dec_Tree):
 def fetch_oldest_card():
     pass
 
+
 def check_possible_winner(Board, players):
     pass
+
 
 def play_card(Board, player):
     pass
 
+
 def fetch_hate_priority():
     pass
+
 
 def do_nothing():
     pass
