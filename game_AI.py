@@ -60,22 +60,3 @@ def make_AI(AI_name, difficulty_level=0, difficulty_level_list=None):
         pass
 
     return AI_gen
-
-
-
-
-
-def main_decision_tree():
-    '''
-    '''
-
-    def initilize_tree():
-        Tree_gen = AI_classes.branch(AI_classes.branch, AI_classes.Leaf("fag"))
-        Tree_gen.child1.child1 = [1]
-
-        return Tree_gen
-    return initilize_tree()
-print(main_decision_tree())
-print(main_decision_tree().child1)
-print(main_decision_tree().child2)
-print(main_decision_tree().child1.child1)
