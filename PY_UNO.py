@@ -13,7 +13,8 @@ face_down_card = game_classes.Card(
 
 # initilizing the board to be used within the game
 board1 = game_classes.Board("board1")
-# initilizing a deck to be used within the game (3 copies are added to each other)
+# initilizing a deck to be used within the game (3 copies are added to
+# each other)
 deck1 = gen_rand_deck("deck1", 3)
 
 # defining a 3 player uno game

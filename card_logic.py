@@ -19,7 +19,6 @@ def card_allowed(board, player):  # return list of cards allowed to be played
     return allowed
 
 
-
 ########################################################
 def wild_pick_4(board, deck, player, players):
     board.color = game_control.player_choice_color()

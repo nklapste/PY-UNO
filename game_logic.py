@@ -4,9 +4,6 @@ import display_funct
 import pygame
 
 
-
-
-
 def card_allowed(board, player):  # return list of cards allowed to be played
     i = 0
     allowed = []

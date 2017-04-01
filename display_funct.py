@@ -23,6 +23,7 @@ def draw_top_stack_card(board):
         screen.blit(top_card.card_data, top_card.rect)
         pygame.display.flip()
 
+
 def redraw_hand_visble(player, selected=None):
     # get a "middle" start postion for bliting cards
     start_pos = (width - 100 * len(player.hand)) // 2
@@ -55,6 +56,7 @@ def redraw_hand_nonvisble(player, selected=None):
         pygame.display.flip()
         i += 1
 
+
 def redraw_screen(player_you, board, player_other):
     # clear screen
     screen.fill(black)
@@ -70,7 +72,6 @@ def redraw_screen(player_you, board, player_other):
 
     # draw the top card on the board
     draw_top_stack_card(board)
-
 
 
 def redraw_screen_menu_color(selected=None):
@@ -98,15 +99,17 @@ def redraw_screen_menu_color(selected=None):
         pygame.display.flip()
         i += 1
 
+
 def redraw_screen_menu_target(players, selected=None):
     # clear screen
     screen.fill(black)
     # get a "middle" start postion for bliting cards
-    start_pos = (width - 100*len(players)) // 2
+    start_pos = (width - 100 * len(players)) // 2
     i = 0
     for player in players:
         player_num = str(player.name[7])
-        card_disp = game_classes.Card("red", "small_cards/red_"+player_num+".png", None)
+        card_disp = game_classes.Card(
+            "red", "small_cards/red_" + player_num + ".png", None)
         card_disp.rect = def_rect
         if i == selected:
             card_disp.rect = card_disp.rect.move(start_pos, 200)
