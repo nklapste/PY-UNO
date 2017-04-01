@@ -54,3 +54,70 @@ def test_Main_Decision_Tree:
 
     print(level_2_1_L_L.value)
     print(level_2_1_L_R.value)
+
+
+def travel_Card_Guess_Tree(Card_Tree, max_depth):
+    Card_Guess_list = []
+
+    def travel_recus(Card_Tree, depth):
+        (left_tree, right_tree) = read_Card_Tree_basic(Card_Tree)
+
+        if left_tree is None and right_tree is None:  # case were no card is at this level of memory
+            return None
+            pass
+
+        (Card_color_p, Card_Type_p) = read_Card_Tree_values(right_tree)
+        Card_Guess_list.append(Card_color_p)
+        Card_Guess_list.append(Card_Type_p)
+
+        travel_recus(Caleft_tree, depth + 1)
+
+        return None
+
+    travel_recus(Card_Tree, 0)
+    slice_num = None
+
+    for i in range(len(Card_Guess_list)):
+        (card_data, depth) = Card_Guess_list[i]
+        if depth > max_depth:
+            slice_num = i
+            break
+
+    if not (slice_num is None):
+        Card_Guess_list[:slice_num:]
+    else:
+        pass
+
+    output_list = []
+    for i in range(0, len(Card_Guess_list), 2):  # TODO FIXISH
+        (card_data_1, depth_1) = Card_Guess_list[i]
+        (card_data_2, depth_2) = Card_Guess_list[i + 1]
+
+        output_list.append([card_data_1, card_data_2])
+
+    return output_list
+
+
+def read_Card_Tree_values(Card_Tree, depth):
+    (Card_color, Card_Type) = Card_Tree.get_offshoots()
+    return ((Card_color.value, depth), (Card_Type.value, depth + 1))
+
+
+def read_Card_Tree_basic(Card_Tree):
+    (left_tree, right_tree) = Card_Tree.get_offshoots()
+    return (left_tree, right_tree)
+
+
+class Card_Guess_Tree:
+    def __init__(self, name, max_depth=0):
+        self.name = name
+        self.Card_Tree = None
+        self.max_depth = max_depth
+
+    def gent_Card_Tree(self):
+        start_Branch = Branch()
+
+    def read_card_tree(self):
+        pass
+
+    def update_card_tree(self, card):
