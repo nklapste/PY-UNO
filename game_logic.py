@@ -4,22 +4,6 @@ import display_funct
 import pygame
 
 
-def card_allowed(board, player):  # return list of cards allowed to be played
-    i = 0
-    allowed = []
-
-    for card in player.hand:
-        if board.card_stack == [] or board.color == "w":
-            allowed = range(len(player.hand))
-            return allowed
-        if card.color == "w":
-            allowed.append(i)
-        elif card.type == board.type or card.color == board.color:
-            allowed.append(i)
-        i += 1
-    return allowed
-
-
 ########################################################
 def player_turn(board, deck, player, allowed_card_list, selected):
     update = False
