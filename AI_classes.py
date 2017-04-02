@@ -1,3 +1,4 @@
+import game_classes
 
 
 class Leaf:
@@ -41,17 +42,12 @@ class Main_Decision_Tree:
         self.Dec_Tree = start_Branch
 
 
-def test_Main_Decision_Tree:
+def test_Main_Decision_Tree():
     test = Main_Decision_Tree("test", 2)
-
     test.gen_Dec_Tree()
-
     level_0 = test.Dec_Tree
-
     (level_1_L, level_1_R) = test.Dec_Tree.get_offshoots()
-
     (level_2_1_L_L, level_2_1_L_R) = level_1_L.get_offshoots()
-
     print(level_2_1_L_L.value)
     print(level_2_1_L_R.value)
 
@@ -62,34 +58,38 @@ def travel_Card_Guess_Tree(Card_Tree, max_depth):
     Card_Guess_list = []
 
     def travel_recus(Card_Tree, depth):
+        if Card_Tree is None:
+            return
         (left_tree, right_tree) = read_Card_Tree_basic(Card_Tree)
-         # case were no card is at this level of memory just return
+
+        # case were no card is at this level of memory just return
         if left_tree is None and right_tree is None:
             return None
             pass
-        # get this levels card data (color and type)
-        (Card_color_p, Card_Type_p) = read_Card_Tree_values(right_tree)
+        # get this levels card data (color and type) and append to
+        # Card_Guess_list
+        (Card_color_p, Card_Type_p) = read_Card_Tree_values(right_tree, depth)
         Card_Guess_list.append(Card_color_p)
         Card_Guess_list.append(Card_Type_p)
 
         # go to the next level of Card_Guess_Tree which is in the left_tree
-        travel_recus(left_tree, depth + 1)
+        travel_recus(left_tree, depth + 2)
 
         return None
 
     travel_recus(Card_Tree, 0)
     slice_num = None
-
     # find the point in Card_Guess_list where the maximum depth is passed
     for i in range(len(Card_Guess_list)):
         (card_data, depth) = Card_Guess_list[i]
-        if depth > max_depth:
+
+        if depth >= max_depth:
             slice_num = i
             break
-            
+
     # if the maximum depth is passed slice the Card_Guess_list at this point
     if not (slice_num is None):
-        Card_Guess_list[:slice_num:]
+        Card_Guess_list = Card_Guess_list[:slice_num:]
     else:
         pass
 
@@ -101,7 +101,7 @@ def travel_Card_Guess_Tree(Card_Tree, max_depth):
 
     # filter out the depth values for clean output and pair color and
     # type together
-    for i in range(0, len(Card_Guess_list), 2):  # TODO FIXISH
+    for i in range(0, len(Card_Guess_list) - 1, 2):  # TODO FIXISH
         (card_data_1, depth_1) = Card_Guess_list[i]
         (card_data_2, depth_2) = Card_Guess_list[i + 1]
 
@@ -114,7 +114,6 @@ def travel_Card_Guess_Tree(Card_Tree, max_depth):
         output_list.append((card_data_1, None))
 
     return output_list
-
 
 
 def read_Card_Tree_values(Card_Tree, depth):
@@ -138,27 +137,33 @@ class Card_Guess_Tree:
         self.Card_Tree = start_Branch
 
     def read_card_tree(self):
-        pass
+        return travel_Card_Guess_Tree(self.Card_Tree, self.max_depth)
 
     def update_card_tree(self, card):
         Card_Tree = self.Card_Tree
-        card_Branch = Branch(card.color, card.type)
+        card_Branch = Branch(None, Leaf(card.color), Leaf(card.type))
         # add new card at new top of Card_Guess_Tree
         self.Card_Tree = Branch(None, Card_Tree, card_Branch)
 
-        # other bottom append method
-        # def travel_Card_Guess_Tree_end(Card_tree, card_Branch):
-        #         (left_tree, right_tree) = read_Card_Tree_basic(Card_Tree)
-        #         if left_tree is None and right_tree is None:  # case were no card is at this level of memory add new card data
-        #             left_tree = Branch(None, None, card_Branch)
-        #             return None
-        #         travel_Card_Guess_Tree_end(left_tree, card_Branch)
-        #         return None
 
-        # travel_Card_Guess_Tree_end(Card_Tree, card_Branch)
+def test_Card_Guess_Tree():
+    test_tree = Card_Guess_Tree("test", 3)
 
+    card1 = card_g = game_classes.Card("g_1", "small_cards/green_0.png", None)
+    card2 = card_g = game_classes.Card("g_2", "small_cards/green_0.png", None)
+    card3 = card_g = game_classes.Card("r_r", "small_cards/green_0.png", None)
 
-        pass
+    test_tree.update_card_tree(card3)
+    test_tree.update_card_tree(card2)
+    test_tree.update_card_tree(card1)
+    test_tree.update_card_tree(card3)
+    test_tree.update_card_tree(card2)
+    test_tree.update_card_tree(card1)
+    test_tree.update_card_tree(card3)
+    test_tree.update_card_tree(card2)
+    test_tree.update_card_tree(card1)
+    test_tree.update_card_tree(card3)
+    test_tree.update_card_tree(card2)
+    test_tree.update_card_tree(card1)
 
-def  test_Card_Guess_Tree():
-        test_tree = Card_Guess_Tree("test", 3)
+    print(travel_Card_Guess_Tree(test_tree.Card_Tree, 3))
