@@ -15,6 +15,9 @@ face_down_card = game_classes.Card(
 
 
 def draw_top_stack_card(board):
+    """
+    Renders the top card of the card_stack on the board
+    """
     if board.card_stack != []:
         top_card = board.card_stack[-1]
         top_card.rect = def_rect
@@ -25,6 +28,9 @@ def draw_top_stack_card(board):
 
 
 def redraw_hand_visble(player, selected=None):
+    """
+    Redraws a players hand to be face up
+    """
     # get a "middle" start postion for bliting cards
     start_pos = (width - 100 * len(player.hand)) // 2
     i = 0
@@ -41,6 +47,10 @@ def redraw_hand_visble(player, selected=None):
 
 
 def redraw_hand_nonvisble(player, selected=None):
+    """
+    redraws a players hand to be non visible
+    """
+
     # get a "middle" start postion for bliting cards
     start_pos = (width - 100 * len(player.hand)) // 2
     i = 0
@@ -58,6 +68,11 @@ def redraw_hand_nonvisble(player, selected=None):
 
 
 def redraw_screen(player_you, board, player_other):
+    """
+    Redraws the screen to its "normal" state, where it renders the current
+    players hand face up, the current card selected is raised, the most recently
+    played card on the board face up, and other players' hands face down.
+    """
     # clear screen
     screen.fill(black)
 
