@@ -23,6 +23,17 @@ def travel_Main_Decision_Tree(Dec_Tree):
         print("ERROR: didn't choose path")
 
 
+def read_Dec_tree(Dec_Tree):
+
+    try:  # check if Dec_Tree is actually is
+        leaf_val = Dec_Tree.value
+        return (False, leaf_val)  # return special case
+
+    except TypeError:  # Dec_Tree is not a Leaf
+        (left_tree, right_tree) = Dec_Tree.get_offshoots()
+        return (left_tree, right_tree)
+
+
 def read_Dec_tree_question(question):
     left_yes = False
     right_yes = False
@@ -73,17 +84,6 @@ def read_Dec_leaf_instruction(leaf_val):
         pass
 
 #########################################################
-
-
-def read_Dec_tree(Dec_Tree):
-
-    try:  # check if Dec_Tree is actually is
-        leaf_val = Dec_Tree.value
-        return (False, leaf_val)  # return special case
-
-    except TypeError:  # Dec_Tree is not a Leaf
-        (left_tree, right_tree) = Dec_Tree.get_offshoots()
-        return (left_tree, right_tree)
 
 
 def fetch_oldest_card():
