@@ -86,19 +86,58 @@ def read_Dec_leaf_instruction(leaf_val):
 #########################################################
 
 
-def fetch_oldest_card():
+def fetch_oldest_card(player):
+    # TODO might need to intergrate allowed cards
+    maxi = 0
+    card_index = 0
+    for card in player.hand:
+        if card.old_val > maxi and not card.color == "w":
+            maxi = card.old_val
+            maxi_index = card_index
+        card_index += 1
+
+    return maxi_index  # returns the oldest cards index in players hand
+
+
+def check_possible_winner(board, player, players):
+    possible_winners = []
+
+    # grab a list of possible_winners (players with
+    # hands smaller than 2)
+    for player in players:
+        if len(player.hand) < 2:
+            possible_winners.append(player)
+
+    # return bool value if there is possible winners or not
+    # also return the list of possible winners for later use
+    # in stop_winners
+    if len(possible_winners) < 1:
+        return (False, None)
+    else:
+        return (True, None)
+
+
+def stop_winners(board, player, possible_winners):
+    # TODO
+    hate_list = fetch_hate_priority(possible_winners)
+
+    # TODO put meanest playable attack card on likely winning
+    # most hated player Priority on using wild 4
+
+    # TODO selection = choosecardaifunction()
+
+    play_card(board, player, selection)
+
+
+def play_card(board, player, selected=0):
+    player.play_card(board, selected)
     pass
 
 
-def check_possible_winner(Board, players):
-    pass
-
-
-def play_card(Board, player):
-    pass
-
-
-def fetch_hate_priority():
+def fetch_hate_priority(players):
+    # TODO
+    for player in players:
+        pass
     pass
 
 
