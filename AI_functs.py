@@ -114,7 +114,7 @@ def check_possible_winner(board, player, players):
     if len(possible_winners) < 1:
         return (False, None)
     else:
-        return (True, None)
+        return (True, possible_winners)
 
 
 def stop_winners(board, player, possible_winners):
