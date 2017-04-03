@@ -23,9 +23,9 @@ class Main_Decision_Tree:
         self.Dec_Tree = None
 
     def gen_Dec_Tree(self):
-
+        #TODO
         subBranch_1 = Branch("Can stop them winning it?", Leaf(
-            "Goto stop Tree"), Leaf("Go back up this tree"))
+            "Goto stop funct"), Leaf("Go back up this tree"))
 
         subsubsubBranch_2_1 = Branch("Does oldest card play priority beat my hate play priority?", Leaf(
             "Play old card"), Leaf("Play hate card"))  # TODO
