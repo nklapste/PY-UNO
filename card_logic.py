@@ -3,7 +3,17 @@ import pygame
 import display_funct
 
 
-def card_allowed(board, player):  # return list of cards allowed to be played
+def card_allowed(board, player):
+    """
+    Args:
+        player: a pyuno Player class in which their hand is being evaluated
+                wether it has valid cards to play or not.
+        board: a pyuno Board class in which its current stat is the determining
+               factor wether a players card is valid or not.
+    Returns:
+        allowed: a list of cards allowed to be played from a certain players
+                 hand.
+    """
     i = 0
     allowed = []
 
