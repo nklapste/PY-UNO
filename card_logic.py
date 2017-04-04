@@ -31,6 +31,12 @@ def card_allowed(board, player):
 
 ########################################################
 def wild_pick_4(board, deck, player, players):
+    """
+    Function that handles when the player plays a wild pick 4 card, going to
+    subfunctions that handel player color choice, and player target choice.
+    This function then prints out the results of the players decisions on the
+    game.
+    """
     board.color = game_control.player_choice_color()
     print("New color: ", board.color)
     players_temp = players[:]
@@ -66,6 +72,15 @@ def skip(board, deck, player, players):
 
 
 def reverse(turn_iterator):
+    """
+    Function that handles when the player plays the reverse card.
+    Prints the original turn_iterator and then returns the negitive of the
+    original turn_iterator.
+
+    Args: turn_iterator of a pyuno game (should be 1 or -1)
+
+    Returns: Negitive of turn_iterator
+    """
     print("reversing", turn_iterator)
     return -turn_iterator
 ########################################################
