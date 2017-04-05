@@ -51,6 +51,8 @@ def test_Main_Decision_Tree():
     print(level_2_1_L_L.value)
     print(level_2_1_L_R.value)
 
+##############################################################
+
 
 def travel_Card_Guess_Tree(Card_Tree, max_depth):
     # list that will be appened card data in the format of
@@ -132,7 +134,7 @@ class Card_Guess_Tree:
         self.Card_Tree = None
         self.max_depth = max_depth
 
-    def gent_Card_Tree(self):
+    def gen_Card_Tree(self):
         start_Branch = Branch()
         self.Card_Tree = start_Branch
 
@@ -167,3 +169,42 @@ def test_Card_Guess_Tree():
     test_tree.update_card_tree(card1)
 
     print(travel_Card_Guess_Tree(test_tree.Card_Tree, 3))
+
+
+###############################################################
+
+
+class Card_Choose_Tree:
+    def __init__(self, name, max_depth=0):
+        self.name = name
+        self.Card_Choose_Tree = None
+
+    def gen_Card_Chooes_Tree(self):
+
+        subBranch_1 = Branch("Can stop them winning it?", Leaf(
+            "Goto stop funct"), Leaf("Go back up this tree"))
+
+        subsubsubBranch_2_1 = Branch("Does oldest card play priority beat my hate play priority?", Leaf(
+            "Play old card"), Leaf("Play hate card"))  # TODO
+
+        subsubBranch_2_1 = Branch(
+            "Do I multiple playable cards?", subsubsubBranch_2_1, Leaf("Play a card"))
+
+        subBranch_2 = Branch("Do I have playable cards?",
+                             subsubBranch_2_1, Leaf("Do nothing"))
+
+        start_Branch = Branch(
+            "Is there an apparent winner?", subBranch_1, subBranch_2)
+
+        self.Card_Choose_Tree = start_Branch
+
+
+
+    # def read_card_tree(self):
+    #     return travel_Card_Guess_Tree(self.Card_Tree, self.max_depth)
+    #
+    # def update_card_tree(self, card):
+    #     Card_Tree = self.Card_Tree
+    #     card_Branch = Branch(None, Leaf(card.color), Leaf(card.type))
+    #     # add new card at new top of Card_Guess_Tree
+    #     self.Card_Tree = Branch(None, Card_Tree, card_Branch)
