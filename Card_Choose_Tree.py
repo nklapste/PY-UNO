@@ -1,4 +1,5 @@
 import game_classes
+import card_logic
 import Leaf from AI_classes
 import Branch from AI_classes
 
@@ -43,11 +44,35 @@ def read_Card_Choose_Tree_question(question):
     right_yes = False
 
     if question == "Do I multiple playable cards?":
-        pass
+        if len(player.hand) > 1:
+            return (True, False)
+
     elif question == "Do I have a nonwild playable card?":
-        pass
+        allowed_cards = card_logic.card_allowed(board, player)
+        for i in allowed_cards:
+            if not player.hand[i].color == "w":
+                return (True, False)
+        return (False, True)
+
     elif question == "what is my most common (color or type) that is also playable?":
-        pass
+        #TODO NEED RETHINKING
+        type_dict = dict()
+        color_dict = dict()
+
+        allowed_cards = card_logic.card_allowed(board, player)
+        for i in allowed_cards:
+            allowed_card = player.hand[i]
+
+            try:
+                color_dict[allowed_card.color] = color_dict[allowed_card.color] + 1
+            except KeyError:
+                color_dict[allowed_card.color] = 1
+
+            try:
+                type_dict[allowed_card.type] = type_dict[allowed_card.type] + 1
+            except KeyError:
+                type_dict[allowed_card.type] = 1
+
 
     return (left_yes, right_yes)
 
@@ -55,13 +80,28 @@ def read_Card_Choose_Tree_question(question):
 def read_Card_Choose_Leaf_instruction(Leaf_val):
     # TODO INCLUDE BOARD AND PLAYER
     if Leaf_val == "Play only card":
-        pass
+        allowed_cards = card_logic.card_allowed(board, player)
+        AI_functs.play_card(board, player, allowed_cards)
+
     elif Leaf_val == "play wild, most common color":
-        pass
+        common_color = AI_functs.fetch_most_common_color(player)
+        # TODO play wild card aI
+
     elif Leaf_val == "play most common color":
-        pass
+        allowed_cards = card_logic.card_allowed(board, player)
+        common_color = AI_functs.fetch_most_common_color(player)
+        for i in allowed_cards:
+            if player.hand[i].color == common_color:
+                AI_functs.play_card(board, player, i)
+                break
+
     elif Leaf_val == "play most common type":
-        pass
+        allowed_cards = card_logic.card_allowed(board, player)
+        common_type = AI_functs.fetch_most_common_type(player)
+        for i in allowed_cards:
+            if player.hand[i].type == common_type:
+                AI_functs.play_card(board, player, i)
+                break
 
 
 class Card_Choose_Tree:
