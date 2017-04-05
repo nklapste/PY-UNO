@@ -1,124 +1,38 @@
 
 
-def travel_Main_Decision_Tree(Dec_Tree):
-    '''
-    TODO: SHOULD READ QUESTIUON THEN PROCEED LEFT OR RIGHT
-    '''
-    (left_tree, right_tree) = read_Dec_tree(Dec_Tree)
+# TODO
+def fetch_most_common_color(player):
+    """
+    Returns the most common color in a players hand
+    """
+    color_dict = dict()
+    for card in player.hand:
+        try:
+            color_dict[card.color] = color_dict[card.color] + 1
+        except KeyError:
+            color_dict[card.color] = 1
+    max_color = max(color_dict, key=color_dict.get)
+    if len(max_color) > 1:
+        max_color = max_color[0]
+    return max_color
 
-    if left_tree is False:  # catchi if Dec_Tree is actually a Leaf
-        # TODO do leaf instruction
-        read_Dec_leaf_instruction(right_tree)
-        return
-    else:
-        question = Dec_Tree.question
-
-        (left_yes, right_yes) = read_Dec_tree_question(question):
-
-    if left_yes:
-        travel_Main_Decision_Tree(left_tree)
-    elif right_yes:
-        travel_Main_Decision_Tree(right_tree)
-    else:
-        print("ERROR: didn't choose path")
+# TODO
 
 
-def read_Dec_tree(Dec_Tree):
-
-    try:  # check if Dec_Tree is actually is
-        leaf_val = Dec_Tree.value
-        return (False, leaf_val)  # return special case
-
-    except TypeError:  # Dec_Tree is not a Leaf
-        (left_tree, right_tree) = Dec_Tree.get_offshoots()
-        return (left_tree, right_tree)
-
-
-def read_Dec_tree_question(question):
-    left_yes = False
-    right_yes = False
-
-    if question == "Is there an apparent winner?":
-        (winnners_bool, winners_list) = check_possible_winner(
-            board, player, players)
-        if winnners_bool:
-            return (True, False)
-        else:
-            return (False, True)
-
-    elif question == "Can stop them winning it?":
-        (winnners_bool, winners_list) = check_possible_winner(
-            board, player, players)
-        playable_cards = card_logic.card_allowed(board, player)
-
-        for hand_index in playable_cards:
-            possible_card = player.hand[hand_index]
-
-            if card.type in ["p", "s", "r", "d"]:
-                return (True, False)
-
-        return (False, True)
-
-    elif question == "Does oldest card play priority beat my hate play priority?":
-        old_val = fetch_oldest_card(player)
-        (hate_val, hate_player) = fetch_hate_priority(players)
-        if hate_val < oldval:
-            return (True, False)
-        else:
-            return (True, False)
-
-    elif question == "Do I have playable cards?":
-        playable_cards = card_logic.card_allowed(board, player)
-        if len(playable_cards) > 0:
-            return (True, False)
-        else:
-            return (False, True)
-
-    elif question == "Do I multiple playable cards?":
-        playable_cards = card_logic.card_allowed(board, player)
-            if len(playable_cards) > 1:
-                return (True, False)
-            else:
-                return (False, True)
-
-    elif question == "1":
-        pass
-
-    elif question == "1":
-        pass
-
-    return (left_yes, right_yes)
-
-
-def read_Dec_leaf_instruction(leaf_val):
-    # TODO INCLUDE BOARD AND PLAYER
-    if leaf_val == "Goto stop funct":
-        stop_winners(board, player, possible_winners)
-        pass
-
-    elif leaf_val == "Play old card":
-        pass
-
-    elif leaf_val == "Play hate card":
-        pass
-
-    elif leaf_val == "Play a card":
-        playable_cards = card_logic.card_allowed(board, player)
-        player.play_card(board, playable_cards[0])
-        pass
-
-    elif leaf_val == "Go back up this tree":  # goes all back to the start and goes right
-        (branch_left, branch_right) = player.Main_Dec.Dec_Tree.get_offshoots()
-        travel_Main_Decision_Tree(branch_right)
-
-    elif leaf_val == "1":
-        pass
-
-    elif leaf_val == "Do nothing":
-        do_nothing()
-        pass
-
-#########################################################
+def fetch_most_common_type(player):
+    """
+    Returns the most common card type from a players hand
+    """
+    type_dict = dict()
+    for card in player.hand:
+        try:
+            type_dict[card.type] = type_dict[card.type] + 1
+        except KeyError:
+            type_dict[card.type] = 1
+    max_type = max(type_dict, key=type_dict.get)
+    if len(max_type) > 1:
+        max_type = max_type[0]
+    return max_type
 
 
 def fetch_oldest_card(player):
@@ -137,7 +51,7 @@ def fetch_oldest_card(player):
     return maxi_index
 
 
-def check_possible_winner(board, AI_player, players):
+def fetch_possible_winner(board, AI_player, players):
     """
     Checks to see if any posible winners are on the current board state
     eg: someone with only 1 card. If so return a tuple containing Logic
@@ -152,7 +66,7 @@ def check_possible_winner(board, AI_player, players):
     # hands smaller than 2)
     for player in players:
         if len(player.hand) < 2:
-            if player == AI_player: # skip ownself
+            if player == AI_player:  # skip ownself
                 pass
             else:
                 possible_winners.append(player)
@@ -175,7 +89,6 @@ def stop_winners(board, player, possible_winners):
 
     # TODO selection = choosecardaifunction()
 
-
     play_card(board, player, selection)
 
 
@@ -188,7 +101,6 @@ def fetch_hate_priority(player, players):
     Returns the highest hate value that player has set on any of the
     players in the game.
     """
-
     max_hate = 0
 
     for h_player in players:
@@ -204,5 +116,3 @@ def do_nothing():
     Placeholder function of doing nothing (skipping a turn)
     """
     return
-
-#########################################################

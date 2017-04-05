@@ -1,7 +1,7 @@
 import AI_classes
 import game_classes
 
-
+#TODO
 def make_AI(AI_name, difficulty_level=0, difficulty_level_list=None):
     '''
     Function that handels all the initilizing of tree structures needed for
