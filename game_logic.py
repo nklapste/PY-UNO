@@ -53,6 +53,11 @@ def game_loop(board, deck, players):  # gameplay loop structure
             if player.skip:
                 print("skipping", player.name, "turn")
                 player.skip = False
+
+            elif player.AI:
+                pass
+            #TODO INTERGRATE AI
+
             else:
                 turn_done = False
                 selected = None
