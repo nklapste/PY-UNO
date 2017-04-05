@@ -23,7 +23,7 @@ class Main_Decision_Tree:
         self.Dec_Tree = None
 
     def gen_Dec_Tree(self):
-        #TODO
+        # TODO
         subBranch_1 = Branch("Can stop them winning it?", Leaf(
             "Goto stop funct"), Leaf("Go back up this tree"))
 
@@ -174,6 +174,72 @@ def test_Card_Guess_Tree():
 ###############################################################
 
 
+def travel_Main_Decision_Tree(Card_Choose_Tree):
+    '''
+    TODO: SHOULD READ QUESTIUON THEN PROCEED LEFT OR RIGHT
+    '''
+    (left_tree, right_tree) = read_Card_Choose_Tree(Card_Choose_Tree)
+
+    if left_tree is False:  # catchi if Card_Choose_Tree is actually a Leaf
+        # TODO do leaf instruction
+        read_Card_Choose_Leaf_instruction(right_tree)
+        return
+    else:
+        question = Card_Choose_Tree.question
+
+        (left_yes, right_yes) = read_Card_Choose_Tree_question(question):
+
+    if left_yes:
+        travel_Main_Decision_Tree(left_tree)
+    elif right_yes:
+        travel_Main_Decision_Tree(right_tree)
+    else:
+        print("ERROR: didn't choose path")
+
+
+def read_Card_Choose_Tree(Card_Choose_Tree):
+
+    try:  # check if Card_Choose_Tree is actually is
+        leaf_val = Card_Choose_Tree.value
+        return (False, leaf_val)  # return special case
+
+    except TypeError:  # Card_Choose_Tree is not a Leaf
+        (left_tree, right_tree) = Card_Choose_Tree.get_offshoots()
+        return (left_tree, right_tree)
+
+
+def read_Card_Choose_Tree_question(question):
+    #TODO
+    left_yes = False
+    right_yes = False
+
+    if question == "":
+        pass
+    elif question == "":
+        pass
+    elif question == "":
+        pass
+    elif question == "":
+        pass
+    elif question == "":
+        pass
+    elif question == "":
+        pass
+    elif question == "":
+        pass
+    elif question == "":
+        pass
+
+    return (left_yes, right_yes)
+
+
+def read_Card_Choose_Leaf_instruction(leaf_val):
+    # TODO INCLUDE BOARD AND PLAYER
+    if leaf_val == "  ":
+        pass
+
+    e
+
 class Card_Choose_Tree:
     def __init__(self, name, max_depth=0):
         self.name = name
@@ -181,30 +247,14 @@ class Card_Choose_Tree:
 
     def gen_Card_Chooes_Tree(self):
 
-        subBranch_1 = Branch("Can stop them winning it?", Leaf(
-            "Goto stop funct"), Leaf("Go back up this tree"))
+        subBranch_1 = Branch(
+            "what is my most common (color or type) that is also playable?",
+            leaf("play most common color"), leaf("play most common type"))
 
-        subsubsubBranch_2_1 = Branch("Does oldest card play priority beat my hate play priority?", Leaf(
-            "Play old card"), Leaf("Play hate card"))  # TODO
-
-        subsubBranch_2_1 = Branch(
-            "Do I multiple playable cards?", subsubsubBranch_2_1, Leaf("Play a card"))
-
-        subBranch_2 = Branch("Do I have playable cards?",
-                             subsubBranch_2_1, Leaf("Do nothing"))
+        Branch_1 = Branch("Do I have a nonwild playable card?",
+                          subBranch_1, leaf("play wild, most common color"))
 
         start_Branch = Branch(
-            "Is there an apparent winner?", subBranch_1, subBranch_2)
+            "Do I multiple playable cards?", Branch_1, Leaf("Play a card"))
 
         self.Card_Choose_Tree = start_Branch
-
-
-
-    # def read_card_tree(self):
-    #     return travel_Card_Guess_Tree(self.Card_Tree, self.max_depth)
-    #
-    # def update_card_tree(self, card):
-    #     Card_Tree = self.Card_Tree
-    #     card_Branch = Branch(None, Leaf(card.color), Leaf(card.type))
-    #     # add new card at new top of Card_Guess_Tree
-    #     self.Card_Tree = Branch(None, Card_Tree, card_Branch)
