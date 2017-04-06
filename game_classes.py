@@ -7,8 +7,13 @@ class Player:
         self.name = name
         self.hand = []
         self.skip = False
+
+        # AI vairables only
         self.AI = False
         self.AI_type = None
+        self.Main_Decision_Tree = None
+        self.Card_Guess_Tree = None
+        self.Card_Choose_Tree = None
 
     def grab_card(self, deckname):  # grab a card from the deck
         card = deckname.grab_card()
