@@ -130,8 +130,6 @@ class Main_Decision_Tree:
         self.difficulty_level = difficulty_level
         self.Dec_Tree = None
 
-    def gen_Dec_Tree(self):
-        # TODO
         subBranch_1 = Branch("Can stop them winning it?", Leaf(
             "Goto stop funct"), Leaf("Go back up this tree"))
 
