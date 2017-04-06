@@ -80,21 +80,21 @@ def read_Card_Tree_basic(Card_Tree):
 class Card_Guess_Tree:
     def __init__(self, name, max_depth=0):
         self.name = name
-        self.Card_Tree = None
+        self.Guess_Tree = None
         self.max_depth = max_depth
 
-    def gen_Card_Tree(self):
+    # def gen_Card_Tree(self):
         start_Branch = Branch()
-        self.Card_Tree = start_Branch
+        self.Guess_Tree = start_Branch
 
     def read_card_tree(self):
-        return travel_Card_Guess_Tree(self.Card_Tree, self.max_depth)
+        return travel_Card_Guess_Tree(self.Guess_Tree, self.max_depth)
 
     def update_card_tree(self, card):
-        Card_Tree = self.Card_Tree
+        Guess_Tree = self.Guess_Tree
         card_Branch = Branch(None, Leaf(card.color), Leaf(card.type))
         # add new card at new top of Card_Guess_Tree
-        self.Card_Tree = Branch(None, Card_Tree, card_Branch)
+        self.Guess_Tree = Branch(None, Guess_Tree, card_Branch)
 
 
 def test_Card_Guess_Tree():
