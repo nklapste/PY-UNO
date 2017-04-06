@@ -83,11 +83,28 @@ def read_Card_Choose_Leaf_instruction(Leaf_val):
         allowed_cards = card_logic.card_allowed(board, player)
         AI_functs.play_card(board, player, allowed_cards)
 
-    elif Leaf_val == "play wild, most common color":
+    elif Leaf_val == "play wild, most common color": #TODO
         common_color = AI_functs.fetch_most_common_color(player)
+
+        #search for wild card messy method
+        hand_index = 0
+        for card in player.hand:
+            if card.color == "w":
+                AI_functs.play_card(board, player, hand_index)
+
+                if card.type == "p": #TODO SPECIAL CASE FOR DRAW FOUR
+
+                break
+            hand_index += 1
+
+        # set the board to the common_color
+        board.color = common_color
+        # read card choose tree again to play a another card
+        read_Card_Choose_Tree(Card_Choose_Tree)
+
         # TODO play wild card aI
 
-    elif Leaf_val == "play most common color":
+    elif Leaf_val == "play most common color": #TODO
         allowed_cards = card_logic.card_allowed(board, player)
         common_color = AI_functs.fetch_most_common_color(player)
         for i in allowed_cards:
@@ -95,7 +112,7 @@ def read_Card_Choose_Leaf_instruction(Leaf_val):
                 AI_functs.play_card(board, player, i)
                 break
 
-    elif Leaf_val == "play most common type":
+    elif Leaf_val == "play most common type": #TODO
         allowed_cards = card_logic.card_allowed(board, player)
         common_type = AI_functs.fetch_most_common_type(player)
         for i in allowed_cards:
@@ -105,11 +122,11 @@ def read_Card_Choose_Leaf_instruction(Leaf_val):
 
 
 class Card_Choose_Tree:
-    def __init__(self, name, max_depth=0):
+    def __init__(self, name):
         self.name = name
-        self.Card_Choose_Tree = None
+        # self.Card_Choose_Tree = None
 
-    def gen_Card_Chooes_Tree(self):
+    # def gen_Card_Chooes_Tree(self):
 
         subBranch_1 = Branch(
             "what is my most common (color or type) that is also playable?",
@@ -121,4 +138,4 @@ class Card_Choose_Tree:
         start_Branch = Branch(
             "Do I multiple playable cards?", Branch_1, Leaf("Play only card"))
 
-        self.Card_Choose_Tree = start_Branch
+        self.Choose_Tree = start_Branch
