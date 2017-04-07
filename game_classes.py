@@ -1,4 +1,5 @@
 import pygame
+import deck_gen
 
 
 class Player:
@@ -104,9 +105,11 @@ class Deck:  # calss defining a card deck
             self.deck.append(card)
 
     def grab_card(self):  # grab a card from the deck
-        if self.deck == []:
-            print("Can't grab card the deck is empty...")
-            return None
+        if self.deck == []: # self regeneration catch
+            print("deck is empty...")
+            print("regenerating deck...")
+            self.deck = deck_gen.gen_rand_deck(self.name, 1).deck
+
         card = self.deck.pop()
         card.set_Owner(None)
         return card
@@ -117,7 +120,6 @@ class Board:
     def __init__(self, name):
         self.name = name
         self.card_stack = []
-
         self.type = None
         self.color = None
 
@@ -125,7 +127,6 @@ class Board:
         card.set_Owner(self.name)
         self.type = card.type
         self.color = card.color
-
         self.card_stack.append(card)
 
     def check_Board(self):  # returns the newest card of the board
