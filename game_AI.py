@@ -1,9 +1,7 @@
-import AI_classes
-import game_classes
-import Main_Decision_Tree
 import Card_Choose_Tree
 import Card_Guess_Tree
-
+import game_classes
+import Main_Decision_Tree
 
 
 def make_AI_basic(deck, AI_name, mem_depth=0, difficulty_level=0):
@@ -18,13 +16,9 @@ def make_AI_basic(deck, AI_name, mem_depth=0, difficulty_level=0):
     return AI_player_gen
 
 
-
-
-
-
-#TODO
+# TODO
 def make_AI(AI_name, difficulty_level=0, difficulty_level_list=None):
-    '''
+    """
     Function that handels all the initilizing of tree structures needed for
     an PY-UNO AI needs to be created. Additional features (difficulty addons)
     can be selected by either a simple difficulty level number (0-10) 0 = dumb
@@ -33,7 +27,8 @@ def make_AI(AI_name, difficulty_level=0, difficulty_level_list=None):
 
     Returns: an Player class from game_classes.py that is AI controlled via a
     decision tree method.
-    '''
+    """
+
     AI_gen = game_classes.Player(AI_name)
     AI_gen.AI = True
 

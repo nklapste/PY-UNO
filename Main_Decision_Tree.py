@@ -1,12 +1,14 @@
-import game_classes
 import AI_functs
-from AI_classes import Leaf
+import game_classes
 from AI_classes import Branch
+from AI_classes import Leaf
+
 
 def travel_Main_Decision_Tree(board, player, players, Dec_Tree):
-    '''
-    TODO: SHOULD READ QUESTIUON THEN PROCEED LEFT OR RIGHT
-    '''
+    """
+    Function that recursively travels Main_Decision_Tree.
+    """
+
     (left_tree, right_tree) = read_Dec_tree(Dec_Tree)
 
     if left_tree is False:  # catchi if Dec_Tree is actually a Leaf

@@ -1,6 +1,7 @@
-import game_control
+
 import card_logic
 import display_funct
+import game_control
 import pygame
 
 
@@ -22,8 +23,8 @@ def player_turn(board, deck, player, allowed_card_list, selected):
 
 
 def game_loop(board, deck, players):  # gameplay loop structure
-    '''
-    main logic and turn loop that controlls the game.
+    """
+    Main logic and turn loop that controlls the game.
 
     args:
         board: a game_classes.py board class in which the cards within the game
@@ -33,10 +34,9 @@ def game_loop(board, deck, players):  # gameplay loop structure
         deck: a game_classes.py deck class to be used as the deck to have cards
         drawn from.
 
-        players: a game_classes.py player that will iterate through allowing for
-        turns with each player.
-    '''
-
+        players: a game_classes.py player that will iterate through allowing
+        for turns with each player.
+    """
     turn_iterator = 1
     turn = 0
     turn_tot = 0
@@ -56,7 +56,7 @@ def game_loop(board, deck, players):  # gameplay loop structure
 
             elif player.AI:
                 pass
-            #TODO INTERGRATE AI
+                #TODO INTERGRATE AI
 
             else:
                 turn_done = False
@@ -97,7 +97,8 @@ def game_loop(board, deck, players):  # gameplay loop structure
                     (turn_iterator, drop_again) = card_logic.card_played_type(
                         board, deck, player, players, turn_iterator)
 
-            if drop_again:  # if the player plays a drop agian card dont iterate turn
+            # if the player plays a drop agian card dont iterate turn
+            if drop_again:
                 drop_again = False
                 continue
             else:

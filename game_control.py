@@ -1,14 +1,22 @@
-import pygame
 import display_funct
 import os
+import pygame
+
 
 def get_keypress(event):
+    """
+    Main call function that grabs keypress events and returns logic values
+    related to such keypresses.
+
+    Note: if the QUIT event happens os._exit is called in which the entire
+    PY-GAME instance is shutdown.
+    """
     select_L = False
     select_R = False
     select_UP = False
 
     if event.type == pygame.QUIT:
-        os._exit(0) # hard exit the program
+        os._exit(0)  # hard exit the program
     if event.type == pygame.KEYDOWN:
 
         if event.key == pygame.K_LEFT:
@@ -96,6 +104,8 @@ def player_choice_color():
                 print("choosing red")
                 return "r"
 ########################################################
+
+
 def select_move_target(select_L, select_R, players, selected):
     if selected is None:
         selected = 0
@@ -153,6 +163,8 @@ def player_choice_target(players):
             target = players[selected]
             return target
 ########################################################
+
+
 def select_choose(player, board, selected=0):
     player.play_card(board, selected)
     selected = None
@@ -177,11 +189,10 @@ def select_move_hand(select_L, select_R, allowed_card_list, selected):
 
 def player_LR_selection_hand(player, selected, board=None, allowed_card_list=None):
     '''
-    Function that is a modification of player_LR_selection that decides the card
-    the player is hovering over, additionally if the player selects the card
-    they are hovering over; turn_done will be turned to true allowing for further
-    progress within outside functions.
-
+    Function that is a modification of player_LR_selection that decides the
+    card the player is hovering over, additionally if the player selects the
+    card they are hovering over; turn_done will be turned to true allowing for
+    further progress within outside functions.
     '''
     select_L = False
     select_R = False
@@ -207,7 +218,8 @@ def player_LR_selection_hand(player, selected, board=None, allowed_card_list=Non
         select_R = False
 
     elif select_UP:  # if  keystoke to play card was entered
-        if selected is None:  # catch for index nonetype error in allowed_card_list
+        # catch for index nonetype error in allowed_card_list
+        if selected is None:
             selected = 0
 
         selected = select_choose(player, board, allowed_card_list[selected])

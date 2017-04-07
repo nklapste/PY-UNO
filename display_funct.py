@@ -28,8 +28,9 @@ face_down_card = game_classes.Card(
 
 def draw_top_stack_card(board):
     """
-    Renders the top card of the card_stack on the board
+    Renders the top card of the card_stack on the board.
     """
+
     # clear specific part of screen
     pygame.draw.rect(screen, black, ((screen_width - card_width) // 2,
                                      (screen_height - card_height) // 2,
@@ -50,7 +51,7 @@ def draw_top_stack_card(board):
 
 def redraw_hand_visble(player, selected=None):
     """
-    Redraws a players hand to be face up
+    Redraws a players hand to be face up.
     """
     # zero input catch
     if selected is None:
@@ -99,7 +100,7 @@ def redraw_hand_visble(player, selected=None):
 
 def redraw_hand_nonvisble(player, start_horz, start_vert=0):
     """
-    redraws a players hand to be non visible
+    Redraws a players hand to be non visible (face down cards).
     """
 
     # placeholder player num graphics
@@ -133,10 +134,13 @@ def redraw_hand_nonvisble(player, start_horz, start_vert=0):
 
 def redraw_screen(player_you, board, players_other):
     """
-    Redraws the screen to its "normal" state, where it renders the current
-    players hand face up, the current card selected is raised, the most recently
-    played card on the board face up, and other players' hands face down.
+    Redraws the screen to its "normal" state.
+
+    Renders the current players hand face up, the current card selected is
+    raised, the most recentl played card on the board face up, and other
+    players' hands face down.
     """
+
     # draw personal players hand
     for player in player_you:
         (player_dat, selected) = player
@@ -175,6 +179,12 @@ def redraw_screen(player_you, board, players_other):
 
 
 def redraw_screen_menu_color(selected=None):
+    """
+    Draws a simple color menu with placeholder graphics.
+
+    Function clears the top half of the screen and clears display of nonvisible
+    hands while it runs.
+    """
     # zero input catch
     if selected is None:
         selected = 0
@@ -209,6 +219,13 @@ def redraw_screen_menu_color(selected=None):
 
 
 def redraw_screen_menu_target(players, selected=None):
+    """
+    Draws a simple menu with placeholder graphics (red number cards) that
+    refrences a target player to use a card effect on. Thus function clears
+    the top half of the screen and clears  display of nonvisible hands while it
+    runs.
+    """
+
     # zero input catch
     if selected is None:
         selected = 0

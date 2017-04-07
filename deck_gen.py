@@ -13,6 +13,7 @@ def generate_cards():
     the images within small_cards. Cards are defined by the Card class in
     game_classes.
     '''
+
     cards = []
     # predefined cards substrings
     colors = ["blue_", "red_", "green_", "yellow_"]
@@ -51,7 +52,7 @@ def generate_cards():
 
 
 def card_shuffler(cards):
-    '''
+    """
     Shufles a list of cards "randomly".
 
     Note: that shuffle is sudorandom thus behavour is not perfect, but is
@@ -59,7 +60,8 @@ def card_shuffler(cards):
 
     Returns:  A randomly shuffed list of cards. Output list contains the same
     elements as the input list.
-    '''
+    """
+
     print("\n\nSHUFFLING CARDLIST...", end="   ")
     shuffle(cards)
     print("DONE\n\n")
@@ -72,11 +74,12 @@ def build_deck(deckname, card_list):
     Function call that builds an uno game class deck from a list of uno game
     cards.
 
-    Note: the output of build_deck is not shuffled, gen_rand_deck handels random
-    card list generation.
+    Note: the output of build_deck is not shuffled, gen_rand_deck handels
+    random card list generation.
 
     Returns: a Deck class using the cards defined in card_list
     '''
+
     deckout = game_classes.Deck(deckname, card_list)
     print("deck generated named: ", end="")
     print(deckname)
@@ -88,6 +91,7 @@ def gen_rand_deck(deckname, size):
     Function that Generates random uno deck with assigned size (how many copies
     of one deck is included) and with name specified as input deckname
     '''
+    
     cards = []
     for i in range(size):
         cards = card_shuffler(generate_cards()) + cards

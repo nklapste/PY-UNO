@@ -1,8 +1,9 @@
 from deck_gen import gen_rand_deck
+import display_funct
 import game_classes
 import game_logic
 import pygame
-import display_funct
+
 
 pygame.init()
 
@@ -47,6 +48,7 @@ card.rect = card.rect.move(0, -100)
 ########################################################
 
 # loop function that enteres into playing the game
-game_logic.game_loop(board1, deck1, [player1, player2AI, player3AI, player4AI, player5AI, player6AI, player7AI])
+game_logic.game_loop(board1, deck1, [player1, player2AI, player3AI, player4AI,
+                     player5AI, player6AI, player7AI])
 
 ########################################################

@@ -1,5 +1,5 @@
-import pygame
 import deck_gen
+import pygame
 
 
 class Player:
@@ -50,7 +50,8 @@ class Player:
             return
         self.hand.pop(card_ID)
 
-class Player_AI: #TODO
+
+class Player_AI:  # TODO
 
     def __init__(self, name):
         self.name = name
@@ -93,6 +94,7 @@ class Player_AI: #TODO
             return
         self.hand.pop(card_ID)
 
+
 class Deck:  # calss defining a card deck
 
     def __init__(self, name, input_deck):
@@ -105,7 +107,7 @@ class Deck:  # calss defining a card deck
             self.deck.append(card)
 
     def grab_card(self):  # grab a card from the deck
-        if self.deck == []: # self regeneration catch
+        if self.deck == []:  # self regeneration catch
             print("deck is empty...")
             print("regenerating deck...")
             self.deck = deck_gen.gen_rand_deck(self.name, 1).deck
@@ -143,7 +145,7 @@ class Card:
         self.name = name
         self.card_data = pygame.image.load(filename)
         self.rect = self.card_data.get_rect()
-        self.Owner = owner #TODO
+        self.Owner = owner  # TODO
         self.color = name[0]
         self.type = name[2]
 

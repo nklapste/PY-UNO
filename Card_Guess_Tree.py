@@ -1,10 +1,14 @@
 
-from AI_classes import Leaf
 from AI_classes import Branch
+from AI_classes import Leaf
 
 import game_classes
 
+
 def travel_Card_Guess_Tree(Card_Tree, max_depth):
+    """
+    Function that recursively travels Card_Guess_Tree.
+    """
     # list that will be appened card data in the format of
     # [(card1_color, depth), (card1_type, depth), (card2_color, depth)...]
     Card_Guess_list = []
@@ -20,7 +24,8 @@ def travel_Card_Guess_Tree(Card_Tree, max_depth):
             pass
         # get this levels card data (color and type) and append to
         # Card_Guess_list
-        (Card_color_p, Card_Type_p , Card_Played_By) = read_Card_Tree_values(right_tree, depth)
+        (Card_color_p, Card_Type_p, Card_Played_By) = read_Card_Tree_values(
+            right_tree, depth)
         Card_Guess_list.append(Card_color_p)
         Card_Guess_list.append(Card_Type_p)
         Card_Guess_list.append(Card_Played_By)
@@ -68,7 +73,7 @@ def travel_Card_Guess_Tree(Card_Tree, max_depth):
         (card_data_1, depth_1) = Card_Guess_list[-2]
         (card_data_2, depth_2) = Card_Guess_list[-1]
         if card_data_1 is None:
-            output_list.append((card_data_2, None , None))
+            output_list.append((card_data_2, None, None))
         else:
             output_list.append((card_data_1, card_data_2, None))
 
@@ -132,5 +137,6 @@ def test_Card_Guess_Tree():
     print(travel_Card_Guess_Tree(test_tree.Guess_Tree, 5))
     print(travel_Card_Guess_Tree(test_tree.Guess_Tree, 6))
     print(travel_Card_Guess_Tree(test_tree.Guess_Tree, 7))
+
 
 test_Card_Guess_Tree()

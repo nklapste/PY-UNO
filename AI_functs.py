@@ -3,7 +3,7 @@
 # TODO
 def fetch_most_common_color(player):
     """
-    Returns the most common color in a players hand
+    Returns the most common color in a players hand.
     """
     color_dict = dict()
     for card in player.hand:
@@ -21,7 +21,7 @@ def fetch_most_common_color(player):
 
 def fetch_most_common_type(player):
     """
-    Returns the most common card type from a players hand
+    Returns the most common card type from a players hand.
     """
     type_dict = dict()
     for card in player.hand:
@@ -113,6 +113,6 @@ def fetch_hate_priority(player, players):
 
 def do_nothing():
     """
-    Placeholder function of doing nothing (skipping a turn)
+    Placeholder function of doing nothing (skipping a turn).
     """
     return

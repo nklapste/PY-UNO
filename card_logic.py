@@ -1,6 +1,4 @@
 import game_control
-import pygame
-import display_funct
 
 
 def card_allowed(board, player):
@@ -14,6 +12,7 @@ def card_allowed(board, player):
         allowed: a list of cards allowed to be played from a certain players
                  hand.
     """
+
     i = 0
     allowed = []
 
@@ -32,10 +31,11 @@ def card_allowed(board, player):
 ########################################################
 def wild_pick_4(board, deck, player, players):
     """
-    Function that handles when the player plays a wild pick 4 card, going to
-    subfunctions that handel player color choice, and player target choice.
-    This function then prints out the results of the players decisions on the
-    game.
+    Card function that handles when the player plays a wild pick 4 card.
+
+    Starts subfunctions that handel player color choice, and player target
+    choice. This function then prints out the results of the players decisions
+    on the game.
     """
     board.color = game_control.player_choice_color()
     print("New color: ", board.color)
@@ -49,11 +49,24 @@ def wild_pick_4(board, deck, player, players):
 
 
 def wild_color(board, deck, player):
+    """
+    Card function that handles when the player plays a wild color card.
+
+    This makes the game move onto making the player choose a color.This
+    chosen color updates the current board color. After a color has been
+    chosen the player then can play another card of the same color.
+    """
     board.color = game_control.player_choice_color()
     print("New color: ", board.color)
 
 
 def draw_2(board, deck, player, players):
+    """
+    Card function that handles when the player plays a draw 2 card.
+
+    This makes the game move to the target selection menu. After a target is
+    selected the targeted player is then forced to draw 2 cards.
+    """
     players_temp = players[:]
     players_temp.remove(player)
     target = game_control.player_choice_target(players_temp)
@@ -73,7 +86,8 @@ def skip(board, deck, player, players):
 
 def reverse(turn_iterator):
     """
-    Function that handles when the player plays the reverse card.
+    Card function that handles when the player plays the reverse card.
+
     Prints the original turn_iterator and then returns the negitive of the
     original turn_iterator.
 
