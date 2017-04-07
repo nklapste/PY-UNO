@@ -143,7 +143,7 @@ class Card:
         self.name = name
         self.card_data = pygame.image.load(filename)
         self.rect = self.card_data.get_rect()
-        self.Owner = owner
+        self.Owner = owner #TODO
         self.color = name[0]
         self.type = name[2]
 
