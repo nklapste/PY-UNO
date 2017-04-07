@@ -10,7 +10,7 @@ for multiple OSes here:
 
 <pre>
 https://www.python.org/downloads/release/python-360/
- </pre>
+</pre>
 
 **Pygame:** After installing python3.6 use pip to install pygame using the pip command:
 
