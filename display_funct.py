@@ -13,7 +13,7 @@ pink = (255, 200, 200)
 
 
 # defining screen
-size = width, height = 1900, 900
+size = width, height = 1500, 900
 speed = [2, 2]
 screen = pygame.display.set_mode(size)
 screen.fill(black)
@@ -51,6 +51,14 @@ def redraw_hand_visble(player, selected=None):
     # clear specific part of screen
     pygame.draw.rect(screen, black, (0, 600, width, 300), 0)
 
+
+    # player playing placeholder graphic
+    player_num = str(player.name[7])
+    card_disp = game_classes.Card(
+        "red", "small_cards/red_" + player_num + ".png", None)
+    card_disp.rect = card_disp.rect.move(0, 900-card_height)
+
+
     # get a "middle" start postion for bliting cards
     start_pos = (width - 100 * len(player.hand)) // 2
     i = 0
@@ -62,27 +70,32 @@ def redraw_hand_visble(player, selected=None):
             card.rect = card.rect.move(start_pos, 700)
         card.rect = card.rect.move(100 * i, 0)
         screen.blit(card.card_data, card.rect)
-        pygame.display.flip()
         i += 1
+    # displaying the placeholder playing player number
+    screen.blit(card_disp.card_data, card_disp.rect)
+    pygame.display.flip()
 
-
-def redraw_hand_nonvisble(player, start_pos, selected=None):
+def redraw_hand_nonvisble(player, start_pos_horz, start_pos_vert=0):
     """
     redraws a players hand to be non visible
     """
 
+    #placeholder player num graphics
+    player_num = str(player.name[7])
+    card_disp = game_classes.Card(
+        "red", "small_cards/red_" + player_num + ".png", None)
+    card_disp.rect = card_disp.rect.move(start_pos_horz, start_pos_vert)
+
     i = 0
     for card in player.hand:
         card.rect = def_rect
-        if i == selected:
-            card.rect = card.rect.move(start_pos, 100)
-        else:
-            card.rect = card.rect.move(start_pos, 0)
-
+        card.rect = card.rect.move(start_pos_horz, start_pos_vert)
         card.rect = card.rect.move(80 * i, 0)
         screen.blit(face_down_card.card_data, card.rect)
-        pygame.display.flip()
         i += 1
+    # displaying the placeholder player num graphics
+    screen.blit(card_disp.card_data, card_disp.rect)
+    pygame.display.flip()
 
 
 def redraw_screen(player_you, board, players_other):
@@ -104,11 +117,20 @@ def redraw_screen(player_you, board, players_other):
     # clear specific part of screen
     pygame.draw.rect(screen, black, (0, 0, width, 600), 0)
     # draw all active other hands in nice other places in the screen
-    start_pos = 0
+    start_pos_horz = 0
+    start_pos_vert = 0
+    player_counts = 0
     for player in players_temp:
         hand_size = (80 * len(player.hand)) + (card_width - 80)
-        redraw_hand_nonvisble(player, start_pos)
-        start_pos = width - hand_size
+        if player_counts > 1:
+            start_pos_vert = start_pos_vert + card_height + 20
+            start_pos_horz = 0
+            player_counts = 0
+        print(player.name)
+        print(start_pos_horz, start_pos_vert)
+        redraw_hand_nonvisble(player, start_pos_horz, start_pos_vert)
+        start_pos_horz = width - hand_size
+        player_counts += 1
 
     # draw the top card on the board
     draw_top_stack_card(board)
@@ -137,9 +159,9 @@ def redraw_screen_menu_color(selected=None):
 
         card_c.rect = card_c.rect.move(200 * i, 0)
         screen.blit(card_c.card_data, card_c.rect)
-        pygame.display.flip()
-        i += 1
 
+        i += 1
+    pygame.display.flip()
 
 def redraw_screen_menu_target(players, selected=None):
     # clear screen
@@ -163,5 +185,5 @@ def redraw_screen_menu_target(players, selected=None):
             card_disp.rect = card_disp.rect.move(start_pos, 300)
         card_disp.rect = card_disp.rect.move(200 * i, 0)
         screen.blit(card_disp.card_data, card_disp.rect)
-        pygame.display.flip()
         i += 1
+    pygame.display.flip()

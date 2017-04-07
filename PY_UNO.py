@@ -27,6 +27,18 @@ player2AI.grab_cards(deck1, 7)
 player3AI = game_classes.Player("player_3AI")
 player3AI.grab_cards(deck1, 7)
 
+player4AI = game_classes.Player("player_4AI")
+player4AI.grab_cards(deck1, 7)
+
+player5AI = game_classes.Player("player_5AI")
+player5AI.grab_cards(deck1, 7)
+
+player6AI = game_classes.Player("player_6AI")
+player6AI.grab_cards(deck1, 7)
+
+player7AI = game_classes.Player("player_7AI")
+player7AI.grab_cards(deck1, 7)
+
 display_funct.redraw_hand_visble(player1, None)
 
 card = player1.hand[0]
@@ -35,6 +47,6 @@ card.rect = card.rect.move(0, -100)
 ########################################################
 
 # loop function that enteres into playing the game
-game_logic.game_loop(board1, deck1, [player1, player2AI, player3AI])
+game_logic.game_loop(board1, deck1, [player1, player2AI, player3AI, player4AI, player5AI, player6AI, player7AI])
 
 ########################################################
