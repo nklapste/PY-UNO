@@ -6,7 +6,7 @@ import Branch from AI_classes
 
 def travel_Card_Choose_Tree(Card_Choose_Tree):
     '''
-    TODO: SHOULD READ QUESTIUON THEN PROCEED LEFT OR RIGHT
+    TODO: SHOULD READ QUESTION THEN PROCEED LEFT OR RIGHT
     '''
     (left_tree, right_tree) = read_Card_Choose_Tree(Card_Choose_Tree)
 
@@ -81,7 +81,7 @@ def read_Card_Choose_Leaf_instruction(Leaf_val):
     # TODO INCLUDE BOARD AND PLAYER
     if Leaf_val == "Play only card":
         allowed_cards = card_logic.card_allowed(board, player)
-        AI_functs.play_card(board, player, allowed_cards)
+        AI_functs.play_card(board, player, allowed_cards[0])
 
     elif Leaf_val == "play wild, most common color": #TODO
         common_color = AI_functs.fetch_most_common_color(player)
@@ -106,7 +106,10 @@ def read_Card_Choose_Leaf_instruction(Leaf_val):
 
     elif Leaf_val == "play most common color": #TODO
         allowed_cards = card_logic.card_allowed(board, player)
-        common_color = AI_functs.fetch_most_common_color(player)
+        for i in allowed_cards: #TODO
+            player.hand[i].color
+
+        common_color = AI_functs.fetch_most_common_color(player, read_Card_Choose_Tree)
         for i in allowed_cards:
             if player.hand[i].color == common_color:
                 AI_functs.play_card(board, player, i)
