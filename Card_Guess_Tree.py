@@ -1,7 +1,8 @@
-import game_classes
-import Leaf from AI_classes
-import Branch from AI_classes
 
+from AI_classes import Leaf
+from AI_classes import Branch
+
+import game_classes
 
 def travel_Card_Guess_Tree(Card_Tree, max_depth):
     # list that will be appened card data in the format of
@@ -19,12 +20,13 @@ def travel_Card_Guess_Tree(Card_Tree, max_depth):
             pass
         # get this levels card data (color and type) and append to
         # Card_Guess_list
-        (Card_color_p, Card_Type_p) = read_Card_Tree_values(right_tree, depth)
+        (Card_color_p, Card_Type_p , Card_Played_By) = read_Card_Tree_values(right_tree, depth)
         Card_Guess_list.append(Card_color_p)
         Card_Guess_list.append(Card_Type_p)
+        Card_Guess_list.append(Card_Played_By)
 
         # go to the next level of Card_Guess_Tree which is in the left_tree
-        travel_recus(left_tree, depth + 2)
+        travel_recus(left_tree, depth + 3)
 
         return None
 
@@ -52,24 +54,31 @@ def travel_Card_Guess_Tree(Card_Tree, max_depth):
 
     # filter out the depth values for clean output and pair color and
     # type together
-    for i in range(0, len(Card_Guess_list) - 1, 2):  # TODO FIXISH
+    for i in range(0, len(Card_Guess_list) - 2, 3):  # TODO FIXISH
         (card_data_1, depth_1) = Card_Guess_list[i]
         (card_data_2, depth_2) = Card_Guess_list[i + 1]
+        (card_data_3, depth_3) = Card_Guess_list[i + 2]
 
-        output_list.append((card_data_1, card_data_2))
+        output_list.append((card_data_1, card_data_2, card_data_3))
 
     # if Card_Guess_list was odd above code would miss the last cards first
     # data value do to range iterating by 2
-    if not len(Card_Guess_list) % 2 == 0:
-        (card_data_1, depth_1) = Card_Guess_list[-1]
-        output_list.append((card_data_1, None))
+    if not len(Card_Guess_list) % 3 == 0:
+
+        (card_data_1, depth_1) = Card_Guess_list[-2]
+        (card_data_2, depth_2) = Card_Guess_list[-1]
+        if card_data_1 is None:
+            output_list.append((card_data_2, None , None))
+        else:
+            output_list.append((card_data_1, card_data_2, None))
 
     return output_list
 
 
 def read_Card_Tree_values(Card_Tree, depth):
-    (Card_color, Card_Type) = Card_Tree.get_offshoots()
-    return ((Card_color.value, depth), (Card_Type.value, depth + 1))
+    (Card_color, Card_Tree_2) = Card_Tree.get_offshoots()
+    (Card_Type, played_by) = Card_Tree_2.get_offshoots()
+    return ((Card_color.value, depth), (Card_Type.value, depth + 1), (played_by.value, depth + 2))
 
 
 def read_Card_Tree_basic(Card_Tree):
@@ -92,7 +101,8 @@ class Card_Guess_Tree:
 
     def update_card_tree(self, card):
         Guess_Tree = self.Guess_Tree
-        card_Branch = Branch(None, Leaf(card.color), Leaf(card.type))
+        card_Branch_sub_1 = Branch(None, Leaf(card.type), Leaf(card.Owner))
+        card_Branch = Branch(None, Leaf(card.color), card_Branch_sub_1)
         # add new card at new top of Card_Guess_Tree
         self.Guess_Tree = Branch(None, Guess_Tree, card_Branch)
 
@@ -117,4 +127,10 @@ def test_Card_Guess_Tree():
     test_tree.update_card_tree(card2)
     test_tree.update_card_tree(card1)
 
-    print(travel_Card_Guess_Tree(test_tree.Card_Tree, 3))
+    print(travel_Card_Guess_Tree(test_tree.Guess_Tree, 3))
+    print(travel_Card_Guess_Tree(test_tree.Guess_Tree, 4))
+    print(travel_Card_Guess_Tree(test_tree.Guess_Tree, 5))
+    print(travel_Card_Guess_Tree(test_tree.Guess_Tree, 6))
+    print(travel_Card_Guess_Tree(test_tree.Guess_Tree, 7))
+
+test_Card_Guess_Tree()
