@@ -1,10 +1,10 @@
 import game_classes
 import card_logic
-import Leaf from AI_classes
-import Branch from AI_classes
+from AI_classes import Leaf
+from AI_classes import Branch
 
 
-def travel_Card_Choose_Tree(Card_Choose_Tree):
+def travel_Card_Choose_Tree(board, player, players, Card_Choose_Tree):
     '''
     TODO: SHOULD READ QUESTION THEN PROCEED LEFT OR RIGHT
     '''
@@ -12,17 +12,17 @@ def travel_Card_Choose_Tree(Card_Choose_Tree):
 
     if left_tree is False:  # catchi if Card_Choose_Tree is actually a Leaf
         # TODO do Leaf instruction
-        read_Card_Choose_Leaf_instruction(right_tree)
+        read_Card_Choose_Leaf_instruction(board, player, players, right_tree)
         return
     else:
         question = Card_Choose_Tree.question
 
-        (left_yes, right_yes) = read_Card_Choose_Tree_question(question):
+        (left_yes, right_yes) = read_Card_Choose_Tree_question(board, player, players, question):
 
     if left_yes:
-        travel_Card_Choose_Tree(left_tree)
+        travel_Card_Choose_Tree(board, player, players, left_tree)
     elif right_yes:
-        travel_Card_Choose_Tree(right_tree)
+        travel_Card_Choose_Tree(board, player, players, right_tree)
     else:
         print("ERROR: didn't choose path")
 
@@ -38,7 +38,7 @@ def read_Card_Choose_Tree(Card_Choose_Tree):
         return (left_tree, right_tree)
 
 
-def read_Card_Choose_Tree_question(question):
+def read_Card_Choose_Tree_question(board, player, players, question):
     # TODO
     left_yes = False
     right_yes = False
@@ -77,7 +77,7 @@ def read_Card_Choose_Tree_question(question):
     return (left_yes, right_yes)
 
 
-def read_Card_Choose_Leaf_instruction(Leaf_val):
+def read_Card_Choose_Leaf_instruction(board, player, players, Leaf_val):
     # TODO INCLUDE BOARD AND PLAYER
     if Leaf_val == "Play only card":
         allowed_cards = card_logic.card_allowed(board, player)
