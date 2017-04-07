@@ -1,9 +1,9 @@
 import game_classes
 import AI_functs
-import Leaf from AI_classes
-import Branch from AI_classes
+from AI_classes import Leaf
+from AI_classes import Branch
 
-def travel_Main_Decision_Tree(Dec_Tree):
+def travel_Main_Decision_Tree(board, player, players, Dec_Tree):
     '''
     TODO: SHOULD READ QUESTIUON THEN PROCEED LEFT OR RIGHT
     '''
@@ -11,7 +11,7 @@ def travel_Main_Decision_Tree(Dec_Tree):
 
     if left_tree is False:  # catchi if Dec_Tree is actually a Leaf
         # TODO do leaf instruction
-        read_Dec_leaf_instruction(right_tree)
+        read_Dec_leaf_instruction(board, player, players, right_tree)
         return
     else:
         question = Dec_Tree.question
@@ -19,9 +19,9 @@ def travel_Main_Decision_Tree(Dec_Tree):
         (left_yes, right_yes) = read_Dec_tree_question(question):
 
     if left_yes:
-        travel_Main_Decision_Tree(left_tree)
+        travel_Main_Decision_Tree(board, player, players, left_tree)
     elif right_yes:
-        travel_Main_Decision_Tree(right_tree)
+        travel_Main_Decision_Tree(board, player, players, right_tree)
     else:
         print("ERROR: didn't choose path")
 
@@ -38,7 +38,7 @@ def read_Dec_tree(Dec_Tree):
         return (left_tree, right_tree)
 
 
-def read_Dec_tree_question(question):
+def read_Dec_tree_question(board, player, players, question):
     left_yes = False
     right_yes = False
 
@@ -94,7 +94,7 @@ def read_Dec_tree_question(question):
     return (left_yes, right_yes)
 
 
-def read_Dec_leaf_instruction(leaf_val):
+def read_Dec_leaf_instruction(board, player, players, leaf_val):
     # TODO INCLUDE BOARD AND PLAYER
     if leaf_val == "Goto stop funct":
         stop_winners(board, player, possible_winners)
