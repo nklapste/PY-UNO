@@ -2,10 +2,11 @@ import game_classes
 import pygame
 from pygame.locals import *
 
+# global screen vairable to be used globaly (as all parts of the game
+# refrence the same screen)
 global screen
 
-
-# colors
+# colors definitions for pygame
 red = (255, 0, 0)
 green = (0, 255, 0)
 blue = (0, 0, 255)
@@ -14,66 +15,61 @@ white = (255, 255, 255)
 black = (0, 0, 0)
 pink = (255, 200, 200)
 
-
 # defining screen
-size_o = screen_width, screen_height = 1500, 900
+size_o = screen_width, screen_height = 1600, 900
 scale_size = size_o
 scale_card_size = 0
 
-global scale_x
-global scale_y
-
+# scaling factors that are initially set the scale value of 1 (native to
+# 1600x900 pixel resolution)
 scale_x = 1
 scale_y = 1
 
+# defining the global pygame screen value to be used within PY-UNO
 screen = pygame.display.set_mode(size_o, HWSURFACE | DOUBLEBUF | RESIZABLE)
 screen.fill(black)
 
-
-# default card rectangle size and card size
+# default card rectangle size and card size and default card pygame rectangle
 card_width = 130
 card_height = 182
 def_rect = pygame.Rect(0, 0, card_width, card_height)
+
+# defining the default facedown card value
 face_down_card = game_classes.Card(
     "face_down", "small_cards/card_back.png", None)
 
-# pygame.init()
-
 
 def handle_resize(event):
+    # grabbing the newely resized windows size
     scale_size = event.dict['size']
 
+    # save these scaling factors globally as they affect the global screen
+    # rendering
     global scale_x
     global scale_y
 
+    # grabbing new scaling factor values
     (x_o, y_o) = size_o
     (x_1, y_1) = scale_size
+    # calculating new scaling factor values
     scale_x = (x_1 / x_o)
     scale_y = (y_1 / y_o)
-    print("scale", (scale_x, scale_y))
-
-    screen = pygame.display.set_mode(
-        scale_size, HWSURFACE | DOUBLEBUF | RESIZABLE)
 
 
-def scale_card_blit(image, position):
-    print("scale", (scale_x, scale_y))
+def scale_card_blit(image, position, transform_ov=False):
+    # scale the inputted card image to the global scale factors
     card_width = int(130 * scale_x)
     card_height = int(182 * scale_y)
-    print(card_height)
-    image = pygame.transform.scale(image, (card_width, card_height))
-    print(image)
-    print(position)
-    print(position.left)
-    print(position.top)
-    print(position.width)
-    print(position.height)
-
+    if transform_ov:  # transform override for half image transform
+        image = pygame.transform.scale(
+            image, (card_width // 2, card_height // 2))
+    else:
+        image = pygame.transform.scale(image, (card_width, card_height))
+    # scale the images position with the global scale factors
     l = int(position.left * scale_x)
     t = int(position.top * scale_y)
     w = int(position.width * scale_x)
     h = int(position.height * scale_y)
-    print(l, t, w, h)
 
     scale_pos = pygame.Rect(l, t, w, h)
     screen.blit(image, scale_pos)
@@ -83,12 +79,6 @@ def draw_top_stack_card(board):
     """
     Renders the top card of the card_stack on the board.
     """
-    #
-    # # clear specific part of screen
-    # pygame.draw.rect(screen, black, ((screen_width - card_width) // 2,
-    #                                  (screen_height - card_height) // 2,
-    #                                  card_width, card_height), 0)
-
     if board.card_stack != []:
         top_card = board.card_stack[-1]
         top_card.rect = def_rect
@@ -99,20 +89,12 @@ def draw_top_stack_card(board):
         # blit top card of board onto center screen
         scale_card_blit(top_card.card_data, top_card.rect)
 
-        # refreshing the screen
-        pygame.display.flip()
-
 
 def redraw_hand_visble(player, selected=None):
     """
     Redraws a players hand to be face up.
     """
-
-
-    # # clear specific part of screen
-    # pygame.draw.rect(screen, black, (0, 600, screen_width, 300), 0)
-
-    # player playing placeholder graphic
+    # player playing indicator placeholder graphic
     player_num = str(player.name[7])
     card_disp = game_classes.Card(
         "red", "small_cards/red_" + player_num + ".png", None)
@@ -146,9 +128,6 @@ def redraw_hand_visble(player, selected=None):
     # displaying the placeholder playing player number
     scale_card_blit(card_disp.card_data, card_disp.rect)
 
-    # # refreshing the screen
-    # pygame.display.flip()
-
 
 def redraw_hand_nonvisble(player, start_horz, start_vert=0):
     """
@@ -177,10 +156,39 @@ def redraw_hand_nonvisble(player, start_horz, start_vert=0):
         card_index += 1
 
     # displaying the placeholder player num graphics
-    scale_card_blit(card_disp.card_data, card_disp.rect)
+    scale_card_blit(card_disp.card_data, card_disp.rect, True)
 
-    # # refreshing the screen
-    # pygame.display.flip()
+
+def redraw_hand_nonvisble_loop(players_temp):
+    """
+    Loop function that orders rendering players_temps hands facedown onto the
+    screen. redraw_hand_nonvisble is used within this loop to actually do the
+    rendering. This loop simply orders each hands location on the screen.
+    """
+    start_horz = 0
+    start_vert = 0
+    loop_iteration = 0
+    # draw all active other hands in nice other places in the screen
+    for player in players_temp:
+
+        if len(player.hand) == 0:
+            hand_size = card_width
+        elif len(player.hand) > 7:
+            hand_size = (80 * 7) + (card_width - 80)
+        else:
+            hand_size = (80 * len(player.hand)) + (card_width - 80)
+
+        if loop_iteration == 1:
+            start_horz = screen_width - hand_size
+
+        elif loop_iteration > 1:
+            start_vert = start_vert + card_height + 20
+            start_horz = 0
+            loop_iteration = 0
+
+        redraw_hand_nonvisble(player, start_horz, start_vert)
+
+        loop_iteration += 1
 
 
 def redraw_screen(player_you, board, players_other):
@@ -197,33 +205,13 @@ def redraw_screen(player_you, board, players_other):
         (player_dat, selected) = player
         redraw_hand_visble(player_dat, selected)
 
+    # grab a list of all players excluding the currenly playing one
     players_temp = players_other[:]
     players_temp.remove(player_dat)
-    #
-    # # clear specific part of screen
-    # pygame.draw.rect(screen, black, (0, 0, screen_width, 600), 0)
 
-    start_horz = 0
-    start_vert = 0
-    loop_iteration = 0
-    # draw all active other hands in nice other places in the screen
-    for player in players_temp:
-        if len(player.hand) > 7:
-            hand_size = (80 * 7) + (card_width - 80)
-        else:
-            hand_size = (80 * len(player.hand)) + (card_width - 80)
-
-        if loop_iteration == 1:
-            start_horz = screen_width - hand_size
-
-        elif loop_iteration > 1:
-            start_vert = start_vert + card_height + 20
-            start_horz = 0
-            loop_iteration = 0
-
-        redraw_hand_nonvisble(player, start_horz, start_vert)
-
-        loop_iteration += 1
+    # draw all players (excluding the currently playing player) hands facedown
+    # an orderly fashion on the screen
+    redraw_hand_nonvisble_loop(players_temp)
 
     # draw the top card on the board
     draw_top_stack_card(board)
@@ -242,8 +230,10 @@ def redraw_screen_menu_color(selected=None):
     # zero input catch
     if selected is None:
         selected = 0
-    # # clear screen
-    pygame.draw.rect(screen, black, (0, 0, screen_width, int(600*scale_y)), 0)
+
+    # clear screen
+    pygame.draw.rect(
+        screen, black, (0, 0, screen_width, int(600 * scale_y)), 0)
 
     # get a "middle" start postion for bliting cards
     start_pos = ((screen_width) // 2) - ((300 * 2 + card_width) // 2)
@@ -285,7 +275,8 @@ def redraw_screen_menu_target(players, selected=None):
         selected = 0
 
     # clear screen (top half)
-    pygame.draw.rect(screen, black, (0, 0, screen_width, int(600*scale_y)), 0)
+    pygame.draw.rect(
+        screen, black, (0, 0, screen_width, int(600 * scale_y)), 0)
 
     # get a "middle" start postion for bliting cards
     start_pos = ((screen_width) // 2) - \
