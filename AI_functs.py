@@ -1,4 +1,4 @@
-
+import card_logic
 
 # TODO
 def fetch_most_common_color(player):
@@ -35,15 +35,17 @@ def fetch_most_common_type(player):
     return max_type
 
 
-def fetch_oldest_card(player):
+def fetch_oldest_card(board, player):
     """
     Returns the oldest playable card card's index in players hand.
     """
 
     card_index = 0
-    playable_cards = card_logic.card_allowed(board, player)
+    maxi = 0
+    maxi_index = 0
+    playable_indexes = card_logic.card_allowed(board, player)
     for card in player.hand:
-        if card.old_val > maxi and not card.color == "w" and card_index in playable_cards:
+        if card.old_val >= maxi and not card.color == "w" and card_index in playable_indexes:
             maxi = card.old_val
             maxi_index = card_index
         card_index += 1
@@ -95,19 +97,21 @@ def stop_winners(board, player, possible_winners):
 def play_card(board, player, selected=0):
     player.play_card(board, selected)
 
-
+#TODO
 def fetch_hate_priority(player, players):
     """
     Returns the highest hate value that player has set on any of the
     players in the game.
     """
     max_hate = 0
-
+    hate_player = None
     for h_player in players:
-        if player.hatval[h_player.name] > max_hate:
-            max_hate = player.hatval[h_player.name]
-            hate_player = h_player
-
+        try:
+            if player.hatval[h_player.name] >= max_hate:
+                max_hate = player.hatval[h_player.name]
+                hate_player = h_player
+        except KeyError:
+            player.hatval[h_player.name] = 0
     return (max_hate, hate_player)
 
 

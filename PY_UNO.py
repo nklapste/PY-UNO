@@ -19,7 +19,7 @@ board1 = game_classes.Board("board1")
 # each other)
 deck1 = gen_rand_deck("deck1", 0)
 
-# defining a 3 player uno game
+# defining a 7 player uno game
 player1 = game_classes.Player("player_1")
 player1.grab_cards(deck1, 7)
 

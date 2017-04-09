@@ -15,6 +15,7 @@ class Player:
         self.Main_Decision_Tree = None
         self.Card_Guess_Tree = None
         self.Card_Choose_Tree = None
+        self.hatval = dict() # TODO
 
     def grab_card(self, deckname):  # grab a card from the deck
         card = deckname.grab_card()
@@ -148,6 +149,7 @@ class Card:
         self.Owner = owner  # TODO
         self.color = name[0]
         self.type = name[2]
+        self.old_val = 0 #TODO
 
     def set_Owner(self, owner):  # set/change card ownership
         self.Owner = owner

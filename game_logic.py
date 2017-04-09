@@ -6,6 +6,10 @@ import pygame
 
 
 ########################################################
+def increment_card_old_vals(player): #TODO
+    for card in player.hand:
+        card.old_val += 1
+
 def compute_turn(players, turn, turn_iterator):
     turn = turn + turn_iterator
     # catch to reloop overs players array
@@ -100,8 +104,10 @@ def game_loop(board, deck, players):
             elif player.skip:
                 print("skipping", player.name, "turn")
                 player.skip = False
+                increment_card_old_vals(player) #TODO
 
             elif player.AI:
+                increment_card_old_vals(player)
                 pass
                 # TODO INTERGRATE AI
 
