@@ -3,7 +3,7 @@ from random import shuffle
 
 
 def generate_cards():
-    '''
+    """
     Generate one set of all uno cards by iterating through all the possible
     subtrings that relate to the filepath of the cards image in small_cards.
     This method thus limits to only having the PY-UNO game run within its own
@@ -12,8 +12,7 @@ def generate_cards():
     Returns: An "ordered" list of all cards that are possible to create with
     the images within small_cards. Cards are defined by the Card class in
     game_classes.
-    '''
-
+    """
     cards = []
     # predefined cards substrings
     colors = ["blue_", "red_", "green_", "yellow_"]
@@ -61,7 +60,6 @@ def card_shuffler(cards):
     Returns:  A randomly shuffed list of cards. Output list contains the same
     elements as the input list.
     """
-
     print("\n\nSHUFFLING CARDLIST...", end="   ")
     shuffle(cards)
     print("DONE\n\n")
@@ -70,7 +68,7 @@ def card_shuffler(cards):
 
 
 def build_deck(deckname, card_list):
-    '''
+    """
     Function call that builds an uno game class deck from a list of uno game
     cards.
 
@@ -78,8 +76,7 @@ def build_deck(deckname, card_list):
     random card list generation.
 
     Returns: a Deck class using the cards defined in card_list
-    '''
-
+    """
     deckout = game_classes.Deck(deckname, card_list)
     print("deck generated named: ", end="")
     print(deckname)
@@ -87,11 +84,10 @@ def build_deck(deckname, card_list):
 
 
 def gen_rand_deck(deckname, size):
-    '''
+    """
     Function that Generates random uno deck with assigned size (how many copies
     of one deck is included) and with name specified as input deckname
-    '''
-    
+    """
     cards = []
     for i in range(size):
         cards = card_shuffler(generate_cards()) + cards

@@ -129,9 +129,6 @@ def read_Card_Choose_Leaf_instruction(board, player, players, Leaf_val):
 class Card_Choose_Tree:
     def __init__(self, name):
         self.name = name
-        # self.Card_Choose_Tree = None
-
-    # def gen_Card_Chooes_Tree(self):
 
         subBranch_1 = Branch(
             "what is my most common (color or type) that is also playable?",

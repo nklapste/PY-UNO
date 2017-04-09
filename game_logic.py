@@ -22,9 +22,9 @@ def player_turn(board, deck, player, allowed_card_list, selected):
     return (update, selected, turn_done)
 
 
-def game_loop(board, deck, players):  # gameplay loop structure
+def game_loop(board, deck, players):
     """
-    Main logic and turn loop that controlls the game.
+    Main logic and turn while loop that controlls the game.
 
     args:
         board: a game_classes.py board class in which the cards within the game

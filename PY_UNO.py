@@ -14,6 +14,7 @@ face_down_card = game_classes.Card(
 
 # initilizing the board to be used within the game
 board1 = game_classes.Board("board1")
+
 # initilizing a deck to be used within the game (3 copies are added to
 # each other)
 deck1 = gen_rand_deck("deck1", 0)
@@ -41,9 +42,6 @@ player7AI = game_classes.Player("player_7AI")
 player7AI.grab_cards(deck1, 7)
 
 display_funct.redraw_hand_visble(player1, None)
-
-card = player1.hand[0]
-card.rect = card.rect.move(0, -100)
 
 ########################################################
 

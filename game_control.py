@@ -17,6 +17,8 @@ def get_keypress(event):
 
     if event.type == pygame.QUIT:
         os._exit(0)  # hard exit the program
+    elif event.type == pygame.VIDEORESIZE:
+        display_funct.handle_resize(event)
     if event.type == pygame.KEYDOWN:
 
         if event.key == pygame.K_LEFT:

@@ -37,7 +37,7 @@ def fetch_most_common_type(player):
 
 def fetch_oldest_card(player):
     """
-    Returns the oldest playable card card's index in players hand
+    Returns the oldest playable card card's index in players hand.
     """
 
     card_index = 0

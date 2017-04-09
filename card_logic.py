@@ -77,6 +77,12 @@ def draw_2(board, deck, player, players):
 
 
 def skip(board, deck, player, players):
+    """
+    Card function that handles when the player plays a skip turn card.
+
+    This makes the game move to the target selection menu. After a target is
+    selected the targeted player is then forced skip their next turn.
+    """
     players_temp = players[:]
     players_temp.remove(player)
     target = game_control.player_choice_target(players_temp)
@@ -101,11 +107,11 @@ def reverse(turn_iterator):
 
 
 def card_played_type(board, deck, player, players, turn_iterator):
-    '''
+    """
     Logic function that takes the most recently played card and decides
     what game actions are needed to be taken to accomadate. These actions are
     then preformed by other functions detailed above.
-    '''
+    """
     if board.card_stack == []:  # catch for empty board
         return turn_iterator
 
