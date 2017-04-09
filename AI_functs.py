@@ -50,7 +50,7 @@ def fetch_oldest_card(board, player):
             maxi_index = card_index
         card_index += 1
 
-    return maxi_index
+    return (maxi, maxi_index)
 
 
 def fetch_possible_winner(board, AI_player, players):
@@ -98,6 +98,21 @@ def play_card(board, player, selected=0):
     player.play_card(board, selected)
 
 #TODO
+def fetch_hate_cards(player):
+    for card in player.hand:
+        if card.type
+    hate_cards = []
+    card_index = 0
+    maxi = 0
+    maxi_index = 0
+    playable_indexes = card_logic.card_allowed(board, player)
+    for card in player.hand:
+        if card.type in ["d", "s", "p"] and card_index in playable_indexes:
+            hate_cards.append((card, card_index))
+        card_index += 1
+
+    
+
 def fetch_hate_priority(player, players):
     """
     Returns the highest hate value that player has set on any of the

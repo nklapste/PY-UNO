@@ -21,7 +21,8 @@ def travel_Main_Decision_Tree(board, player, players, Dec_Tree):
     else:
         question = Dec_Tree.question
 
-        (left_yes, right_yes) = read_Dec_tree_question(board, player, players, question)
+        (left_yes, right_yes) = read_Dec_tree_question(
+            board, player, players, question)
     print(left_yes, right_yes)
 
     if left_yes:
@@ -75,9 +76,10 @@ def read_Dec_tree_question(board, player, players, question):
     elif question == "Does oldest card play priority beat my hate play priority?":
         print("AI question:", player.name, question)
 
-        old_val = AI_functs.fetch_oldest_card(board, player)
+        (old_val, card_index) = AI_functs.fetch_oldest_card(board, player)
         (hate_val, hate_player) = AI_functs.fetch_hate_priority(player, players)
-        if hate_val < old_val: #TODO
+        print((old_val, card_index), (hate_val, hate_player))
+        if hate_val <= old_val:  # TODO
             return (True, False)
         else:
             return (False, True)
@@ -116,14 +118,15 @@ def read_Dec_leaf_instruction(board, player, players, Leaf_val):
         stop_winners(board, player, possible_winners)
         pass
 
-    elif Leaf_val == "Play oldest playable card": # TODO
+    elif Leaf_val == "Play oldest playable card":  # TODO
         print("AI instruction:", player.name, Leaf_val)
-
+        (old_val, card_index) = AI_functs.fetch_oldest_card(board, player)
+        player.play_card(board, card_index)
         pass
 
-    elif Leaf_val == "Play highest hate playable card": #TODO
+    elif Leaf_val == "Play highest hate playable card":  # TODO
         print("AI instruction:", player.name, Leaf_val)
-
+        (hate_val, hate_player) = AI_functs.fetch_hate_priority(player, players)
         pass
 
     elif Leaf_val == "Play a playable card":
@@ -138,11 +141,6 @@ def read_Dec_leaf_instruction(board, player, players, Leaf_val):
 
         (branch_left, branch_right) = player.Main_Dec.Dec_Tree.get_offshoots()
         travel_Main_Decision_Tree(branch_right)
-
-    elif Leaf_val == "1":
-        print("AI instruction:", player.name, Leaf_val)
-
-        pass
 
     elif Leaf_val == "Do nothing":
         print("AI instruction:", player.name, Leaf_val)
@@ -185,7 +183,6 @@ def test_Main_Decision_Tree_1():
     print(level_2_1_L_R.value)
 
 
-
 def test_Main_Decision_Tree_2():
 
     test_tree = Main_Decision_Tree("test")
@@ -216,12 +213,16 @@ def test_Main_Decision_Tree_2():
 
     player1.Main_Decision_Tree = test_tree
     test_player = player1
+    for i in range(len(player1.hand)):
+        print(player1.hand[i].name)
+        player1.hand[i].old_val = i
+
 
     test_players = [player1, player2AI, player3AI, player4AI,
-                         player5AI, player6AI, player7AI]
+                    player5AI, player6AI, player7AI]
 
-
-    travel_Main_Decision_Tree(test_board, test_player, test_players, test_tree.Dec_Tree)
-
+    travel_Main_Decision_Tree(test_board, test_player,
+                              test_players, test_tree.Dec_Tree)
+    print(test_board.card_stack[-1].name)
 
 test_Main_Decision_Tree_2()
