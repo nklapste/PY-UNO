@@ -6,6 +6,49 @@ import pygame
 
 
 ########################################################
+def compute_turn(players, turn, turn_iterator):
+    turn = turn + turn_iterator
+    # catch to reloop overs players array
+    if turn < 0:
+        turn = len(players) - 1
+    elif turn >= len(players):
+        turn = 0
+    print("Turn iterator: ", turn_iterator)
+    print("Turn end \n\n")
+
+    return turn
+
+
+def check_update(board, allowed_card_list, selected, player, players, update):
+    if update:
+        update = False
+        if selected is None:
+            display_funct.redraw_screen(
+                [(player, None)], board, players)
+        else:
+            display_funct.redraw_screen(
+                [(player, allowed_card_list[selected])], board, players)
+    return update
+
+
+def check_winners(winners, player, players):
+    if player.hand == []:  # conditions for winning!
+        print(str(player.name), "Leaves this round!")
+        winners.append(player.name)
+        if len(players) == 1:
+
+            for i in range(len(winners)):
+                print("Winning placements goes as follows:")
+                print(i, winners[i])
+
+            print("Last place goes to:\n", players[0].name)
+
+            while 1:
+                for event in pygame.event.get():
+                    game_control.get_keypress(event)
+    return winners
+
+
 def player_turn(board, deck, player, allowed_card_list, selected):
     update = False
     if allowed_card_list == []:
@@ -41,6 +84,7 @@ def game_loop(board, deck, players):
     turn = 0
     turn_tot = 0
     drop_again = False
+    winners = []
 
     while True:
 
@@ -50,13 +94,16 @@ def game_loop(board, deck, players):
             print("Players", turn + 1, "turn")
             print("PLAYER: ", player.name, "TURN")
 
-            if player.skip:
+            if player.name in winners:
+                pass
+
+            elif player.skip:
                 print("skipping", player.name, "turn")
                 player.skip = False
 
             elif player.AI:
                 pass
-                #TODO INTERGRATE AI
+                # TODO INTERGRATE AI
 
             else:
                 turn_done = False
@@ -79,20 +126,11 @@ def game_loop(board, deck, players):
                     (update, selected, turn_done) = player_turn(
                         board, deck, player, allowed_card_list, selected)
 
-                    if player.hand == []:  # conditions for winning!
-                        print(str(player.name), "wins!!")
-                        while 1:
-                            for event in pygame.event.get():
-                                game_control.get_keypress(event)
+                    winners = check_winners(winners, player, players)
 
-                    if update:
-                        update = False
-                        if selected is None:
-                            display_funct.redraw_screen(
-                                [(player, None)], board, players)
-                        else:
-                            display_funct.redraw_screen(
-                                [(player, allowed_card_list[selected])], board, players)
+                    update = check_update(board, allowed_card_list, selected,
+                                          player, players, update)
+
                 if not skipping:
                     (turn_iterator, drop_again) = card_logic.card_played_type(
                         board, deck, player, players, turn_iterator)
@@ -100,15 +138,9 @@ def game_loop(board, deck, players):
             # if the player plays a drop agian card dont iterate turn
             if drop_again:
                 drop_again = False
-                continue
+                print(player.name, "Allowed to play another card, replaying!\n")
             else:
-                turn = turn + turn_iterator
-                # catch to reloop overs players array
-                if turn < 0:
-                    turn = len(players) - 1
-                elif turn >= len(players):
-                    turn = 0
-                print("Turn iterator: ", turn_iterator)
-                print("Turn end \n\n")
+                turn = compute_turn(players, turn, turn_iterator)
                 turn_tot += 1
+
 ########################################################
