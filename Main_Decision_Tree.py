@@ -50,7 +50,6 @@ def read_Dec_tree_question(board, player, players, question):
     print("AI question:", player.name, question)
 
     if question == "Is there an apparent winner?":
-
         (winnners_bool, winners_list) = AI_functs.fetch_possible_winner(
             board, player, players)
         if winnners_bool:
@@ -59,7 +58,6 @@ def read_Dec_tree_question(board, player, players, question):
             return (False, True)
 
     elif question == "Can stop them winning it?":
-
         (winnners_bool, winners_list) = AI_functs.fetch_possible_winner(
             board, player, players)
         playable_cards = card_logic.card_allowed(board, player)
@@ -73,7 +71,6 @@ def read_Dec_tree_question(board, player, players, question):
         return (False, True)
 
     elif question == "Does oldest card play priority beat my hate play priority?":
-
         (old_val, card_index) = AI_functs.fetch_oldest_card(board, player)
         (hate_val, hate_player) = AI_functs.fetch_hate_priority(player, players)
         print((old_val, card_index), (hate_val, hate_player))
@@ -83,7 +80,6 @@ def read_Dec_tree_question(board, player, players, question):
             return (False, True)
 
     elif question == "Do I have playable cards?":
-
         playable_cards = card_logic.card_allowed(board, player)
         if len(playable_cards) > 0:
             return (True, False)
@@ -91,7 +87,6 @@ def read_Dec_tree_question(board, player, players, question):
             return (False, True)
 
     elif question == "Do I multiple playable cards?":
-
         playable_cards = card_logic.card_allowed(board, player)
         if len(playable_cards) > 1:
             return (True, False)
@@ -133,7 +128,6 @@ def read_Dec_leaf_instruction(board, deck, player, players, Leaf_val):
         Card_Choose_Tree.travel_Card_Choose_Tree(
             board, deck, player, players, player.Card_Choose_Tree.Choose_Tree)
 
-
     elif Leaf_val == "Go back up this tree":  # goes all back to the start and goes right
 
         (branch_left, branch_right) = player.Main_Decision_Tree.Dec_Tree.get_offshoots()
@@ -142,6 +136,7 @@ def read_Dec_leaf_instruction(board, deck, player, players, Leaf_val):
     elif Leaf_val == "Do nothing":
         AI_functs.do_nothing(deck, player)
         pass
+        
     elif Leaf_val == "Goto Card_Choose_Tree":
         Card_Choose_Tree.travel_Card_Choose_Tree(
             board, deck, player, players, player.Card_Choose_Tree.Choose_Tree)

@@ -40,6 +40,12 @@ face_down_card = game_classes.Card(
 
 
 def handle_resize(event):
+    """
+    Small function that is called when the PY-GAME window is resized.
+
+    Functinon updates the scale_x and scale_y globals for easy resizing display
+    functionality.
+    """
     # grabbing the newely resized windows size
     scale_size = event.dict['size']
 
@@ -57,6 +63,13 @@ def handle_resize(event):
 
 
 def scale_card_blit(image, position, transform_ov=False):
+    """
+    Scaling blit function that uses the scale_x and scale_y globals for
+    correctly transforming the image onto a resized screen.
+
+    This function both scales the position of the image and the size of the
+    image itself aswell.
+    """
     # scale the inputted card image to the global scale factors
     card_width = int(130 * scale_x)
     card_height = int(182 * scale_y)

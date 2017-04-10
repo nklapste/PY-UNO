@@ -52,50 +52,6 @@ class Player:
         self.hand.pop(card_ID)
 
 
-class Player_AI:  # TODO
-
-    def __init__(self, name):
-        self.name = name
-        self.hand = []
-        self.skip = False
-        self.AI = False
-        self.AI_type = None
-
-    def grab_card(self, deckname):  # grab a card from the deck
-        card = deckname.grab_card()
-        if card is None:  # likely the deck is empty
-            return None
-        card.set_Owner(self.name)
-        self.hand.append(card)
-
-    def grab_cards(self, deckname, n):  # grab n number of cards from the deck
-        for i in range(n):
-            self.grab_card(deckname)
-
-    def play_card(self, boardname, card_ID):
-        card = self.hand.pop(card_ID)
-        card.set_Owner(None)
-        boardname.update_Board(card)
-
-    def look_card(self, card_ID):
-        return self.hand[card_ID].name
-
-    def look_hand(self):
-        L = []
-        for i in range(len(self.hand)):
-            L.append(self.hand[i].name)
-        return L
-
-    def discard(self, card_ID=None):
-        if self.hand == []:
-            print("Can't discard.... no cards")
-            return
-        if card_ID is None:
-            self.hand.pop()
-            return
-        self.hand.pop(card_ID)
-
-
 class Deck:  # calss defining a card deck
 
     def __init__(self, name, input_deck):

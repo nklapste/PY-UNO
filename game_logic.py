@@ -7,11 +7,18 @@ import Main_Decision_Tree
 
 
 ########################################################
-def increment_card_old_vals(player): #TODO
+def increment_card_old_vals(player):
+    """
+    Function for AI use that updates the old values of their hands cards.
+    Each turn the all of the current turn AI's cards old values goes up by one.
+    """
     for card in player.hand:
         card.old_val += 1
 
 def compute_turn(players, turn, turn_iterator):
+    """
+    Function that handles PY-UNO turn iterations for any amount of players.
+    """
     turn = turn + turn_iterator
     # catch to reloop overs players array
     if turn < 0:
@@ -80,25 +87,21 @@ def game_loop(board, deck, players):
     turn = 0
     turn_tot = 0
     drop_again = False
-    winners = []
 
     while True:
-
-
         player = players[turn]
 
         print("Turn number:", turn_tot)
         print("Players", turn + 1, "turn")
         print("PLAYER: ", player.name, "TURN")
 
-
-
         if player.skip:
             print("skipping", player.name, "turn")
             player.skip = False
-            increment_card_old_vals(player) #TODO
+            if player.AI:
+                increment_card_old_vals(player)
 
-        elif player.AI: #TODO
+        elif player.AI:
             increment_card_old_vals(player)
             Main_Decision_Tree.travel_Main_Decision_Tree(board, deck, player,
                                       players, player.Main_Decision_Tree.Dec_Tree)

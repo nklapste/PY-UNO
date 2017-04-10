@@ -15,7 +15,6 @@ def travel_Card_Choose_Tree(board, deck, player, players, Card_Choose_Tree):
     (left_tree, right_tree) = read_Card_Choose_Tree(Card_Choose_Tree)
 
     if left_tree is False:  # catchi if Card_Choose_Tree is actually a Leaf
-        # TODO do Leaf instruction
         print("Found Leaf:", right_tree)
         read_Card_Choose_Leaf_instruction(
             board, deck, player, players, right_tree)
@@ -36,7 +35,6 @@ def travel_Card_Choose_Tree(board, deck, player, players, Card_Choose_Tree):
 
 
 def read_Card_Choose_Tree(Card_Choose_Tree):
-    # TODO print(Card_Choose_Tree)
     try:  # check if Card_Choose_Tree is actually is
         Leaf_val = Card_Choose_Tree.value
         return (False, Leaf_val)  # return special case
@@ -99,7 +97,6 @@ def read_Card_Choose_Tree_question(board, player, players, question):
 
 
 def read_Card_Choose_Leaf_instruction(board, deck, player, players, Leaf_val):
-    # TODO INCLUDE BOARD AND PLAYER
     print("AI instruction:", player.name, Leaf_val)
 
     if Leaf_val == "Play only card":
@@ -124,18 +121,10 @@ def read_Card_Choose_Leaf_instruction(board, deck, player, players, Leaf_val):
 
     elif Leaf_val == "play most common color":  # TODO fix
 
-        # allowed_cards = card_logic.card_allowed(board, player)
-        # for i in allowed_cards:  # TODO
-        #     player.hand[i].color
-        #
-        # common_color = AI_functs.fetch_most_common_color(
-        #     player)
-        # for i in allowed_cards:
-        #     if player.hand[i].color == common_color:
-        #         AI_functs.play_card(board, player, i)
-        #         break
         color_max = AI_functs.fetch_most_common_color_playable(board, player)
+
         allowed_cards = card_logic.card_allowed(board, player)
+
         for i in allowed_cards:  # TODO
             if player.hand[i].color == color_max:
                 AI_functs.play_card(board, player, i)
@@ -146,12 +135,16 @@ def read_Card_Choose_Leaf_instruction(board, deck, player, players, Leaf_val):
 
     elif Leaf_val == "play most common type":  # TODO
 
+
         type_max = AI_functs.fetch_most_common_type_playable(board, player)
+
         allowed_cards = card_logic.card_allowed(board, player)
+
         for i in allowed_cards:
             if player.hand[i].type == type_max:
                 AI_functs.play_card(board, player, i)
                 break
+
         # figure out what do within the game from AI played card
         AI_card_logic.AI_card_played_type(board, deck, player, players)
 
@@ -206,6 +199,3 @@ def test_Card_Choose_Tree():
 
     travel_Card_Choose_Tree(test_board, test_player,
                             test_players, test_tree.Choose_Tree)
-
-
-# test_Card_Choose_Tree()

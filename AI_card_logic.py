@@ -2,11 +2,10 @@ import game_control
 import AI_functs
 import pygame
 
-########################################################
+
 def AI_wild_pick_4(board, deck, player, target, selected_color):
     """
     Card function that handles when the player plays a wild pick 4 card.
-
     """
     board.color = selected_color
     print("New color: ", board.color)
@@ -19,7 +18,6 @@ def AI_wild_pick_4(board, deck, player, target, selected_color):
 def AI_wild_color(board, player, selected_color):
     """
     Card function that handles when the player plays a wild color card.
-
     """
     board.color = selected_color
     print("New color: ", board.color)
@@ -28,7 +26,6 @@ def AI_wild_color(board, player, selected_color):
 def AI_draw_2(deck, player, target):
     """
     Card function that handles when the player plays a draw 2 card.
-
     """
     print("Targeted player: ", target.name)
     print("Trageted players hand size before: ", len(target.hand))
@@ -39,7 +36,6 @@ def AI_draw_2(deck, player, target):
 def AI_skip(board, player, target):
     """
     Card function that handles when the player plays a skip turn card.
-
     """
     print("Targeted player skipping: ", target.name)
     target.skip = True
@@ -55,9 +51,8 @@ def AI_card_played_type(board, deck, player, players, target=None, selected_colo
     then preformed by other functions detailed above.
     """
     # check to see if AI won
-    if player.hand == []:  # conditions for winning!
+    if player.hand == []:
         print(player.name, "WINS!")
-
         while 1:
             for event in pygame.event.get():
                 game_control.get_keypress(event)
@@ -71,10 +66,6 @@ def AI_card_played_type(board, deck, player, players, target=None, selected_colo
     if selected_color is None:
         selected_color = AI_functs.fetch_most_common_color(player)
 
-
-
-
-    drop_again = False
     played_type = board.type
     played_color = board.color
 
@@ -83,7 +74,6 @@ def AI_card_played_type(board, deck, player, players, target=None, selected_colo
     print("played card color: ", played_color)
 
     if played_color == "w":
-        drop_again = True
         if played_type == "d":      # wild choose color draw 4 card played
             AI_wild_pick_4(board, deck, player, target, selected_color)
         elif played_type == "c":    # wild choose color card played

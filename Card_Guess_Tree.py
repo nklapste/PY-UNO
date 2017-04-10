@@ -1,7 +1,6 @@
 
 from AI_classes import Branch
 from AI_classes import Leaf
-
 import game_classes
 
 
@@ -59,7 +58,7 @@ def travel_Card_Guess_Tree(Card_Tree, max_depth):
 
     # filter out the depth values for clean output and pair color and
     # type together
-    for i in range(0, len(Card_Guess_list) - 2, 3):  # TODO FIXISH
+    for i in range(0, len(Card_Guess_list) - 2, 3):
         (card_data_1, depth_1) = Card_Guess_list[i]
         (card_data_2, depth_2) = Card_Guess_list[i + 1]
         (card_data_3, depth_3) = Card_Guess_list[i + 2]
@@ -137,6 +136,3 @@ def test_Card_Guess_Tree():
     print(travel_Card_Guess_Tree(test_tree.Guess_Tree, 5))
     print(travel_Card_Guess_Tree(test_tree.Guess_Tree, 6))
     print(travel_Card_Guess_Tree(test_tree.Guess_Tree, 7))
-
-
-test_Card_Guess_Tree()

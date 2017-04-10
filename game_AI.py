@@ -5,6 +5,12 @@ import Main_Decision_Tree
 
 
 def make_AI_basic(deck, AI_name, mem_depth=0, difficulty_level=0):
+    """
+    Simple AI creation function that allows for the creation of a simple
+    "flash frame decision" low memory style AI.
+
+    Returns: AI_player_gen: a simple generated AI
+    """
     AI_player_gen = game_classes.Player(AI_name)
     # grab an initial hand
     AI_player_gen.grab_cards(deck, 7)

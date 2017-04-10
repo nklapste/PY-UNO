@@ -158,7 +158,8 @@ def player_choice_target(players):
     selected = None
     display_funct.redraw_screen_menu_target(players, None)
     while True:
-        (update, selected, turn_done) = player_LR_selection_target(players, selected)
+        (update, selected, turn_done) = player_LR_selection_target(players,
+                                                                   selected)
         if update:
             display_funct.redraw_screen_menu_target(players, selected)
         if turn_done:
