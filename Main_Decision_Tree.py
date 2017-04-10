@@ -45,8 +45,6 @@ def read_Dec_tree(Dec_Tree):
 
 
 def read_Dec_tree_question(board, player, players, question):
-    left_yes = False
-    right_yes = False
     print("AI question:", player.name, question)
 
     if question == "Is there an apparent winner?":
@@ -73,7 +71,6 @@ def read_Dec_tree_question(board, player, players, question):
     elif question == "Does oldest card play priority beat my hate play priority?":
         (old_val, card_index) = AI_functs.fetch_oldest_card(board, player)
         (hate_val, hate_player) = AI_functs.fetch_hate_priority(player, players)
-        print((old_val, card_index), (hate_val, hate_player))
         if hate_val <= old_val:  # TODO
             return (True, False)
         else:
@@ -100,11 +97,6 @@ def read_Dec_tree_question(board, player, players, question):
         else:
             return (False, True)
 
-    elif question == "1":
-        pass
-
-    return (left_yes, right_yes)
-
 
 def read_Dec_leaf_instruction(board, deck, player, players, Leaf_val):
 
@@ -124,10 +116,6 @@ def read_Dec_leaf_instruction(board, deck, player, players, Leaf_val):
         player.play_card(board, hate_cards[0][1])
         AI_card_logic.AI_card_played_type(board, deck, player, players, hate_player)
 
-    elif Leaf_val == "Play a card":
-        Card_Choose_Tree.travel_Card_Choose_Tree(
-            board, deck, player, players, player.Card_Choose_Tree.Choose_Tree)
-
     elif Leaf_val == "Go back up this tree":  # goes all back to the start and goes right
 
         (branch_left, branch_right) = player.Main_Decision_Tree.Dec_Tree.get_offshoots()
@@ -136,7 +124,7 @@ def read_Dec_leaf_instruction(board, deck, player, players, Leaf_val):
     elif Leaf_val == "Do nothing":
         AI_functs.do_nothing(deck, player)
         pass
-        
+
     elif Leaf_val == "Goto Card_Choose_Tree":
         Card_Choose_Tree.travel_Card_Choose_Tree(
             board, deck, player, players, player.Card_Choose_Tree.Choose_Tree)
@@ -152,13 +140,13 @@ class Main_Decision_Tree:
             "Goto stop funct"), Leaf("Go back up this tree"))
 
         subsubsubsubBranch_2_1 = Branch("Does oldest card play priority beat my hate play priority?", Leaf(
-            "Goto Card_Choose_Tree"), Leaf("Play highest hate playable card"))  # TODO
+            "Goto Card_Choose_Tree"), Leaf("Play highest hate playable card"))
 
         subsubsubBranch_2_1 = Branch(
             "Do I have playable hate cards?", subsubsubsubBranch_2_1, Leaf("Goto Card_Choose_Tree"))
 
         subsubBranch_2_1 = Branch(
-            "Do I multiple playable cards?", subsubsubBranch_2_1, Leaf("Play a card"))
+            "Do I multiple playable cards?", subsubsubBranch_2_1, Leaf("Goto Card_Choose_Tree"))
 
         subBranch_2 = Branch("Do I have playable cards?",
                              subsubBranch_2_1, Leaf("Do nothing"))
@@ -167,17 +155,6 @@ class Main_Decision_Tree:
             "Is there an apparent winner?", subBranch_1, subBranch_2)
 
         self.Dec_Tree = start_Branch
-
-
-def test_Main_Decision_Tree_1():
-    test = Main_Decision_Tree("test", 2)
-    test.gen_Dec_Tree()
-    level_0 = test.Dec_Tree
-    (level_1_L, level_1_R) = test.Dec_Tree.get_offshoots()
-    (level_2_1_L_L, level_2_1_L_R) = level_1_L.get_offshoots()
-    print(level_2_1_L_L.value)
-    print(level_2_1_L_R.value)
-
 
 def test_Main_Decision_Tree_2():
 
@@ -222,6 +199,3 @@ def test_Main_Decision_Tree_2():
     travel_Main_Decision_Tree(test_board, deck1, test_player,
                               test_players, test_tree.Dec_Tree)
     print(test_board.card_stack[-1].name)
-
-
-test_Main_Decision_Tree_2()

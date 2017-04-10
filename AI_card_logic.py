@@ -1,6 +1,7 @@
 import game_control
 import AI_functs
 import pygame
+import Main_Decision_Tree
 
 
 def AI_wild_pick_4(board, deck, player, target, selected_color):
@@ -50,6 +51,8 @@ def AI_card_played_type(board, deck, player, players, target=None, selected_colo
     what game actions are needed to be taken to accomadate. These actions are
     then preformed by other functions detailed above.
     """
+
+
     # check to see if AI won
     if player.hand == []:
         print(player.name, "WINS!")
@@ -79,6 +82,13 @@ def AI_card_played_type(board, deck, player, players, target=None, selected_colo
         elif played_type == "c":    # wild choose color card played
             AI_wild_color(board, deck, selected_color)
 
+        # go through Main_Decision_Tree as another card can be played
+        # as the AI played a wild card
+        print("wild card played, playing again.")
+        Main_Decision_Tree.travel_Main_Decision_Tree(board, deck, player,
+                                players, player.Main_Decision_Tree.Dec_Tree)
+
+
     elif played_type == "p":        # draw 2 card played
         AI_draw_2(deck, player, target)
 
@@ -87,6 +97,5 @@ def AI_card_played_type(board, deck, player, players, target=None, selected_colo
 
     elif played_type == "r":     # TODO TODO SPECIAL WORK NEEDED
         pass
-
     elif played_type.isdigit():     # normal number card played
         pass

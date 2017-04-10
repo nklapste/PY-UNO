@@ -45,9 +45,6 @@ def read_Card_Choose_Tree(Card_Choose_Tree):
 
 
 def read_Card_Choose_Tree_question(board, player, players, question):
-    # TODO
-    left_yes = False
-    right_yes = False
     print("AI question:", player.name, question)
 
     if question == "Do I multiple playable cards?":
@@ -63,37 +60,26 @@ def read_Card_Choose_Tree_question(board, player, players, question):
         for i in allowed_cards:
             if not player.hand[i].color == "w":
                 return (True, False)
+
         return (False, True)
 
     elif question == "what is my most common (color or type) that is also playable?":
 
-        # TODO NEED RETHINKING
-        type_dict = dict()
-        color_dict = dict()
+        max_color = AI_functs.fetch_most_common_color_playable(board, player)
+        max_type = AI_functs.fetch_most_common_type_playable(board, player)
 
-        allowed_cards = card_logic.card_allowed(board, player)
-        for i in allowed_cards:
-            allowed_card = player.hand[i]
+        max_color_count = 0
+        max_type_count = 0
+        for card in player.hand:
+            if card.color == max_color:
+                max_color_count += 1
+            if card.type == max_type:
+                max_type_count += 1
 
-            try:
-                color_dict[allowed_card.color] = color_dict[allowed_card.color] + 1
-            except KeyError:
-                color_dict[allowed_card.color] = 1
-            try:
-                type_dict[allowed_card.type] = type_dict[allowed_card.type] + 1
-            except KeyError:
-                type_dict[allowed_card.type] = 1
-        # TODO
-        print(type_dict, color_dict)
-        print(max(type_dict, key=type_dict.get))
-        print(max(color_dict, key=color_dict.get))
-
-        if color_dict[max(color_dict, key=color_dict.get)] > type_dict[max(type_dict, key=type_dict.get)]:
+        if max_color_count >= max_type_count:
             return (True, False)
         else:
             return (False, True)
-
-    return (left_yes, right_yes)
 
 
 def read_Card_Choose_Leaf_instruction(board, deck, player, players, Leaf_val):
@@ -102,24 +88,18 @@ def read_Card_Choose_Leaf_instruction(board, deck, player, players, Leaf_val):
     if Leaf_val == "Play only card":
 
         allowed_cards = card_logic.card_allowed(board, player)
-        AI_functs.play_card(board, player, allowed_cards[0])
-
-        # figure out what do within the game from AI played card
-        AI_card_logic.AI_card_played_type(board, deck, player, players)
+        player.play_card(board, allowed_cards[0])
 
     elif Leaf_val == "play wild, most common color":
         # search for wild card messy method
         hand_index = 0
         for card in player.hand:
             if card.color == "w":
-                AI_functs.play_card(board, player, hand_index)
+                player.play_card(board, hand_index)
                 break
             hand_index += 1
 
-        # figure out what do within the game from AI played card
-        AI_card_logic.AI_card_played_type(board, deck, player, players)
-
-    elif Leaf_val == "play most common color":  # TODO fix
+    elif Leaf_val == "play most common color":
 
         color_max = AI_functs.fetch_most_common_color_playable(board, player)
 
@@ -127,14 +107,11 @@ def read_Card_Choose_Leaf_instruction(board, deck, player, players, Leaf_val):
 
         for i in allowed_cards:  # TODO
             if player.hand[i].color == color_max:
-                AI_functs.play_card(board, player, i)
+                player.play_card(board, i)
+
                 break
 
-        # figure out what do within the game from AI played card
-        AI_card_logic.AI_card_played_type(board, deck, player, players)
-
-    elif Leaf_val == "play most common type":  # TODO
-
+    elif Leaf_val == "play most common type":
 
         type_max = AI_functs.fetch_most_common_type_playable(board, player)
 
@@ -142,11 +119,12 @@ def read_Card_Choose_Leaf_instruction(board, deck, player, players, Leaf_val):
 
         for i in allowed_cards:
             if player.hand[i].type == type_max:
-                AI_functs.play_card(board, player, i)
+                player.play_card(board, i)
+
                 break
 
-        # figure out what do within the game from AI played card
-        AI_card_logic.AI_card_played_type(board, deck, player, players)
+    # figure out what do within the game from AI played card
+    AI_card_logic.AI_card_played_type(board, deck, player, players)
 
 
 class Card_Choose_Tree:

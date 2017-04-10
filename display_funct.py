@@ -15,7 +15,7 @@ white = (255, 255, 255)
 black = (0, 0, 0)
 pink = (255, 200, 200)
 
-# defining screen
+# defining screen 16:9 native
 size_o = screen_width, screen_height = 1600, 900
 scale_size = size_o
 scale_card_size = 0

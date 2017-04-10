@@ -37,9 +37,7 @@ def fetch_most_common_color_playable(board, player):
         if card.color in color_dict.keys():
             color_dict[card.color] += 1
 
-    max_color = max(color_dict, key=color_dict.get)
-
-    return max_color
+    return  max(color_dict, key=color_dict.get)
 
 
 def fetch_most_common_type(player):
@@ -133,19 +131,12 @@ def stop_winners(board, deck, player, possible_winner):
     # TODO put meanest playable attack card on likely winning
     # most hated player Priority on using wild 4
 
-    # TODO selection = choosecardaifunction()
     hate_cards = fetch_hate_cards(board, player)
 
-    play_card(board, player, hate_cards[0][1])  # TODO improve
-
+    player.play_card(board, hate_cards[0][1])
     # figure out what do within the game from AI played card
     AI_card_logic.AI_card_played_type(
         board, deck, player, None, possible_winner)
-
-
-# TODO REMOVE PROPERLY
-def play_card(board, player, selected=0):
-    player.play_card(board, selected)
 
 
 def fetch_hate_cards(board, player):
@@ -179,11 +170,16 @@ def fetch_hate_priority(player, players):
         if player == h_player:
             continue
         try:
-            if player.hatval[h_player.name] >= max_hate:
-                max_hate = player.hatval[h_player.name]
+            if player.hatval[h_player] >= max_hate:
+                max_hate = player.hatval[h_player]
                 hate_player = h_player
         except KeyError:
-            player.hatval[h_player.name] = 0
+            player.hatval[h_player] = 0
+
+    if hate_player is None:  # catch if this the first time initilizing hateval
+        max_hate = 0
+        hate_player = list(player.hatval.keys())[0]
+
     return (max_hate, hate_player)
 
 

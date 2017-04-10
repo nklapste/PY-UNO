@@ -12,7 +12,6 @@ def make_AI_basic(deck, AI_name, mem_depth=0, difficulty_level=0):
     Returns: AI_player_gen: a simple generated AI
     """
     AI_player_gen = game_classes.Player(AI_name)
-    # grab an initial hand
     AI_player_gen.grab_cards(deck, 7)
     AI_player_gen.AI = True
     AI_player_gen.Main_Decision_Tree = Main_Decision_Tree.Main_Decision_Tree(AI_name)

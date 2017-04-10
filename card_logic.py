@@ -12,7 +12,6 @@ def card_allowed(board, player):
         allowed: a list of cards allowed to be played from a certain players
                  hand.
     """
-
     i = 0
     allowed = []
 

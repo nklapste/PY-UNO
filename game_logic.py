@@ -6,7 +6,6 @@ import pygame
 import Main_Decision_Tree
 
 
-########################################################
 def increment_card_old_vals(player):
     """
     Function for AI use that updates the old values of their hands cards.
@@ -14,6 +13,7 @@ def increment_card_old_vals(player):
     """
     for card in player.hand:
         card.old_val += 1
+
 
 def compute_turn(players, turn, turn_iterator):
     """
@@ -104,7 +104,7 @@ def game_loop(board, deck, players):
         elif player.AI:
             increment_card_old_vals(player)
             Main_Decision_Tree.travel_Main_Decision_Tree(board, deck, player,
-                                      players, player.Main_Decision_Tree.Dec_Tree)
+                                                         players, player.Main_Decision_Tree.Dec_Tree)
             turn = compute_turn(players, turn, turn_iterator)
             continue
         else:
