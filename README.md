@@ -1,5 +1,5 @@
 # PY-UNO
-A pygame version of the fun boardgame UNO! In which a single human player can face off with 6 other decision tree based AIs.
+A pygame version of the fun board game UNO! In which a single human player can face off with 6 other decision tree based AIs.
 
 ## Install and Running Instructions:
 
@@ -37,6 +37,8 @@ After this PY-UNO should be running and you are free to enjoy.
 
 **Up Arrow Key:**  confirms and plays the selected card or target
 
+**Window Exit Button:** varies from each operating system but clicking on your operating window close button will exit the current instance of PY-UNO.
+
 ## Additional info:
 
 **Game AI:** Within the release version of PY-UNO only one human player is
@@ -61,8 +63,6 @@ to maybe play another the next turn).
 
 **-BETA- Card_Guess_Tree:** Is a depth based tree method that keeps appending new cards to the tree. Within this appending memory tree card data such as card color, type, and the player who played are all stored. However, to emulate actual memory limitations all of these values have different depth levels attached to it (color = depth, type = depth + 1, played by = depth +2). Each AI would potentially have a max memory depth and as a result when the AI would check its memory it could only go so for to extract or interpolate data. Additionally, as more cards are added to the memory tree the past card memory values would increase in tree depth thus eventually becoming  "forgotten".
 
-
-
 **Display Resizing:**
 Within PY-UNO the native supported and boot resolution is 1600x900 (16:9 aspect ratio). Users are free to resize the window
 to their display needs but must keep in mind the limitations that are present with pygame and sprite scaling. (eg: scaling the window to 20x4000 would be a bad idea for actual use).
@@ -70,3 +70,9 @@ to their display needs but must keep in mind the limitations that are present wi
 **Card Game Engine:**
 PY-UNO handles deck generation, turn logic, turn iteration, card logic, display output, input controll, and AI implementation. But due to the nature of these developed modules it can be easy to swap out specific PY-UNO modules (such as AI or card_logic) to
 create other styles of games. Using  defined files such as game_classes, deck_gen, and display_funct one can likely adapt these broad scripts to accept new styles of card games.
+
+## Uno Card Assets:
+
+Uno card images are sourced from opengameart.org created by the author ikmhr. Used under open source development, full credits go to ikmhr on creating this awesome set of images. Link detailing the download of these assets and ikmhr's page is shown below:
+
+<pre>https://opengameart.org/content/uno-playing-cards-2d</pre>
