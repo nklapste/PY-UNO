@@ -1,9 +1,8 @@
 from deck_gen import gen_rand_deck
 import display_funct
+import game_AI
 import game_classes
 import game_logic
-import pygame
-import game_AI
 
 
 # initilizing the board to be used within the game

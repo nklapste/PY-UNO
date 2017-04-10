@@ -1,5 +1,40 @@
-import card_logic
 import AI_card_logic
+import card_logic
+import random
+
+
+def get_rand_type():
+    card_type = ["p", "s", "r", "c", "d", "0",
+                 "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+    return random.choice(card_type)
+
+
+def get_rand_color():
+    colors_name = ["b", "r", "g", "y"]
+    return random.choice(colors_name)
+
+
+def play_win(board, deck, player, players):
+    card_index = 0
+    for card in player.hand:
+        if card.color == "w":  # skip wild cards
+            player.play_card(board, card_index)
+
+            # figure out what do within the game from AI played card
+            AI_card_logic.AI_card_played_type(
+                board, deck, player, players)
+
+        card_index += 1
+
+    # if one last non wild card remains
+    if len(player.hand) == 1:
+        player.play_card(board, 0)
+
+        # figure out what do within the game from AI played card
+        AI_card_logic.AI_card_played_type(
+            board, deck, player, players)
+    else:
+        board.color = get_rand_color()
 
 
 def fetch_most_common_color(player):
@@ -8,14 +43,20 @@ def fetch_most_common_color(player):
     """
     color_dict = dict()
     for card in player.hand:
+
+        if card.color == "w":
+            continue
+
         try:
             color_dict[card.color] = color_dict[card.color] + 1
         except KeyError:
             color_dict[card.color] = 1
-    max_color = max(color_dict, key=color_dict.get)
-    if len(max_color) > 1:
-        max_color = max_color[0]
-    return max_color
+
+    if color_dict == {}:  # if no colors were prefered pick a random color
+        return get_rand_color()
+
+    return max(color_dict, key=color_dict.get)
+
 
 
 def fetch_most_common_color_playable(board, player):
@@ -28,6 +69,9 @@ def fetch_most_common_color_playable(board, player):
     for i in allowed_cards:
         allowed_card = player.hand[i]
 
+        if allowed_card.color == "w":  # skip wild cards
+            continue
+
         try:
             color_dict[allowed_card.color] = 0
         except KeyError:
@@ -37,7 +81,10 @@ def fetch_most_common_color_playable(board, player):
         if card.color in color_dict.keys():
             color_dict[card.color] += 1
 
-    return  max(color_dict, key=color_dict.get)
+    if color_dict == {}:  # if no colors were prefered pick a random color
+        return get_rand_color()
+
+    return max(color_dict, key=color_dict.get)
 
 
 def fetch_most_common_type(player):
