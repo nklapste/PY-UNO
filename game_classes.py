@@ -81,6 +81,7 @@ class Board:
         self.card_stack = []
         self.type = None
         self.color = None
+        self.turn_iterator = 1
 
     def update_Board(self, card):  # add a new card onto the board
         card.set_Owner(self.name)
