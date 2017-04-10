@@ -3,6 +3,7 @@ import card_logic
 import display_funct
 import game_control
 import pygame
+import Main_Decision_Tree
 
 
 ########################################################
@@ -35,22 +36,13 @@ def check_update(board, allowed_card_list, selected, player, players, update):
     return update
 
 
-def check_winners(winners, player, players):
+def check_winners(player):
     if player.hand == []:  # conditions for winning!
-        print(str(player.name), "Leaves this round!")
-        winners.append(player.name)
-        if len(players) == 1:
+        print(player.name, "WINS!")
 
-            for i in range(len(winners)):
-                print("Winning placements goes as follows:")
-                print(i, winners[i])
-
-            print("Last place goes to:\n", players[0].name)
-
-            while 1:
-                for event in pygame.event.get():
-                    game_control.get_keypress(event)
-    return winners
+        while 1:
+            for event in pygame.event.get():
+                game_control.get_keypress(event)
 
 
 def player_turn(board, deck, player, allowed_card_list, selected):
@@ -92,61 +84,62 @@ def game_loop(board, deck, players):
 
     while True:
 
-        for player in range(len(players)):
-            player = players[turn]
-            print("Turn number:", turn_tot)
-            print("Players", turn + 1, "turn")
-            print("PLAYER: ", player.name, "TURN")
 
-            if player.name in winners:
-                pass
+        player = players[turn]
 
-            elif player.skip:
-                print("skipping", player.name, "turn")
-                player.skip = False
-                increment_card_old_vals(player) #TODO
+        print("Turn number:", turn_tot)
+        print("Players", turn + 1, "turn")
+        print("PLAYER: ", player.name, "TURN")
 
-            elif player.AI:
-                increment_card_old_vals(player)
-                pass
-                # TODO INTERGRATE AI
 
-            else:
-                turn_done = False
-                selected = None
-                skipping = False
 
-                allowed_card_list = card_logic.card_allowed(board, player)
-                print("allowed cards: ", allowed_card_list)
+        if player.skip:
+            print("skipping", player.name, "turn")
+            player.skip = False
+            increment_card_old_vals(player) #TODO
 
-                # if no cards can be played skip turn
-                if allowed_card_list == []:
-                    print("no playable cards, drawing and skipping")
-                    player.grab_card(deck)
-                    turn_done = True
-                    skipping = True
+        elif player.AI: #TODO
+            increment_card_old_vals(player)
+            Main_Decision_Tree.travel_Main_Decision_Tree(board, deck, player,
+                                      players, player.Main_Decision_Tree.Dec_Tree)
+            turn = compute_turn(players, turn, turn_iterator)
+            continue
+        else:
+            turn_done = False
+            selected = None
+            skipping = False
 
-                display_funct.redraw_screen([(player, None)], board, players)
+            allowed_card_list = card_logic.card_allowed(board, player)
+            print("allowed cards: ", allowed_card_list)
 
-                while not turn_done:
-                    (update, selected, turn_done) = player_turn(
-                        board, deck, player, allowed_card_list, selected)
+            # if no cards can be played skip turn
+            if allowed_card_list == []:
+                print("no playable cards, drawing and skipping")
+                player.grab_card(deck)
+                turn_done = True
+                skipping = True
 
-                    winners = check_winners(winners, player, players)
+            display_funct.redraw_screen([(player, None)], board, players)
 
-                    update = check_update(board, allowed_card_list, selected,
-                                          player, players, update)
+            while not turn_done:
+                (update, selected, turn_done) = player_turn(
+                    board, deck, player, allowed_card_list, selected)
 
-                if not skipping:
-                    (turn_iterator, drop_again) = card_logic.card_played_type(
-                        board, deck, player, players, turn_iterator)
+                check_winners(player)
 
-            # if the player plays a drop agian card dont iterate turn
-            if drop_again:
-                drop_again = False
-                print(player.name, "Allowed to play another card, replaying!\n")
-            else:
-                turn = compute_turn(players, turn, turn_iterator)
-                turn_tot += 1
+                update = check_update(board, allowed_card_list, selected,
+                                      player, players, update)
+
+            if not skipping:
+                (turn_iterator, drop_again) = card_logic.card_played_type(
+                    board, deck, player, players, turn_iterator)
+
+        # if the player plays a drop agian card dont iterate turn
+        if drop_again:
+            drop_again = False
+            print(player.name, "Allowed to play another card, replaying!\n")
+        else:
+            turn = compute_turn(players, turn, turn_iterator)
+            turn_tot += 1
 
 ########################################################

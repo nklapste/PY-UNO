@@ -8,10 +8,10 @@ def make_AI_basic(deck, AI_name, mem_depth=0, difficulty_level=0):
     AI_player_gen = game_classes.Player(AI_name)
     # grab an initial hand
     AI_player_gen.grab_cards(deck, 7)
-
-    AI_player_gen.Main_Decision_Tree = Main_Decision_Tree(AI_name)
-    AI_player_gen.Card_Guess_Tree = Card_Guess_Tree(AI_name, mem_depth)
-    AI_player_gen.Card_Choose_Tree = Card_Choose_Tree(AI_name)
+    AI_player_gen.AI = True
+    AI_player_gen.Main_Decision_Tree = Main_Decision_Tree.Main_Decision_Tree(AI_name)
+    AI_player_gen.Card_Guess_Tree = Card_Guess_Tree.Card_Guess_Tree(AI_name, mem_depth)
+    AI_player_gen.Card_Choose_Tree = Card_Choose_Tree.Card_Choose_Tree(AI_name)
 
     return AI_player_gen
 
