@@ -13,6 +13,8 @@ def AI_wild_pick_4(board, deck, player, target, selected_color):
     print("Trageted players hand size before: ", len(target.hand))
     target.grab_cards(deck, 4)
     print("Trageted players hand size after: ", len(target.hand))
+    # update targets hatval of player
+    game_logic.update_hatval(player, target, 4)
 
 
 def AI_wild_color(board, player, selected_color):
@@ -31,6 +33,8 @@ def AI_draw_2(deck, player, target):
     print("Trageted players hand size before: ", len(target.hand))
     target.grab_cards(deck, 2)
     print("Trageted players hand size after: ", len(target.hand))
+    # update targets hatval of player
+    game_logic.update_hatval(player, target, 2)
 
 
 def AI_skip(board, player, target):
@@ -39,8 +43,10 @@ def AI_skip(board, player, target):
     """
     print("Targeted player skipping: ", target.name)
     target.skip = True
+    # update targets hatval of player
+    game_logic.update_hatval(player, target, 1)
 
-#TODO
+
 def reverse(board):
     """
     Card function that handles when the player plays the reverse card.
@@ -93,7 +99,7 @@ def AI_card_played_type(board, deck, player, players, target=None, selected_colo
 
         # go through Main_Decision_Tree as another card can be played
         # as the AI played a wild card
-        if player.hand == []: # catch if the player has won
+        if player.hand == []:  # catch if the player has won
             return
         else:
             print("wild card played, playing again.")

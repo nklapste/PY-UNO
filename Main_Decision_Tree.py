@@ -124,7 +124,7 @@ def read_Dec_leaf_instruction(board, deck, player, players, Leaf_val):
 
     elif Leaf_val == "Play highest hate playable card":  # TODO
         (hate_val, hate_player) = AI_functs.fetch_hate_priority(player, players)
-        hate_cards = fetch_hate_cards(player)
+        hate_cards = AI_functs.fetch_hate_cards(board, player)
         player.play_card(board, hate_cards[0][1])
         AI_card_logic.AI_card_played_type(
             board, deck, player, players, hate_player)

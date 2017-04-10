@@ -9,6 +9,18 @@ global winners
 winners = []
 
 
+def update_hatval(player, target, hate_increase=1):
+    try:
+        target.hatval[player] += hate_increase
+    except KeyError:
+        target.hatval[player] = hate_increase
+
+def degrade_hatval(player):
+    for hated_player in player.hatval.keys():
+        if player.hatval[hated_player] > 0:
+            player.hatval[hated_player] -= 1
+
+
 def increment_card_old_vals(player):
     """
     Function for AI use that updates the old values of their hands cards.
@@ -131,12 +143,15 @@ def game_loop(board, deck, players):
 
             Main_Decision_Tree.travel_Main_Decision_Tree(board, deck, player,
                                                          players, player.Main_Decision_Tree.Dec_Tree)
+            degrade_hatval(player)                                             
+
             if player in winners:  # TODO
                 players.remove(player)
                 print("removing player", player.name)
                 check_game_done(players)
                 turn = compute_turn(players, turn, board.turn_iterator)
                 continue
+
 
             turn = compute_turn(players, turn, board.turn_iterator)
 
