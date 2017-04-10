@@ -88,7 +88,6 @@ def AI_card_played_type(board, deck, player, players, target=None, selected_colo
         # go through Main_Decision_Tree as another card can be played
         # as the AI played a wild card
         print("wild card played, playing again.")
-        print(players)
         Main_Decision_Tree.travel_Main_Decision_Tree(board, deck, player,
                                                      players, player.Main_Decision_Tree.Dec_Tree)
 

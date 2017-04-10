@@ -118,7 +118,6 @@ def game_loop(board, deck, players):
         print("Turn number:", turn_tot)
         print("Players", turn + 1, "turn")
         print("PLAYER: ", player.name, "TURN")
-        print("number of players left", len(players), players)
 
         if player.skip:
             print("skipping", player.name, "turn")
@@ -132,7 +131,7 @@ def game_loop(board, deck, players):
                                                          players, player.Main_Decision_Tree.Dec_Tree)
             if player in winners:  # TODO
                 players.remove(player)
-                print("removing player", players)
+                print("removing player", player.name)
                 check_game_done(players)
                 turn = compute_turn(players, turn, turn_iterator)
                 continue
@@ -164,7 +163,7 @@ def game_loop(board, deck, players):
                 check_winners(player)
                 if player in winners:  # TODO
                     players.remove(player)
-                    print("removing player", players)
+                    print("removing player", player.name)
                     check_game_done(players)
                     turn = compute_turn(players, turn, turn_iterator)
                     continue
