@@ -88,7 +88,7 @@ def skip(board, deck, player, players):
     print("Targeted player skipping: ", target.name)
     target.skip = True
 
-#TODO
+
 def reverse(board):
     """
     Card function that handles when the player plays the reverse card.
