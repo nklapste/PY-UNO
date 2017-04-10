@@ -88,24 +88,24 @@ def skip(board, deck, player, players):
     print("Targeted player skipping: ", target.name)
     target.skip = True
 
-
-def reverse(turn_iterator):
+#TODO
+def reverse(board):
     """
     Card function that handles when the player plays the reverse card.
 
-    Prints the original turn_iterator and then returns the negitive of the
+    Prints the original turn_iterator and then swaps sign of the
     original turn_iterator.
 
-    Args: turn_iterator of a pyuno game (should be 1 or -1)
-
-    Returns: Negitive of turn_iterator
+    Args: board class of a pyuno game in which its turn_iterator value will be
+    accessed (should be 1 or -1)
     """
+    turn_iterator = board.turn_iterator
     print("reversing", turn_iterator)
-    return -turn_iterator
+    board.turn_iterator = -turn_iterator
 ########################################################
 
 
-def card_played_type(board, deck, player, players, turn_iterator):
+def card_played_type(board, deck, player, players):
     """
     Logic function that takes the most recently played card and decides
     what game actions are needed to be taken to accomadate. These actions are
@@ -133,7 +133,8 @@ def card_played_type(board, deck, player, players, turn_iterator):
     elif played_type == "s":        # skip turn card played
         skip(board, deck, player, players)
     elif played_type == "r":        # reverse turns card played
-        return (reverse(turn_iterator), False)
+        reverse(board)
+        return False
     elif played_type.isdigit():     # normal number card played
         pass
-    return (turn_iterator, drop_again)
+    return drop_again

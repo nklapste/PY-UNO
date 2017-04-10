@@ -2,8 +2,8 @@
 import card_logic
 import display_funct
 import game_control
-import pygame
 import Main_Decision_Tree
+import pygame
 
 global winners
 winners = []
@@ -107,7 +107,7 @@ def game_loop(board, deck, players):
         players: a game_classes.py player that will iterate through allowing
         for turns with each player.
     """
-    turn_iterator = 1
+    board.turn_iterator = 1
     turn = 0
     turn_tot = 0
     drop_again = False
@@ -116,7 +116,6 @@ def game_loop(board, deck, players):
         player = players[turn]
 
         print("Turn number:", turn_tot)
-        print("Players", turn + 1, "turn")
         print("PLAYER: ", player.name, "TURN")
 
         if player.skip:
@@ -127,16 +126,17 @@ def game_loop(board, deck, players):
 
         elif player.AI:
             increment_card_old_vals(player)
+
             Main_Decision_Tree.travel_Main_Decision_Tree(board, deck, player,
                                                          players, player.Main_Decision_Tree.Dec_Tree)
             if player in winners:  # TODO
                 players.remove(player)
                 print("removing player", player.name)
                 check_game_done(players)
-                turn = compute_turn(players, turn, turn_iterator)
+                turn = compute_turn(players, turn, board.turn_iterator)
                 continue
 
-            turn = compute_turn(players, turn, turn_iterator)
+            turn = compute_turn(players, turn, board.turn_iterator)
 
             continue
         else:
@@ -161,26 +161,28 @@ def game_loop(board, deck, players):
                     board, deck, player, allowed_card_list, selected)
 
                 check_winners(player)
-                if player in winners:  # TODO
-                    players.remove(player)
-                    print("removing player", player.name)
-                    check_game_done(players)
-                    turn = compute_turn(players, turn, turn_iterator)
-                    continue
+
 
                 update = check_update(board, allowed_card_list, selected,
                                       player, players, update)
 
             if not skipping:
-                (turn_iterator, drop_again) = card_logic.card_played_type(
-                    board, deck, player, players, turn_iterator)
+                drop_again = card_logic.card_played_type(
+                    board, deck, player, players)
+
+            if player in winners:  # TODO
+                players.remove(player)
+                print("removing player", player.name)
+                check_game_done(players)
+                turn = compute_turn(players, turn, board.turn_iterator)
+                continue
 
         # if the player plays a drop agian card dont iterate turn
         if drop_again:
             drop_again = False
             print(player.name, "Allowed to play another card, replaying!\n")
         else:
-            turn = compute_turn(players, turn, turn_iterator)
+            turn = compute_turn(players, turn, board.turn_iterator)
             turn_tot += 1
 
 ########################################################
