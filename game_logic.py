@@ -5,6 +5,7 @@ import game_control
 import Main_Decision_Tree
 import pygame
 
+# global list containing the winners in placement order
 global winners
 winners = []
 
@@ -14,6 +15,7 @@ def update_hatval(player, target, hate_increase=1):
         target.hatval[player] += hate_increase
     except KeyError:
         target.hatval[player] = hate_increase
+
 
 def degrade_hatval(player):
     for hated_player in player.hatval.keys():
@@ -138,12 +140,12 @@ def game_loop(board, deck, players):
             if player.AI:
                 increment_card_old_vals(player)
 
-        elif player.AI:
+        elif player.AI:  # handle for an AI player
             increment_card_old_vals(player)
 
             Main_Decision_Tree.travel_Main_Decision_Tree(board, deck, player,
                                                          players, player.Main_Decision_Tree.Dec_Tree)
-            degrade_hatval(player)                                             
+            degrade_hatval(player)
 
             if player in winners:  # TODO
                 players.remove(player)
@@ -152,11 +154,9 @@ def game_loop(board, deck, players):
                 turn = compute_turn(players, turn, board.turn_iterator)
                 continue
 
-
             turn = compute_turn(players, turn, board.turn_iterator)
-
             continue
-        else:
+        else:  # handle for a human player
             turn_done = False
             selected = None
             skipping = False
@@ -165,13 +165,18 @@ def game_loop(board, deck, players):
             print("allowed cards: ", allowed_card_list)
 
             display_funct.redraw_screen([(player, None)], board, players)
+            # if no cards can be played end turn
+            if len(allowed_card_list) == 0:
+                print("no playable cards skipping and drawing\n\n")
+                player.grab_card(deck)
+                turn = compute_turn(players, turn, board.turn_iterator)
+                continue
 
             while not turn_done:
                 (update, selected, turn_done) = player_turn(
                     board, deck, player, allowed_card_list, selected)
 
                 check_winners(player)
-
 
                 update = check_update(board, allowed_card_list, selected,
                                       player, players, update)
@@ -194,5 +199,3 @@ def game_loop(board, deck, players):
         else:
             turn = compute_turn(players, turn, board.turn_iterator)
             turn_tot += 1
-
-########################################################

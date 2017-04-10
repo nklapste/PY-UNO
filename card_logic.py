@@ -1,6 +1,9 @@
 import game_control
 import game_logic
 
+def update_mem_trees(board, deck, player, players):
+    pass
+    #TODO
 
 def card_allowed(board, player):
     """

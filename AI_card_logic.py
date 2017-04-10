@@ -2,6 +2,9 @@ import AI_functs
 import game_logic
 import Main_Decision_Tree
 
+def update_mem_trees(board, deck, player, players):
+    pass
+    #TODO
 
 def AI_wild_pick_4(board, deck, player, target, selected_color):
     """
@@ -47,15 +50,9 @@ def AI_skip(board, player, target):
     game_logic.update_hatval(player, target, 1)
 
 
-def reverse(board):
+def AI_reverse(board):
     """
     Card function that handles when the player plays the reverse card.
-
-    Prints the original turn_iterator and then swaps sign of the
-    original turn_iterator.
-
-    Args: board class of a pyuno game in which its turn_iterator value will be
-    accessed (should be 1 or -1)
     """
     turn_iterator = board.turn_iterator
     print("reversing", turn_iterator)
@@ -112,7 +109,7 @@ def AI_card_played_type(board, deck, player, players, target=None, selected_colo
     elif played_type == "s":        # skip turn card played
         AI_skip(board, player, target)
 
-    elif played_type == "r":     # TODO TODO SPECIAL WORK NEEDED
-        reverse(board)
+    elif played_type == "r":        # reverse card played
+        AI_reverse(board)
     elif played_type.isdigit():     # normal number card played
         pass
