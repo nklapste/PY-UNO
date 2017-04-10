@@ -314,3 +314,31 @@ def redraw_screen_menu_target(players, selected=None):
 
     # refresh the screen
     pygame.display.flip()
+
+
+def draw_winners(winners):
+    """
+    Function that draws the winners in win placement from left to right.
+    Left being the first winner and right being last place.
+    """
+    # clear screen (top half)
+    screen.fill(black)
+    
+    # get a "middle" start postion for bliting cards
+    start_pos = ((screen_width) // 2) - \
+        (200 * (len(winners) - 1) + card_width) // 2
+
+    target_index = 0
+    for player in winners:
+        player_num = str(player.name[7])
+        card_disp = game_classes.Card(
+            "red", "small_cards/green_" + player_num + ".png", None)
+        card_disp.rect = def_rect
+        card_disp.rect = card_disp.rect.move(start_pos, 300)
+        card_disp.rect = card_disp.rect.move(200 * target_index, 0)
+        scale_card_blit(card_disp.card_data, card_disp.rect)
+
+        target_index += 1
+
+    # refresh the screen
+    pygame.display.flip()

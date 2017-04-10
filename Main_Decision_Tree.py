@@ -110,7 +110,6 @@ def read_Dec_tree_question(board, player, players, question):
 
 
 def read_Dec_leaf_instruction(board, deck, player, players, Leaf_val):
-
     print("AI instruction:", player.name, Leaf_val)
 
     if Leaf_val == "Goto stop funct":  # TODO

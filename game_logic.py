@@ -71,7 +71,9 @@ def check_game_done(players):
             print(place, player.name)
             place += 1
 
-        while 1:
+        display_funct.draw_winners(winners)
+
+        while 1:  # wait till the player exits out of the game
             for event in pygame.event.get():
                 game_control.get_keypress(event)
 
@@ -146,13 +148,6 @@ def game_loop(board, deck, players):
 
             allowed_card_list = card_logic.card_allowed(board, player)
             print("allowed cards: ", allowed_card_list)
-
-            # if no cards can be played skip turn
-            if allowed_card_list == []:
-                print("no playable cards, drawing and skipping")
-                player.grab_card(deck)
-                turn_done = True
-                skipping = True
 
             display_funct.redraw_screen([(player, None)], board, players)
 
