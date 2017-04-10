@@ -5,6 +5,9 @@ import game_control
 import pygame
 import Main_Decision_Tree
 
+global winners
+winners = []
+
 
 def increment_card_old_vals(player):
     """
@@ -43,9 +46,30 @@ def check_update(board, allowed_card_list, selected, player, players, update):
     return update
 
 
+def add_winner(player):
+    global winners
+    print(player.name, "won and leaves this round!")
+    winners.append(player)
+
+
 def check_winners(player):
+    global winners
     if player.hand == []:  # conditions for winning!
-        print(player.name, "WINS!")
+        print(player.name, "won and leaves this round!")
+        winners.append(player)
+
+
+def check_game_done(players):
+    if len(players) <= 1:
+        print("\n\ngame done!!!!!")
+        # adding last place
+        winners.append(players[0])
+
+        place = 1
+        print("displaying winners in order:")
+        for player in winners:
+            print(place, player.name)
+            place += 1
 
         while 1:
             for event in pygame.event.get():
@@ -94,6 +118,7 @@ def game_loop(board, deck, players):
         print("Turn number:", turn_tot)
         print("Players", turn + 1, "turn")
         print("PLAYER: ", player.name, "TURN")
+        print("number of players left", len(players), players)
 
         if player.skip:
             print("skipping", player.name, "turn")
@@ -105,7 +130,15 @@ def game_loop(board, deck, players):
             increment_card_old_vals(player)
             Main_Decision_Tree.travel_Main_Decision_Tree(board, deck, player,
                                                          players, player.Main_Decision_Tree.Dec_Tree)
+            if player in winners:  # TODO
+                players.remove(player)
+                print("removing player", players)
+                check_game_done(players)
+                turn = compute_turn(players, turn, turn_iterator)
+                continue
+
             turn = compute_turn(players, turn, turn_iterator)
+
             continue
         else:
             turn_done = False
@@ -129,6 +162,12 @@ def game_loop(board, deck, players):
                     board, deck, player, allowed_card_list, selected)
 
                 check_winners(player)
+                if player in winners:  # TODO
+                    players.remove(player)
+                    print("removing player", players)
+                    check_game_done(players)
+                    turn = compute_turn(players, turn, turn_iterator)
+                    continue
 
                 update = check_update(board, allowed_card_list, selected,
                                       player, players, update)

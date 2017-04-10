@@ -104,7 +104,7 @@ def read_Dec_leaf_instruction(board, deck, player, players, Leaf_val):
 
     if Leaf_val == "Goto stop funct": #TODO
         (winners_bool, possible_winners) = AI_functs.fetch_possible_winner(board, player, players)
-        AI_functs.stop_winners(board, deck, player, possible_winners[0])
+        AI_functs.stop_winners(board, deck, player, players, possible_winners[0])
 
     elif Leaf_val == "Play oldest playable card":  # TODO obsolete
         (old_val, card_index) = AI_functs.fetch_oldest_card(board, player)

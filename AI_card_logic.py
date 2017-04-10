@@ -2,6 +2,7 @@ import game_control
 import AI_functs
 import pygame
 import Main_Decision_Tree
+import game_logic
 
 
 def AI_wild_pick_4(board, deck, player, target, selected_color):
@@ -55,10 +56,12 @@ def AI_card_played_type(board, deck, player, players, target=None, selected_colo
 
     # check to see if AI won
     if player.hand == []:
-        print(player.name, "WINS!")
-        while 1:
-            for event in pygame.event.get():
-                game_control.get_keypress(event)
+        game_logic.add_winner(player)
+        return
+        # print(player.name, "WINS!")
+        # while 1:
+        #     for event in pygame.event.get():
+        #         game_control.get_keypress(event)
 
     # if no target was selected set target to be most hated player
     if target is None:
@@ -85,8 +88,9 @@ def AI_card_played_type(board, deck, player, players, target=None, selected_colo
         # go through Main_Decision_Tree as another card can be played
         # as the AI played a wild card
         print("wild card played, playing again.")
+        print(players)
         Main_Decision_Tree.travel_Main_Decision_Tree(board, deck, player,
-                                players, player.Main_Decision_Tree.Dec_Tree)
+                                                     players, player.Main_Decision_Tree.Dec_Tree)
 
 
     elif played_type == "p":        # draw 2 card played

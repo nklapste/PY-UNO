@@ -126,7 +126,7 @@ def fetch_possible_winner(board, AI_player, players):
         return (True, possible_winners)
 
 
-def stop_winners(board, deck, player, possible_winner):
+def stop_winners(board, deck, player, players, possible_winner):
 
     # TODO put meanest playable attack card on likely winning
     # most hated player Priority on using wild 4
@@ -136,7 +136,7 @@ def stop_winners(board, deck, player, possible_winner):
     player.play_card(board, hate_cards[0][1])
     # figure out what do within the game from AI played card
     AI_card_logic.AI_card_played_type(
-        board, deck, player, None, possible_winner)
+        board, deck, player, players, possible_winner)
 
 
 def fetch_hate_cards(board, player):
