@@ -65,7 +65,7 @@ def compute_turn(players, turn, turn_iterator):
     elif turn >= len(players):
         turn = 0
     print("Turn iterator: ", turn_iterator)
-    print("Turn end \n\n")
+    print("__TURN_END__ \n")
 
     return turn
 
@@ -122,6 +122,8 @@ def check_game_done(players):
     O(n) runtime where n is the length of winners. However this is the end game
     state so this is likely no a problem.
     """
+    global winners
+
     if len(players) <= 1:
         print("\n\ngame done!!!!!")
         # adding last place
@@ -137,7 +139,14 @@ def check_game_done(players):
 
         while 1:  # wait till the player exits out of the game
             for event in pygame.event.get():
-                game_control.get_keypress(event)
+                (select_L, select_R, select_UP) = game_control.get_keypress(event)
+
+                if select_UP:
+                    # clear winners for next game
+                    winners = []
+                    return True
+
+    return False
 
 
 def extern_AI_player_turn(board, deck, player, players, turn):
@@ -241,7 +250,12 @@ def game_loop(board, deck, players):
         # game. Also check if the game is done "only one player left".
         if player in winners:
             players.remove(player)
-            check_game_done(players)
+            restart_bool = check_game_done(players)
+
+            # leaves this instance of the game logic loop back to PY-UNO start
+            # in which a new game is started
+            if restart_bool:
+                return
 
         # iterate the turn
         turn = compute_turn(players, turn, board.turn_iterator)
