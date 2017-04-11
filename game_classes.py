@@ -32,24 +32,24 @@ class Player:
         card = self.hand.pop(card_ID)
         card.set_Owner(None)
         boardname.update_Board(card)
+    #
+    # def look_card(self, card_ID):
+    #     return self.hand[card_ID].name
+    #
+    # def look_hand(self):
+    #     L = []
+    #     for i in range(len(self.hand)):
+    #         L.append(self.hand[i].name)
+    #     return L
 
-    def look_card(self, card_ID):
-        return self.hand[card_ID].name
-
-    def look_hand(self):
-        L = []
-        for i in range(len(self.hand)):
-            L.append(self.hand[i].name)
-        return L
-
-    def discard(self, card_ID=None):
-        if self.hand == []:
-            print("Can't discard.... no cards")
-            return
-        if card_ID is None:
-            self.hand.pop()
-            return
-        self.hand.pop(card_ID)
+    # def discard(self, card_ID=None):
+    #     if self.hand == []:
+    #         print("Can't discard.... no cards")
+    #         return
+    #     if card_ID is None:
+    #         self.hand.pop()
+    #         return
+    #     self.hand.pop(card_ID)
 
 
 class Deck:  # calss defining a card deck
@@ -103,19 +103,19 @@ class Card:
         self.name = name
         self.card_data = pygame.image.load(filename)
         self.rect = self.card_data.get_rect()
-        self.Owner = owner  # TODO
+        self.Owner = owner
         self.color = name[0]
         self.type = name[2]
-        self.old_val = 0 #TODO
+        self.old_val = 0
 
     def set_Owner(self, owner):  # set/change card ownership
         self.Owner = owner
 
-    def check_ownership(self, owner_c):  # check if player owns this card
-        if owner_c == self.Owner:
-            return True
-        else:
-            return False
+    # def check_ownership(self, owner_c):  # check if player owns this card
+    #     if owner_c == self.Owner:
+    #         return True
+    #     else:
+    #         return False
 
     def play_card(self, boardname):
         self.set_Owner(None)

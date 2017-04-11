@@ -11,25 +11,27 @@ import game_classes
 def travel_Main_Decision_Tree(board, deck, player, players, Dec_Tree):
     """
     Function that recursively travels Main_Decision_Tree.
+
+    O(n) runtime
     """
 
-    (left_tree, right_tree) = read_Dec_tree(Dec_Tree)
+    (left_tree, right_tree) = read_Dec_tree(Dec_Tree)  #O(1)
 
     if left_tree is False:  # catch if Dec_Tree is actually a Leaf
         print("Found Leaf:", right_tree)
-        read_Dec_leaf_instruction(board, deck, player, players, right_tree)
+        read_Dec_leaf_instruction(board, deck, player, players, right_tree)  # O(n)
         return
     else:
         question = Dec_Tree.question
 
         (left_yes, right_yes) = read_Dec_tree_question(
-            board, player, players, question)
+            board, player, players, question)  # O(n)
 
     print("left or right:", left_yes, right_yes)
     if left_yes:
-        travel_Main_Decision_Tree(board, deck, player, players, left_tree)
+        travel_Main_Decision_Tree(board, deck, player, players, left_tree)  # O(n)
     elif right_yes:
-        travel_Main_Decision_Tree(board, deck, player, players, right_tree)
+        travel_Main_Decision_Tree(board, deck, player, players, right_tree)  # O(n)
     else:
         print("ERROR: didn't choose path")
 
@@ -152,7 +154,7 @@ def read_Dec_leaf_instruction(board, deck, player, players, Leaf_val):
         (winners_bool, possible_winners) = AI_functs.fetch_possible_winner(
             board, player, players)  # O(n)
         AI_functs.stop_winners(board, deck, player,
-                               players, possible_winners[0])
+                               players, possible_winners[0])  # O(n)
 
     elif Leaf_val == "Play oldest playable card":
         (old_val, card_index) = AI_functs.fetch_oldest_card(board, player)  # O(n)
@@ -163,11 +165,13 @@ def read_Dec_leaf_instruction(board, deck, player, players, Leaf_val):
             player, players)  # O(n)
         hate_cards = AI_functs.fetch_hate_cards(board, player)  # O(n)
         player.play_card(board, hate_cards[0][1])
+        # O(n) or recuse Main_Decision_Tree
         AI_card_logic.AI_card_played_type(
-            board, deck, player, players, hate_player)  # O(n) or recuse Main_Decision_Tree
+            board, deck, player, players, hate_player)
 
     elif Leaf_val == "Go back up this tree":
         # goes all back to the start of start_Branch_2 and goes right
+        # this is needed to prevent an infinite recusion
         (branch_left_2, branch_right_1) = player.Main_Decision_Tree.Dec_Tree.get_offshoots()
         (branch_left_2, branch_right_2) = branch_right_1.get_offshoots()
         # recurse Main_Decision_Tree
@@ -175,11 +179,11 @@ def read_Dec_leaf_instruction(board, deck, player, players, Leaf_val):
 
     elif Leaf_val == "Do nothing":
         AI_functs.do_nothing(deck, player)  # O(1)
-        pass
 
     elif Leaf_val == "Goto Card_Choose_Tree":
+        # recurse Card_Choose_Tree
         Card_Choose_Tree.travel_Card_Choose_Tree(
-            board, deck, player, players, player.Card_Choose_Tree.Choose_Tree)  # recurse Card_Choose_Tree
+            board, deck, player, players, player.Card_Choose_Tree.Choose_Tree)
 
     elif Leaf_val == "Goto play_win":
         AI_functs.play_win(board, deck, player, players)  # O(n)

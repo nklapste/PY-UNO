@@ -122,7 +122,7 @@ def AI_card_played_type(board, deck, player, players, target=None, selected_colo
         else:
             print("wild card played, playing again.")
             Main_Decision_Tree.travel_Main_Decision_Tree(board, deck, player,
-                                         players, player.Main_Decision_Tree.Dec_Tree)
+                                                         players, player.Main_Decision_Tree.Dec_Tree)
 
     elif played_type == "p":        # draw 2 card played
         AI_draw_2(deck, player, target)

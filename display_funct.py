@@ -213,7 +213,7 @@ def redraw_hand_nonvisble_loop(players_temp):
             start_horz = 0
             loop_iteration = 0
 
-        redraw_hand_nonvisble(player, start_horz, start_vert) # O(n)
+        redraw_hand_nonvisble(player, start_horz, start_vert)  # O(n)
 
         loop_iteration += 1
 

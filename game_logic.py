@@ -139,12 +139,14 @@ def check_game_done(players):
             for event in pygame.event.get():
                 game_control.get_keypress(event)
 
+
 def extern_AI_player_turn(board, deck, player, players, turn):
     increment_card_old_vals(player)  # O(n)
 
     Main_Decision_Tree.travel_Main_Decision_Tree(board, deck, player,
                                                  players, player.Main_Decision_Tree.Dec_Tree)
-    degrade_hatval(player)  #O(n)
+    degrade_hatval(player)  # O(n)
+
 
 def extern_player_turn(board, deck, player, players, turn):
     drop_again = True
@@ -233,7 +235,7 @@ def game_loop(board, deck, players):
 
         else:            # handle for a human player
             (update, turn_done) = extern_player_turn(board, deck,
-                                                        player, players, turn)
+                                                     player, players, turn)
 
         # check if the player won this round and properly remove them from the
         # game. Also check if the game is done "only one player left".

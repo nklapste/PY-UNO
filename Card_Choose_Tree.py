@@ -10,26 +10,29 @@ import game_classes
 def travel_Card_Choose_Tree(board, deck, player, players, Card_Choose_Tree):
     """
     Function that recursively travels Card_Choose_Tree.
-    """
 
-    (left_tree, right_tree) = read_Card_Choose_Tree(Card_Choose_Tree)
+    O(n) runtime
+    """
+    (left_tree, right_tree) = read_Card_Choose_Tree(Card_Choose_Tree)  # O(1)
 
     if left_tree is False:  # catchi if Card_Choose_Tree is actually a Leaf
         print("Found Leaf:", right_tree)
         read_Card_Choose_Leaf_instruction(
-            board, deck, player, players, right_tree)
+            board, deck, player, players, right_tree)  # O(n)
         return
     else:
         question = Card_Choose_Tree.question
 
         (left_yes, right_yes) = read_Card_Choose_Tree_question(
-            board, player, players, question)
+            board, player, players, question)  # O(n)
 
     print("left or right:", left_yes, right_yes)
     if left_yes:
-        travel_Card_Choose_Tree(board, deck, player, players, left_tree)
+        travel_Card_Choose_Tree(board, deck, player,
+                                players, left_tree)  # O(n)
     elif right_yes:
-        travel_Card_Choose_Tree(board, deck, player, players, right_tree)
+        travel_Card_Choose_Tree(board, deck, player,
+                                players, right_tree)  # O(n)
     else:
         print("ERROR: didn't choose path")
 
@@ -83,8 +86,10 @@ def read_Card_Choose_Tree_question(board, player, players, question):
 
     elif question == "what is my most common (color or type) that is also playable?":
 
-        max_color = AI_functs.fetch_most_common_color_playable(board, player)  # O(n)
-        max_type = AI_functs.fetch_most_common_type_playable(board, player)    # O(n)
+        max_color = AI_functs.fetch_most_common_color_playable(
+            board, player)  # O(n)
+        max_type = AI_functs.fetch_most_common_type_playable(
+            board, player)    # O(n)
 
         max_color_count = 0
         max_type_count = 0
@@ -132,7 +137,8 @@ def read_Card_Choose_Leaf_instruction(board, deck, player, players, Leaf_val):
 
     elif Leaf_val == "play most common color":
 
-        color_max = AI_functs.fetch_most_common_color_playable(board, player)  # O(n)
+        color_max = AI_functs.fetch_most_common_color_playable(
+            board, player)  # O(n)
 
         allowed_cards = card_logic.card_allowed(board, player)  # O(n)
 
@@ -143,7 +149,8 @@ def read_Card_Choose_Leaf_instruction(board, deck, player, players, Leaf_val):
 
     elif Leaf_val == "play most common type":
 
-        type_max = AI_functs.fetch_most_common_type_playable(board, player)  # O(n)
+        type_max = AI_functs.fetch_most_common_type_playable(
+            board, player)  # O(n)
 
         allowed_cards = card_logic.card_allowed(board, player)  # O(n)
 
