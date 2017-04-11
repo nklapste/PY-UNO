@@ -8,7 +8,7 @@ def update_mem_trees(board, deck, player, players):
 
 def AI_wild_pick_4(board, deck, player, target, selected_color):
     """
-    Card function that handles when the player plays a wild pick 4 card.
+    Card function that handles when the AI player plays a wild pick 4 card.
     """
     board.color = selected_color
     print("New color: ", board.color)
@@ -22,7 +22,7 @@ def AI_wild_pick_4(board, deck, player, target, selected_color):
 
 def AI_wild_color(board, player, selected_color):
     """
-    Card function that handles when the player plays a wild color card.
+    Card function that handles when the AI player plays a wild color card.
     """
     board.color = selected_color
     print("New color: ", board.color)
@@ -30,7 +30,7 @@ def AI_wild_color(board, player, selected_color):
 
 def AI_draw_2(deck, player, target):
     """
-    Card function that handles when the player plays a draw 2 card.
+    Card function that handles when the AI player plays a draw 2 card.
     """
     print("Targeted player: ", target.name)
     print("Trageted players hand size before: ", len(target.hand))
@@ -42,7 +42,7 @@ def AI_draw_2(deck, player, target):
 
 def AI_skip(board, player, target):
     """
-    Card function that handles when the player plays a skip turn card.
+    Card function that handles when the AI player plays a skip turn card.
     """
     print("Targeted player skipping: ", target.name)
     target.skip = True
@@ -52,7 +52,7 @@ def AI_skip(board, player, target):
 
 def AI_reverse(board):
     """
-    Card function that handles when the player plays the reverse card.
+    Card function that handles when the AI player plays the reverse card.
     """
     turn_iterator = board.turn_iterator
     print("reversing", turn_iterator)

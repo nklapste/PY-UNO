@@ -4,12 +4,18 @@ import random
 
 
 def get_rand_type():
+    """
+    Funciton that grabs a random card type that is used within PY-UNO.
+    """
     card_type = ["p", "s", "r", "c", "d", "0",
                  "1", "2", "3", "4", "5", "6", "7", "8", "9"]
     return random.choice(card_type)
 
 
 def get_rand_color():
+    """
+    Funciton that grabs a random card color that is used within PY-UNO.
+    """
     colors_name = ["b", "r", "g", "y"]
     return random.choice(colors_name)
 

@@ -11,6 +11,14 @@ winners = []
 
 
 def update_hatval(player, target, hate_increase=1):
+    """
+    Function that updates the hatval of a player in refrence to a player.
+
+    Eg: a player (player A) plays a skip turn card on a target (player B)
+    thus player B's hatval of player A goes up. The higher the hatval the
+    more likely that player B will prioritize targeting player A over other
+    logical plays.
+    """
     try:
         target.hatval[player] += hate_increase
     except KeyError:
@@ -18,6 +26,11 @@ def update_hatval(player, target, hate_increase=1):
 
 
 def degrade_hatval(player):
+    """
+    Funciton that de-iterates the current players hatval of all other players
+    by 1. Essentially preventing hatevals going extremely high, and making very
+    mean AIs.
+    """
     for hated_player in player.hatval.keys():
         if player.hatval[hated_player] > 0:
             player.hatval[hated_player] -= 1
@@ -37,7 +50,7 @@ def compute_turn(players, turn, turn_iterator):
     Function that handles PY-UNO turn iterations for any amount of players.
     """
     turn = turn + turn_iterator
-    # catch to reloop overs players array
+    # catch to reloop over players array
     if turn < 0:
         turn = len(players) - 1
     elif turn >= len(players):
@@ -91,8 +104,48 @@ def check_game_done(players):
             for event in pygame.event.get():
                 game_control.get_keypress(event)
 
+def extern_AI_player_turn(board, deck, player, players, turn):
+    increment_card_old_vals(player)
 
-def player_turn(board, deck, player, allowed_card_list, selected):
+    Main_Decision_Tree.travel_Main_Decision_Tree(board, deck, player,
+                                                 players, player.Main_Decision_Tree.Dec_Tree)
+    degrade_hatval(player)
+
+def extern_player_turn(board, deck, player, players, turn):
+    drop_again = True
+    while drop_again:
+        turn_done = False
+        selected = None
+
+        # redraw display at start of human turn
+        display_funct.redraw_screen([(player, None)], board, players)
+
+        # grab the list of allowed_cards cards
+        allowed_card_list = card_logic.card_allowed(board, player)
+        # if no cards can be played end turn
+        if len(allowed_card_list) == 0:
+            print("no playable cards skipping and drawing\n\n")
+            player.grab_card(deck)
+            turn = compute_turn(players, turn, board.turn_iterator)
+            return (player, turn)
+
+        while not turn_done:
+            (update, selected, turn_done) = intern_player_turn(
+                board, deck, player, allowed_card_list, selected)
+
+            check_winners(player)
+
+            update = check_update(board, allowed_card_list, selected,
+                                  player, players, update)
+
+        # returns false unless a drop_again type card is played
+        drop_again = card_logic.card_played_type(board, deck,
+                                                 player, players)
+
+    return (player, turn)
+
+
+def intern_player_turn(board, deck, player, allowed_card_list, selected):
     update = False
     if allowed_card_list == []:
         player.grab_card(deck)
@@ -130,72 +183,29 @@ def game_loop(board, deck, players):
 
     while True:
         player = players[turn]
-
+        turn_tot += 1
         print("Turn number:", turn_tot)
         print("PLAYER: ", player.name, "TURN")
 
         if player.skip:
-            print("skipping", player.name, "turn")
-            player.skip = False
             if player.AI:
                 increment_card_old_vals(player)
 
+            print("skipping", player.name, "turn")
+            player.skip = False
+
         elif player.AI:  # handle for an AI player
-            increment_card_old_vals(player)
+            extern_AI_player_turn(board, deck, player, players, turn)
 
-            Main_Decision_Tree.travel_Main_Decision_Tree(board, deck, player,
-                                                         players, player.Main_Decision_Tree.Dec_Tree)
-            degrade_hatval(player)
+        else:            # handle for a human player
+            (update, turn_done) = extern_player_turn(board, deck,
+                                                        player, players, turn)
 
-            if player in winners:  # TODO
-                players.remove(player)
-                print("removing player", player.name)
-                check_game_done(players)
-                turn = compute_turn(players, turn, board.turn_iterator)
-                continue
+        # check if the player won this round and properly remove them from the
+        # game. Also check if the game is done "only one player left".
+        if player in winners:
+            players.remove(player)
+            check_game_done(players)
 
-            turn = compute_turn(players, turn, board.turn_iterator)
-            continue
-        else:  # handle for a human player
-            turn_done = False
-            selected = None
-            skipping = False
-
-            allowed_card_list = card_logic.card_allowed(board, player)
-            print("allowed cards: ", allowed_card_list)
-
-            display_funct.redraw_screen([(player, None)], board, players)
-            # if no cards can be played end turn
-            if len(allowed_card_list) == 0:
-                print("no playable cards skipping and drawing\n\n")
-                player.grab_card(deck)
-                turn = compute_turn(players, turn, board.turn_iterator)
-                continue
-
-            while not turn_done:
-                (update, selected, turn_done) = player_turn(
-                    board, deck, player, allowed_card_list, selected)
-
-                check_winners(player)
-
-                update = check_update(board, allowed_card_list, selected,
-                                      player, players, update)
-
-            if not skipping:
-                drop_again = card_logic.card_played_type(
-                    board, deck, player, players)
-
-            if player in winners:  # TODO
-                players.remove(player)
-                print("removing player", player.name)
-                check_game_done(players)
-                turn = compute_turn(players, turn, board.turn_iterator)
-                continue
-
-        # if the player plays a drop agian card dont iterate turn
-        if drop_again:
-            drop_again = False
-            print(player.name, "Allowed to play another card, replaying!\n")
-        else:
-            turn = compute_turn(players, turn, board.turn_iterator)
-            turn_tot += 1
+        # iterate the turn
+        turn = compute_turn(players, turn, board.turn_iterator)

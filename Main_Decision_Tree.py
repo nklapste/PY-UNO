@@ -178,6 +178,11 @@ class Main_Decision_Tree:
 
 
 def test_Main_Decision_Tree_2():
+    """
+    Test function that tests the basic capabilites of a Main_Decision_Tree
+    going over feature such as creating a Main_Decision_Tree, and deciding a
+    player decision based on board state.
+    """
 
     test_tree = Main_Decision_Tree("test")
 

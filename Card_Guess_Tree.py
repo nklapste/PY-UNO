@@ -111,6 +111,11 @@ class Card_Guess_Tree:
 
 
 def test_Card_Guess_Tree():
+    """
+    Function that tests all the base functions of implementing a
+    Card_Guess_Tree: creating the treem adding new cards, and extracting
+    cards with a memory limit
+    """
     test_tree = Card_Guess_Tree("test", 3)
 
     card1 = card_g = game_classes.Card("g_1", "small_cards/green_0.png", None)

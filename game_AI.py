@@ -33,7 +33,6 @@ def make_AI(AI_name, difficulty_level=0, difficulty_level_list=None):
     Returns: an Player class from game_classes.py that is AI controlled via a
     decision tree method.
     """
-
     AI_gen = game_classes.Player(AI_name)
     AI_gen.AI = True
 
