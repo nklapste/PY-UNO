@@ -2,9 +2,11 @@ import AI_functs
 import game_logic
 import Main_Decision_Tree
 
+
 def update_mem_trees(board, deck, player, players):
     pass
-    #TODO
+    # TODO
+
 
 def AI_wild_pick_4(board, deck, player, target, selected_color):
     """
@@ -90,7 +92,8 @@ def AI_card_played_type(board, deck, player, players, target=None, selected_colo
 
     # if no target was selected set target to be most hated player
     if target is None:
-        (max_hate, hate_player) = AI_functs.fetch_hate_priority(player, players)  # O(n)
+        (max_hate, hate_player) = AI_functs.fetch_hate_priority(
+            player, players)  # O(n)
         target = hate_player
 
     # if no color was selected set it to most common_color
