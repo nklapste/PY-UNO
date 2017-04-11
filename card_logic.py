@@ -143,9 +143,8 @@ def card_played_type(board, deck, player, players):
     played_type = board.type
     played_color = board.color
 
-    print("played by: ", player.name)
-    print("played card type: ", played_type)
-    print("played card color: ", played_color)
+    print("played", played_type, played_color,"by:", player.name)
+
 
     if played_color == "w":
         drop_again = True

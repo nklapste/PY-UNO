@@ -154,6 +154,3 @@ def test_Card_Guess_Tree():
     print(travel_Card_Guess_Tree(test_tree.Guess_Tree, 5))
     print(travel_Card_Guess_Tree(test_tree.Guess_Tree, 6))
     print(travel_Card_Guess_Tree(test_tree.Guess_Tree, 7))
-
-
-test_Card_Guess_Tree()

@@ -105,9 +105,8 @@ def AI_card_played_type(board, deck, player, players, target=None, selected_colo
     played_type = board.type
     played_color = board.color
 
-    print("played by: ", player.name)
-    print("played card type: ", played_type)
-    print("played card color: ", played_color)
+    print("Played:", played_type, played_color, "by:", player.name)
+
 
     if played_color == "w":
         if played_type == "d":      # wild choose color draw 4 card played
@@ -120,7 +119,7 @@ def AI_card_played_type(board, deck, player, players, target=None, selected_colo
         if player.hand == []:  # catch if the player has won
             return
         else:
-            print("wild card played, playing again.")
+            print("Wild played, playing again.")
             Main_Decision_Tree.travel_Main_Decision_Tree(board, deck, player,
                                                          players, player.Main_Decision_Tree.Dec_Tree)
 

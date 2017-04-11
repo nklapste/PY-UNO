@@ -18,7 +18,7 @@ def travel_Main_Decision_Tree(board, deck, player, players, Dec_Tree):
     (left_tree, right_tree) = read_Dec_tree(Dec_Tree)  #O(1)
 
     if left_tree is False:  # catch if Dec_Tree is actually a Leaf
-        print("Found Leaf:", right_tree)
+        # print("Found Leaf:", right_tree)
         read_Dec_leaf_instruction(board, deck, player, players, right_tree)  # O(n)
         return
     else:
@@ -27,7 +27,7 @@ def travel_Main_Decision_Tree(board, deck, player, players, Dec_Tree):
         (left_yes, right_yes) = read_Dec_tree_question(
             board, player, players, question)  # O(n)
 
-    print("left or right:", left_yes, right_yes)
+    # print("left or right:", left_yes, right_yes)
     if left_yes:
         travel_Main_Decision_Tree(board, deck, player, players, left_tree)  # O(n)
     elif right_yes:
@@ -66,7 +66,7 @@ def read_Dec_tree_question(board, player, players, question):
     O(n) runtime where n is the length of players or the size of player's hand
     (whichever is larger)
     """
-    print("AI question:", player.name, question)
+    # print("AI question:", player.name, question)
 
     if question == "Can I win this turn?":
         wild_count = 0
@@ -148,7 +148,7 @@ def read_Dec_leaf_instruction(board, deck, player, players, Leaf_val):
 
     Recuse Main_Decision_Tree or Card_Choose_Tree
     """
-    print("AI instruction:", player.name, Leaf_val)
+    # print("AI instruction:", player.name, Leaf_val)
 
     if Leaf_val == "Goto stop funct":  # TODO get runtime
         (winners_bool, possible_winners) = AI_functs.fetch_possible_winner(

@@ -273,5 +273,6 @@ def do_nothing(deck, player):
 
     O(1) runtime
     """
+    print("NOTHING TO PLAY SKIPPING")  # TODO
     player.grab_card(deck)
     return

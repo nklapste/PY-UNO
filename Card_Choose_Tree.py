@@ -16,7 +16,7 @@ def travel_Card_Choose_Tree(board, deck, player, players, Card_Choose_Tree):
     (left_tree, right_tree) = read_Card_Choose_Tree(Card_Choose_Tree)  # O(1)
 
     if left_tree is False:  # catchi if Card_Choose_Tree is actually a Leaf
-        print("Found Leaf:", right_tree)
+        # print("Found Leaf:", right_tree)
         read_Card_Choose_Leaf_instruction(
             board, deck, player, players, right_tree)  # O(n)
         return
@@ -26,7 +26,7 @@ def travel_Card_Choose_Tree(board, deck, player, players, Card_Choose_Tree):
         (left_yes, right_yes) = read_Card_Choose_Tree_question(
             board, player, players, question)  # O(n)
 
-    print("left or right:", left_yes, right_yes)
+    # print("left or right:", left_yes, right_yes)
     if left_yes:
         travel_Card_Choose_Tree(board, deck, player,
                                 players, left_tree)  # O(n)
@@ -66,7 +66,7 @@ def read_Card_Choose_Tree_question(board, player, players, question):
 
     O(n) runtime where n is the number of cards in a players hand
     """
-    print("AI question:", player.name, question)
+    # print("AI question:", player.name, question)
 
     if question == "Do I multiple playable cards?":
 
@@ -119,7 +119,7 @@ def read_Card_Choose_Leaf_instruction(board, deck, player, players, Leaf_val):
 
     Can recuse back to Main_Decision_Tree
     """
-    print("AI instruction:", player.name, Leaf_val)
+    # print("AI instruction:", player.name, Leaf_val)
 
     if Leaf_val == "Play only card":
 
