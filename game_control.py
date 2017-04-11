@@ -20,7 +20,7 @@ def get_keypress(event):
     if event.type == pygame.QUIT:
         os._exit(0)  # hard exit the program
     elif event.type == pygame.VIDEORESIZE:
-        display_funct.handle_resize(event)
+        display_funct.handle_resize(event) # O(1)
     if event.type == pygame.KEYDOWN:
 
         if event.key == pygame.K_LEFT:
@@ -56,6 +56,9 @@ def select_move_color(select_L, select_R, selected):
 
 
 def player_LR_selection_color(selected=None):
+    """
+    O(1) runtime
+    """
     select_L = False
     select_R = False
     select_UP = False
@@ -63,11 +66,11 @@ def player_LR_selection_color(selected=None):
     turn_done = False
     if selected is None:
         selected = 0
-    for event in pygame.event.get():
-        (select_L, select_R, select_UP) = get_keypress(event)
+    for event in pygame.event.get():  # O(1)
+        (select_L, select_R, select_UP) = get_keypress(event)  # O(1)
     if select_R or select_L:  # if  keystoke to pick card was entered
 
-        selectednew = select_move_color(select_L, select_R, selected)
+        selectednew = select_move_color(select_L, select_R, selected)  # O(1)
 
         if selected == selectednew:
             pass
@@ -86,17 +89,19 @@ def player_LR_selection_color(selected=None):
 
 
 def player_choice_color():
-    '''
+    """
     Loop that waits for player input on choosing a color state for the board
-    '''
+
+    O(1) runtime (excluding loop) (assuming slection is made instantly)
+    """
     # setuop intial value of selected
     # and initially render the menu screen
     selected = None
-    display_funct.redraw_screen_menu_color(None)
+    display_funct.redraw_screen_menu_color(None)  # O(4)
     while True:
-        (update, selected, turn_done) = player_LR_selection_color(selected)
+        (update, selected, turn_done) = player_LR_selection_color(selected) # O(1)
         if update:
-            display_funct.redraw_screen_menu_color(selected)
+            display_funct.redraw_screen_menu_color(selected)  # O(4) ==> O(1)
         if turn_done:
             if selected == 0:
                 print("choosing green")
@@ -133,6 +138,9 @@ def select_move_target(select_L, select_R, players, selected):
 
 
 def player_LR_selection_target(players, selected=None):
+    """
+    O(1) runtime
+    """
     select_L = False
     select_R = False
     select_UP = False
@@ -141,10 +149,10 @@ def player_LR_selection_target(players, selected=None):
 
     if selected is None:
         selected = 0
-    for event in pygame.event.get():
-        (select_L, select_R, select_UP) = get_keypress(event)
+    for event in pygame.event.get():  # O(1)
+        (select_L, select_R, select_UP) = get_keypress(event)  # O(1)
     if select_R or select_L:  # if  keystoke to pick card was entered
-        selectednew = select_move_target(select_L, select_R, players, selected)
+        selectednew = select_move_target(select_L, select_R, players, selected)  # O(1)
 
         if selected == selectednew:
             pass
@@ -163,13 +171,17 @@ def player_LR_selection_target(players, selected=None):
 
 
 def player_choice_target(players):
+    """
+    O(n) runtime where in is the length of players (assuming selection is made
+    instantly)
+    """
     selected = None
-    display_funct.redraw_screen_menu_target(players, None)
+    display_funct.redraw_screen_menu_target(players, None) # O(n)
     while True:
         (update, selected, turn_done) = player_LR_selection_target(players,
-                                                                   selected)
+                                                                   selected) # O(1)
         if update:
-            display_funct.redraw_screen_menu_target(players, selected)
+            display_funct.redraw_screen_menu_target(players, selected) # O(n)
         if turn_done:
             target = players[selected]
             return target
@@ -210,6 +222,8 @@ def player_LR_selection_hand(player, selected, board=None, allowed_card_list=Non
     card the player is hovering over, additionally if the player selects the
     card they are hovering over; turn_done will be turned to true allowing for
     further progress within outside functions.
+
+    O(1) runtime
     '''
     select_L = False
     select_R = False
@@ -217,13 +231,13 @@ def player_LR_selection_hand(player, selected, board=None, allowed_card_list=Non
     update = False
     turn_done = False
 
-    for event in pygame.event.get():
-        (select_L, select_R, select_UP) = get_keypress(event)
+    for event in pygame.event.get(): # O(1)
+        (select_L, select_R, select_UP) = get_keypress(event) # O(1)
 
     if select_R or select_L:  # if  keystoke to pick card was entered
 
         selectednew = select_move_hand(
-            select_L, select_R, allowed_card_list, selected)
+            select_L, select_R, allowed_card_list, selected) # O(1)
 
         if selected == selectednew:
             pass
@@ -239,7 +253,7 @@ def player_LR_selection_hand(player, selected, board=None, allowed_card_list=Non
         if selected is None:
             selected = 0
 
-        selected = select_choose(player, board, allowed_card_list[selected])
+        selected = select_choose(player, board, allowed_card_list[selected]) # O(1)
         update = True
         turn_done = True
 
