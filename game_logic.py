@@ -140,11 +140,11 @@ def check_game_done(players):
                 game_control.get_keypress(event)
 
 def extern_AI_player_turn(board, deck, player, players, turn):
-    increment_card_old_vals(player)
+    increment_card_old_vals(player)  # O(n)
 
     Main_Decision_Tree.travel_Main_Decision_Tree(board, deck, player,
                                                  players, player.Main_Decision_Tree.Dec_Tree)
-    degrade_hatval(player)
+    degrade_hatval(player)  #O(n)
 
 def extern_player_turn(board, deck, player, players, turn):
     drop_again = True

@@ -34,7 +34,7 @@ def card_allowed(board, player):
 
 
 ########################################################
-#TODO GET RUNTIME
+
 def wild_pick_4(board, deck, player, players):
     """
     Card function that handles when the player plays a wild pick 4 card.
@@ -42,12 +42,14 @@ def wild_pick_4(board, deck, player, players):
     Starts subfunctions that handel player color choice, and player target
     choice. This function then prints out the results of the players decisions
     on the game.
+
+    O(n) runtime
     """
-    board.color = game_control.player_choice_color()
+    board.color = game_control.player_choice_color()  # O(1)
     print("New color: ", board.color)
-    players_temp = players[:]
-    players_temp.remove(player)
-    target = game_control.player_choice_target(players_temp)
+    players_temp = players[:]  # O(n)
+    players_temp.remove(player)  # O(n)
+    target = game_control.player_choice_target(players_temp)  # O(n)
     print("Targeted player: ", target.name)
     print("Trageted players hand size before: ", len(target.hand))
     target.grab_cards(deck, 4)
@@ -55,7 +57,7 @@ def wild_pick_4(board, deck, player, players):
     # update targets hatval of player
     game_logic.update_hatval(player, target, 4)
 
-#TODO GET RUNTIME
+
 def wild_color(board, deck, player):
     """
     Card function that handles when the player plays a wild color card.
@@ -63,21 +65,25 @@ def wild_color(board, deck, player):
     This makes the game move onto making the player choose a color.This
     chosen color updates the current board color. After a color has been
     chosen the player then can play another card of the same color.
+
+    O(1) runtime
     """
-    board.color = game_control.player_choice_color()
+    board.color = game_control.player_choice_color()  # O(1)
     print("New color: ", board.color)
 
-#TODO GET RUNTIME
+
 def draw_2(board, deck, player, players):
     """
     Card function that handles when the player plays a draw 2 card.
 
     This makes the game move to the target selection menu. After a target is
     selected the targeted player is then forced to draw 2 cards.
+
+    O(n) runtime
     """
     players_temp = players[:]
     players_temp.remove(player)
-    target = game_control.player_choice_target(players_temp)
+    target = game_control.player_choice_target(players_temp)   # O(n)
     print("Targeted player: ", target.name)
     print("Trageted players hand size before: ", len(target.hand))
     target.grab_cards(deck, 2)
@@ -85,17 +91,19 @@ def draw_2(board, deck, player, players):
     # update targets hatval of player
     game_logic.update_hatval(player, target, 2)
 
-#TODO GET RUNTIME
+
 def skip(board, deck, player, players):
     """
     Card function that handles when the player plays a skip turn card.
 
     This makes the game move to the target selection menu. After a target is
     selected the targeted player is then forced skip their next turn.
+
+    O(n) runtime
     """
     players_temp = players[:]
     players_temp.remove(player)
-    target = game_control.player_choice_target(players_temp)
+    target = game_control.player_choice_target(players_temp)  # O(n)
     print("Targeted player skipping: ", target.name)
     target.skip = True
     # update targets hatval of player
@@ -119,12 +127,14 @@ def reverse(board):
     board.turn_iterator = -turn_iterator
 ########################################################
 
-#TODO GET RUNTIME
+
 def card_played_type(board, deck, player, players):
     """
     Logic function that takes the most recently played card and decides
     what game actions are needed to be taken to accomadate. These actions are
     then preformed by other functions detailed above.
+
+    O(n) runtime
     """
     if board.card_stack == []:  # catch for empty board
         return turn_iterator

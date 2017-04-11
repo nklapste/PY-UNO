@@ -79,6 +79,9 @@ def AI_card_played_type(board, deck, player, players, target=None, selected_colo
     what game actions are needed to be taken to accomadate. These actions are
     then preformed by other functions detailed above.
 
+    O(1) if target and selected color are already given
+
+    or
 
     O(n) runtime where n is the number of players OR player handsize
 
@@ -86,7 +89,6 @@ def AI_card_played_type(board, deck, player, players, target=None, selected_colo
 
     Main_Decision_Tree is retraveled thus making stuff deeper.
     """
-
     # check to see if AI won
     game_logic.check_winners(player)
 
@@ -120,7 +122,7 @@ def AI_card_played_type(board, deck, player, players, target=None, selected_colo
         else:
             print("wild card played, playing again.")
             Main_Decision_Tree.travel_Main_Decision_Tree(board, deck, player,
-                                                         players, player.Main_Decision_Tree.Dec_Tree)
+                                         players, player.Main_Decision_Tree.Dec_Tree)
 
     elif played_type == "p":        # draw 2 card played
         AI_draw_2(deck, player, target)

@@ -39,6 +39,8 @@ def read_Dec_tree(Dec_Tree):
     Main_Decision_Tree extraction function. Will try to extract a leaf
     value first, if this fails its expected that it is instead a branch.
     As such the branches offshoots are then extracted.
+
+    O(1) runtime
     """
     try:
         Leaf_val = Dec_Tree.value
@@ -98,7 +100,8 @@ def read_Dec_tree_question(board, player, players, question):
 
     elif question == "Does oldest card play priority beat my hate play priority?":
         (old_val, card_index) = AI_functs.fetch_oldest_card(board, player)  # O(n)
-        (hate_val, hate_player) = AI_functs.fetch_hate_priority(player, players)  # O(n)
+        (hate_val, hate_player) = AI_functs.fetch_hate_priority(
+            player, players)  # O(n)
         if hate_val <= old_val:  # TODO
             return (True, False)
         else:
@@ -145,7 +148,7 @@ def read_Dec_leaf_instruction(board, deck, player, players, Leaf_val):
     """
     print("AI instruction:", player.name, Leaf_val)
 
-    if Leaf_val == "Goto stop funct": #TODO get runtime
+    if Leaf_val == "Goto stop funct":  # TODO get runtime
         (winners_bool, possible_winners) = AI_functs.fetch_possible_winner(
             board, player, players)  # O(n)
         AI_functs.stop_winners(board, deck, player,
@@ -156,7 +159,8 @@ def read_Dec_leaf_instruction(board, deck, player, players, Leaf_val):
         player.play_card(board, card_index)
 
     elif Leaf_val == "Play highest hate playable card":
-        (hate_val, hate_player) = AI_functs.fetch_hate_priority(player, players)  # O(n)
+        (hate_val, hate_player) = AI_functs.fetch_hate_priority(
+            player, players)  # O(n)
         hate_cards = AI_functs.fetch_hate_cards(board, player)  # O(n)
         player.play_card(board, hate_cards[0][1])
         AI_card_logic.AI_card_played_type(
@@ -166,7 +170,8 @@ def read_Dec_leaf_instruction(board, deck, player, players, Leaf_val):
         # goes all back to the start of start_Branch_2 and goes right
         (branch_left_2, branch_right_1) = player.Main_Decision_Tree.Dec_Tree.get_offshoots()
         (branch_left_2, branch_right_2) = branch_right_1.get_offshoots()
-        travel_Main_Decision_Tree(board, deck, player, players, branch_right_2) # recurse Main_Decision_Tree
+        # recurse Main_Decision_Tree
+        travel_Main_Decision_Tree(board, deck, player, players, branch_right_2)
 
     elif Leaf_val == "Do nothing":
         AI_functs.do_nothing(deck, player)  # O(1)
@@ -174,10 +179,10 @@ def read_Dec_leaf_instruction(board, deck, player, players, Leaf_val):
 
     elif Leaf_val == "Goto Card_Choose_Tree":
         Card_Choose_Tree.travel_Card_Choose_Tree(
-            board, deck, player, players, player.Card_Choose_Tree.Choose_Tree) # recurse Card_Choose_Tree
+            board, deck, player, players, player.Card_Choose_Tree.Choose_Tree)  # recurse Card_Choose_Tree
 
     elif Leaf_val == "Goto play_win":
-        AI_functs.play_win(board, deck, player, players) # TODO fix runtime
+        AI_functs.play_win(board, deck, player, players)  # O(n)
 
 
 class Main_Decision_Tree:

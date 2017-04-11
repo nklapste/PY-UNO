@@ -12,11 +12,14 @@ def travel_Card_Guess_Tree(Card_Tree, max_depth):
     # list that will be appened card data in the format of
     # [(card1_color, depth), (card1_type, depth), (card2_color, depth)...]
     Card_Guess_list = []
-    #TODO GET RUNTIME
+
     def travel_recus(Card_Tree, depth):
+        """
+        O(1) runtime
+        """
         if Card_Tree is None:
             return
-        (left_tree, right_tree) = read_Card_Tree_basic(Card_Tree)
+        (left_tree, right_tree) = read_Card_Tree_basic(Card_Tree)  #O(1)
 
         # case were no card is at this level of memory just return
         if left_tree is None and right_tree is None:
@@ -25,10 +28,10 @@ def travel_Card_Guess_Tree(Card_Tree, max_depth):
         # get this levels card data (color and type) and append to
         # Card_Guess_list
         (Card_color_p, Card_Type_p, Card_Played_By) = read_Card_Tree_values(
-            right_tree, depth)
-        Card_Guess_list.append(Card_color_p)
-        Card_Guess_list.append(Card_Type_p)
-        Card_Guess_list.append(Card_Played_By)
+            right_tree, depth)  #O(1)
+        Card_Guess_list.append(Card_color_p)  #O(1)
+        Card_Guess_list.append(Card_Type_p)  #O(1)
+        Card_Guess_list.append(Card_Played_By)  #O(1)
 
         # go to the next level of Card_Guess_Tree which is in the left_tree
         travel_recus(left_tree, depth + 3)
@@ -125,7 +128,7 @@ def test_Card_Guess_Tree():
     """
     Function that tests all the base functions of implementing a
     Card_Guess_Tree: creating the treem adding new cards, and extracting
-    cards with a memory limit
+    cards with a memory limit.
     """
     test_tree = Card_Guess_Tree("test", 3)
 

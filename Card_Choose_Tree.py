@@ -154,7 +154,7 @@ def read_Card_Choose_Leaf_instruction(board, deck, player, players, Leaf_val):
                 break
 
     # figure out what do within the game from AI played card
-    AI_card_logic.AI_card_played_type(board, deck, player, players)
+    AI_card_logic.AI_card_played_type(board, deck, player, players)  # O(n)
 
 
 class Card_Choose_Tree:

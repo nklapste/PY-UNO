@@ -23,11 +23,17 @@ def get_rand_color():
     colors_name = ["b", "r", "g", "y"]
     return random.choice(colors_name)
 
-#TODO GET RUNTIME
-#TODO MAKE MORE EFFICENT
+
 def play_win(board, deck, player, players):
     """
+    O(n) runtime
     """
+    (max_hate, hate_player) = fetch_hate_priority(
+        player, players)  # O(n)
+    target = hate_player
+
+    # if no color was selected set it to most common_color
+    selected_color = fetch_most_common_color(player)  # O(n)`
 
     card_index = 0
     for card in player.hand:  # O(n)
@@ -36,7 +42,7 @@ def play_win(board, deck, player, players):
 
             # figure out what do within the game from AI played card
             AI_card_logic.AI_card_played_type(
-                board, deck, player, players) # O(n) or recuse Main_Decision_Tree
+                board, deck, player, players, target, selected_color)  # O(1) or recuse Main_Decision_Tree
 
         card_index += 1
 
@@ -46,7 +52,7 @@ def play_win(board, deck, player, players):
 
         # figure out what do within the game from AI played card
         AI_card_logic.AI_card_played_type(
-            board, deck, player, players) # O(n) or recuse Main_Decision_Tree
+            board, deck, player, players)  # O(n) or recuse Main_Decision_Tree
     else:
         board.color = get_rand_color()
 
@@ -197,18 +203,20 @@ def fetch_possible_winner(board, AI_player, players):
     else:
         return (True, possible_winners)
 
-#TODO GET RUNTIME
-def stop_winners(board, deck, player, players, possible_winner):
 
+def stop_winners(board, deck, player, players, possible_winner):
+    """
+    O(n) runtime
+    """
     # TODO put meanest playable attack card on likely winning
     # most hated player Priority on using wild 4
 
-    hate_cards = fetch_hate_cards(board, player)
+    hate_cards = fetch_hate_cards(board, player)  # O(n)
 
     player.play_card(board, hate_cards[0][1])
     # figure out what do within the game from AI played card
     AI_card_logic.AI_card_played_type(
-        board, deck, player, players, possible_winner)
+        board, deck, player, players, possible_winner)  # O(n)
 
 
 def fetch_hate_cards(board, player):
