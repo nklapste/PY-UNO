@@ -10,6 +10,8 @@ def get_keypress(event):
 
     Note: if the QUIT event happens os._exit is called in which the entire
     PY-GAME instance is shutdown.
+
+    O(1) runtime
     """
     select_L = False
     select_R = False
@@ -35,6 +37,9 @@ def get_keypress(event):
 
 ########################################################
 def select_move_color(select_L, select_R, selected):
+    """
+    O(1) runtime
+    """
     if selected is None:
         selected = 0
     if select_R:
@@ -109,6 +114,9 @@ def player_choice_color():
 
 
 def select_move_target(select_L, select_R, players, selected):
+    """
+    O(1) runtime
+    """
     if selected is None:
         selected = 0
     if select_R:
@@ -169,12 +177,18 @@ def player_choice_target(players):
 
 
 def select_choose(player, board, selected=0):
+    """
+    O(1) runtime
+    """
     player.play_card(board, selected)
     selected = None
     return selected
 
 
 def select_move_hand(select_L, select_R, allowed_card_list, selected):
+    """
+    O(1) runtime
+    """
     if selected is None:
         selected = 0
     if select_R:

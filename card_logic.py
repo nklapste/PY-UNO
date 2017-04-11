@@ -15,11 +15,13 @@ def card_allowed(board, player):
     Returns:
         allowed: a list of cards allowed to be played from a certain players
                  hand.
+
+    O(n) runtime where n is the number of cards in the players hand
     """
     i = 0
     allowed = []
 
-    for card in player.hand:
+    for card in player.hand:   # O(n)
         if board.card_stack == [] or board.color == "w":
             allowed = range(len(player.hand))
             return allowed
@@ -32,6 +34,7 @@ def card_allowed(board, player):
 
 
 ########################################################
+#TODO GET RUNTIME
 def wild_pick_4(board, deck, player, players):
     """
     Card function that handles when the player plays a wild pick 4 card.
@@ -52,7 +55,7 @@ def wild_pick_4(board, deck, player, players):
     # update targets hatval of player
     game_logic.update_hatval(player, target, 4)
 
-
+#TODO GET RUNTIME
 def wild_color(board, deck, player):
     """
     Card function that handles when the player plays a wild color card.
@@ -64,7 +67,7 @@ def wild_color(board, deck, player):
     board.color = game_control.player_choice_color()
     print("New color: ", board.color)
 
-
+#TODO GET RUNTIME
 def draw_2(board, deck, player, players):
     """
     Card function that handles when the player plays a draw 2 card.
@@ -82,7 +85,7 @@ def draw_2(board, deck, player, players):
     # update targets hatval of player
     game_logic.update_hatval(player, target, 2)
 
-
+#TODO GET RUNTIME
 def skip(board, deck, player, players):
     """
     Card function that handles when the player plays a skip turn card.
@@ -108,13 +111,15 @@ def reverse(board):
 
     Args: board class of a pyuno game in which its turn_iterator value will be
     accessed (should be 1 or -1)
+
+    O(1) runtime
     """
     turn_iterator = board.turn_iterator
     print("reversing", turn_iterator)
     board.turn_iterator = -turn_iterator
 ########################################################
 
-
+#TODO GET RUNTIME
 def card_played_type(board, deck, player, players):
     """
     Logic function that takes the most recently played card and decides

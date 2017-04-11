@@ -35,6 +35,13 @@ def travel_Card_Choose_Tree(board, deck, player, players, Card_Choose_Tree):
 
 
 def read_Card_Choose_Tree(Card_Choose_Tree):
+    """
+    Card_Choose_Tree extraction function. Will try to extract a leaf value
+    first, if this fails its expected that it is instead a branch. As such
+    the branches offshoots are then extracted.
+
+    O(1) runtime
+    """
     try:  # check if Card_Choose_Tree is actually is
         Leaf_val = Card_Choose_Tree.value
         return (False, Leaf_val)  # return special case
@@ -45,6 +52,17 @@ def read_Card_Choose_Tree(Card_Choose_Tree):
 
 
 def read_Card_Choose_Tree_question(board, player, players, question):
+    """
+    Function that takes a branches question and returns a tuple of two Logic
+    values. Indicating wether to go left or right within the tree.
+
+    (True, False) ==> go left
+    (False, True) ==> go right
+
+    Any other combination is considered incorrect
+
+    O(n) runtime where n is the number of cards in a players hand
+    """
     print("AI question:", player.name, question)
 
     if question == "Do I multiple playable cards?":
@@ -56,8 +74,8 @@ def read_Card_Choose_Tree_question(board, player, players, question):
 
     elif question == "Do I have a nonwild playable card?":
 
-        allowed_cards = card_logic.card_allowed(board, player)
-        for i in allowed_cards:
+        allowed_cards = card_logic.card_allowed(board, player)  # O(n)
+        for i in allowed_cards:  # O(n)
             if not player.hand[i].color == "w":
                 return (True, False)
 
@@ -65,12 +83,12 @@ def read_Card_Choose_Tree_question(board, player, players, question):
 
     elif question == "what is my most common (color or type) that is also playable?":
 
-        max_color = AI_functs.fetch_most_common_color_playable(board, player)
-        max_type = AI_functs.fetch_most_common_type_playable(board, player)
+        max_color = AI_functs.fetch_most_common_color_playable(board, player)  # O(n)
+        max_type = AI_functs.fetch_most_common_type_playable(board, player)    # O(n)
 
         max_color_count = 0
         max_type_count = 0
-        for card in player.hand:
+        for card in player.hand:  # O(n)
             if card.color == max_color:
                 max_color_count += 1
             if card.type == max_type:
@@ -83,17 +101,30 @@ def read_Card_Choose_Tree_question(board, player, players, question):
 
 
 def read_Card_Choose_Leaf_instruction(board, deck, player, players, Leaf_val):
+    """
+    Function that takes the instructions given by a tree Leaf value and commits
+    into doing its requested action. Some Leaf values require other imports
+    such as AI_Functs, while others require computation of board/player status
+    to proceed.
+
+    O(n) runtime where n is the lenght of players or the size of player's hand
+    (whichever is bigger)
+
+    or
+
+    Can recuse back to Main_Decision_Tree
+    """
     print("AI instruction:", player.name, Leaf_val)
 
     if Leaf_val == "Play only card":
 
-        allowed_cards = card_logic.card_allowed(board, player)
+        allowed_cards = card_logic.card_allowed(board, player)  # O(n)
         player.play_card(board, allowed_cards[0])
 
     elif Leaf_val == "play wild, most common color":
         # search for wild card messy method
         hand_index = 0
-        for card in player.hand:
+        for card in player.hand:  # O(n)
             if card.color == "w":
                 player.play_card(board, hand_index)
                 break
@@ -101,23 +132,22 @@ def read_Card_Choose_Leaf_instruction(board, deck, player, players, Leaf_val):
 
     elif Leaf_val == "play most common color":
 
-        color_max = AI_functs.fetch_most_common_color_playable(board, player)
+        color_max = AI_functs.fetch_most_common_color_playable(board, player)  # O(n)
 
-        allowed_cards = card_logic.card_allowed(board, player)
+        allowed_cards = card_logic.card_allowed(board, player)  # O(n)
 
-        for i in allowed_cards:  # TODO
+        for i in allowed_cards:  # O(n)
             if player.hand[i].color == color_max:
                 player.play_card(board, i)
-
                 break
 
     elif Leaf_val == "play most common type":
 
-        type_max = AI_functs.fetch_most_common_type_playable(board, player)
+        type_max = AI_functs.fetch_most_common_type_playable(board, player)  # O(n)
 
-        allowed_cards = card_logic.card_allowed(board, player)
+        allowed_cards = card_logic.card_allowed(board, player)  # O(n)
 
-        for i in allowed_cards:
+        for i in allowed_cards:  # O(n)
             if player.hand[i].type == type_max:
                 player.play_card(board, i)
 
@@ -145,6 +175,11 @@ class Card_Choose_Tree:
 
 
 def test_Card_Choose_Tree():
+    """
+    Test function that tests the basic capabilites of a Card_Choose_Tree
+    going over feature such as creating a Card_Choose_Tree, and deciding a
+    card decision based on board state (thus traveling the tree itself).
+    """
     test_tree = Card_Choose_Tree("test")
 
     test_board = game_classes.Board("board_test")

@@ -9,12 +9,14 @@ def update_mem_trees(board, deck, player, players):
 def AI_wild_pick_4(board, deck, player, target, selected_color):
     """
     Card function that handles when the AI player plays a wild pick 4 card.
+
+    O(1) runtime
     """
     board.color = selected_color
     print("New color: ", board.color)
     print("Targeted player: ", target.name)
     print("Trageted players hand size before: ", len(target.hand))
-    target.grab_cards(deck, 4)
+    target.grab_cards(deck, 4)  # O(4)
     print("Trageted players hand size after: ", len(target.hand))
     # update targets hatval of player
     game_logic.update_hatval(player, target, 4)
@@ -23,6 +25,8 @@ def AI_wild_pick_4(board, deck, player, target, selected_color):
 def AI_wild_color(board, player, selected_color):
     """
     Card function that handles when the AI player plays a wild color card.
+
+    O(1) runtime
     """
     board.color = selected_color
     print("New color: ", board.color)
@@ -31,6 +35,8 @@ def AI_wild_color(board, player, selected_color):
 def AI_draw_2(deck, player, target):
     """
     Card function that handles when the AI player plays a draw 2 card.
+
+    O(1) runtime
     """
     print("Targeted player: ", target.name)
     print("Trageted players hand size before: ", len(target.hand))
@@ -43,6 +49,8 @@ def AI_draw_2(deck, player, target):
 def AI_skip(board, player, target):
     """
     Card function that handles when the AI player plays a skip turn card.
+
+    O(1) runtime
     """
     print("Targeted player skipping: ", target.name)
     target.skip = True
@@ -53,6 +61,8 @@ def AI_skip(board, player, target):
 def AI_reverse(board):
     """
     Card function that handles when the AI player plays the reverse card.
+
+    O(1) runtime
     """
     turn_iterator = board.turn_iterator
     print("reversing", turn_iterator)
@@ -66,20 +76,26 @@ def AI_card_played_type(board, deck, player, players, target=None, selected_colo
     Logic function that takes the most recently played card and decides
     what game actions are needed to be taken to accomadate. These actions are
     then preformed by other functions detailed above.
+
+
+    O(n) runtime where n is the number of players OR player handsize
+
+    or
+
+    Main_Decision_Tree is retraveled thus making stuff deeper.
     """
 
     # check to see if AI won
-    if player.hand == []:
-        game_logic.add_winner(player)
+    game_logic.check_winners(player)
 
     # if no target was selected set target to be most hated player
     if target is None:
-        (max_hate, hate_player) = AI_functs.fetch_hate_priority(player, players)
+        (max_hate, hate_player) = AI_functs.fetch_hate_priority(player, players)  # O(n)
         target = hate_player
 
     # if no color was selected set it to most common_color
     if selected_color is None:
-        selected_color = AI_functs.fetch_most_common_color(player)
+        selected_color = AI_functs.fetch_most_common_color(player)  # O(n)
 
     played_type = board.type
     played_color = board.color

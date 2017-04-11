@@ -15,7 +15,7 @@ class Player:
         self.Main_Decision_Tree = None
         self.Card_Guess_Tree = None
         self.Card_Choose_Tree = None
-        self.hatval = dict() # TODO
+        self.hatval = dict()
 
     def grab_card(self, deckname):  # grab a card from the deck
         card = deckname.grab_card()

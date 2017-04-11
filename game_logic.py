@@ -18,6 +18,8 @@ def update_hatval(player, target, hate_increase=1):
     thus player B's hatval of player A goes up. The higher the hatval the
     more likely that player B will prioritize targeting player A over other
     logical plays.
+
+    O(1) runtime
     """
     try:
         target.hatval[player] += hate_increase
@@ -30,6 +32,9 @@ def degrade_hatval(player):
     Funciton that de-iterates the current players hatval of all other players
     by 1. Essentially preventing hatevals going extremely high, and making very
     mean AIs.
+
+    O(n) runtime where n is the number of hated players number of
+    (keys of players hatval).
     """
     for hated_player in player.hatval.keys():
         if player.hatval[hated_player] > 0:
@@ -40,6 +45,8 @@ def increment_card_old_vals(player):
     """
     Function for AI use that updates the old values of their hands cards.
     Each turn the all of the current turn AI's cards old values goes up by one.
+
+    O(n) runtime where n is the size of the players hand
     """
     for card in player.hand:
         card.old_val += 1
@@ -48,6 +55,8 @@ def increment_card_old_vals(player):
 def compute_turn(players, turn, turn_iterator):
     """
     Function that handles PY-UNO turn iterations for any amount of players.
+
+    O(1) runtime
     """
     turn = turn + turn_iterator
     # catch to reloop over players array
@@ -62,6 +71,16 @@ def compute_turn(players, turn, turn_iterator):
 
 
 def check_update(board, allowed_card_list, selected, player, players, update):
+    """
+    Checks to see during a human players turn if updating the screen is
+    nessicarry. This helps reduce redundant updates and keeps the screen
+    refreshing crisp.
+
+    Worst case:
+    O(m*n) runtime where m is the amount of players to be drawn and
+    n is the size of the players hand. Since both of these sizes should be
+    relatively small optimizing was considered negligible.
+    """
     if update:
         update = False
         if selected is None:
@@ -73,13 +92,14 @@ def check_update(board, allowed_card_list, selected, player, players, update):
     return update
 
 
-def add_winner(player):
-    global winners
-    print(player.name, "won and leaves this round!")
-    winners.append(player)
-
-
 def check_winners(player):
+    """
+    Checks to see if a player has met the conditions of winning a round
+    (having no more cards in hand). If so the player is appened onto the global
+    list winners.
+
+    O(1) runtime
+    """
     global winners
     if player.hand == []:  # conditions for winning!
         print(player.name, "won and leaves this round!")
@@ -87,6 +107,21 @@ def check_winners(player):
 
 
 def check_game_done(players):
+    """
+    Checks to see if the PY-UNO game is over (only one player left with cards).
+    If so the last player with cards is appened to the winners list and then
+    the game displays the winners with placeholder green cards (with a numeric
+    value the same as their name number) in win order. The left most card
+    displayed is first place while the rightmost is last. Winners are also
+    printed out within terminal (printed in winning placement order).
+
+    Args:
+        players: a game_classes.py player that will iterate through allowing
+        for turns with each player.
+
+    O(n) runtime where n is the length of winners. However this is the end game
+    state so this is likely no a problem.
+    """
     if len(players) <= 1:
         print("\n\ngame done!!!!!")
         # adding last place
@@ -165,10 +200,9 @@ def game_loop(board, deck, players):
     """
     Main logic and turn while loop that controlls the game.
 
-    args:
+    Args:
         board: a game_classes.py board class in which the cards within the game
-        will be played on. The board class is used within some internal logic
-        decisions and thus is needed.
+        will be played on.
 
         deck: a game_classes.py deck class to be used as the deck to have cards
         drawn from.

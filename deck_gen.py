@@ -12,6 +12,8 @@ def generate_cards():
     Returns: An "ordered" list of all cards that are possible to create with
     the images within small_cards. Cards are defined by the Card class in
     game_classes.
+
+    O(m*n) runtime where n is the number of colors and m is the number of types
     """
     cards = []
     # predefined cards substrings
@@ -21,7 +23,7 @@ def generate_cards():
                  "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
     # make predefined cards
-    for i in range(len(colors)):
+    for i in range(len(colors)):  # O(m*n)
         for ct in card_type:
             filename_str = "small_cards/" + colors[i] + ct + ".png"
             name_str = colors_name[i] + "_" + ct
@@ -49,7 +51,7 @@ def generate_cards():
 
     return cards
 
-
+#TODO GET RUNTIME
 def card_shuffler(cards):
     """
     Shufles a list of cards "randomly".
@@ -66,7 +68,7 @@ def card_shuffler(cards):
     print("SHUFFLED CARDLIST:\n")
     return cards
 
-
+#TODO GET RUNTIME
 def build_deck(deckname, card_list):
     """
     Function call that builds an uno game class deck from a list of uno game
@@ -82,7 +84,7 @@ def build_deck(deckname, card_list):
     print(deckname)
     return deckout
 
-
+#TODO GET RUNTIME
 def gen_rand_deck(deckname, size):
     """
     Function that Generates random uno deck with assigned size (how many copies

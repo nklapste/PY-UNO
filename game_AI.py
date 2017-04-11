@@ -3,7 +3,7 @@ import Card_Guess_Tree
 import game_classes
 import Main_Decision_Tree
 
-
+#TODO GET RUNTIME
 def make_AI_basic(deck, AI_name, mem_depth=0, difficulty_level=0):
     """
     Simple AI creation function that allows for the creation of a simple

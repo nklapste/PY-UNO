@@ -2,15 +2,17 @@ from AI_classes import Branch
 from AI_classes import Leaf
 import game_classes
 
-
+#TODO CHECK RUNTIME
 def travel_Card_Guess_Tree(Card_Tree, max_depth):
     """
     Function that recursively travels Card_Guess_Tree.
+
+    O(n) runtime which is bounded by max_depth
     """
     # list that will be appened card data in the format of
     # [(card1_color, depth), (card1_type, depth), (card2_color, depth)...]
     Card_Guess_list = []
-
+    #TODO GET RUNTIME
     def travel_recus(Card_Tree, depth):
         if Card_Tree is None:
             return
@@ -36,7 +38,7 @@ def travel_Card_Guess_Tree(Card_Tree, max_depth):
     travel_recus(Card_Tree, 0)
     slice_num = None
     # find the point in Card_Guess_list where the maximum depth is passed
-    for i in range(len(Card_Guess_list)):
+    for i in range(len(Card_Guess_list)):  # O(n)
         (card_data, depth) = Card_Guess_list[i]
 
         if depth >= max_depth:
@@ -45,7 +47,7 @@ def travel_Card_Guess_Tree(Card_Tree, max_depth):
 
     # if the maximum depth is passed slice the Card_Guess_list at this point
     if not (slice_num is None):
-        Card_Guess_list = Card_Guess_list[:slice_num:]
+        Card_Guess_list = Card_Guess_list[:slice_num:]  # O(n)
     else:
         pass
 
@@ -57,7 +59,7 @@ def travel_Card_Guess_Tree(Card_Tree, max_depth):
 
     # filter out the depth values for clean output and pair color and
     # type together
-    for i in range(0, len(Card_Guess_list) - 2, 3):
+    for i in range(0, len(Card_Guess_list) - 2, 3):  # O(n)
         (card_data_1, depth_1) = Card_Guess_list[i]
         (card_data_2, depth_2) = Card_Guess_list[i + 1]
         (card_data_3, depth_3) = Card_Guess_list[i + 2]
@@ -79,12 +81,18 @@ def travel_Card_Guess_Tree(Card_Tree, max_depth):
 
 
 def read_Card_Tree_values(Card_Tree, depth):
+    """
+    O(1) runtime
+    """
     (Card_color, Card_Tree_2) = Card_Tree.get_offshoots()
     (Card_Type, played_by) = Card_Tree_2.get_offshoots()
     return ((Card_color.value, depth), (Card_Type.value, depth + 1), (played_by.value, depth + 2))
 
 
 def read_Card_Tree_basic(Card_Tree):
+    """
+    O(1) runtime
+    """
     (left_tree, right_tree) = Card_Tree.get_offshoots()
     return (left_tree, right_tree)
 
@@ -103,6 +111,9 @@ class Card_Guess_Tree:
         return travel_Card_Guess_Tree(self.Guess_Tree, self.max_depth)
 
     def update_card_tree(self, card):
+        """
+        O(1) runtime
+        """
         Guess_Tree = self.Guess_Tree
         card_Branch_sub_1 = Branch(None, Leaf(card.type), Leaf(card.Owner))
         card_Branch = Branch(None, Leaf(card.color), card_Branch_sub_1)

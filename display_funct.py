@@ -45,6 +45,8 @@ def handle_resize(event):
 
     Functinon updates the scale_x and scale_y globals for easy resizing display
     functionality.
+
+    O(1) runtime
     """
     # grabbing the newely resized windows size
     scale_size = event.dict['size']
@@ -69,6 +71,8 @@ def scale_card_blit(image, position, transform_ov=False):
 
     This function both scales the position of the image and the size of the
     image itself aswell.
+
+    O(1) runtime (neglecting blit)
     """
     # scale the inputted card image to the global scale factors
     card_width = int(130 * scale_x)
@@ -91,6 +95,8 @@ def scale_card_blit(image, position, transform_ov=False):
 def draw_top_stack_card(board):
     """
     Renders the top card of the card_stack on the board.
+
+    O(1) runtime
     """
     if board.card_stack != []:
         top_card = board.card_stack[-1]
@@ -106,6 +112,8 @@ def draw_top_stack_card(board):
 def redraw_hand_visble(player, selected=None):
     """
     Redraws a players hand to be face up.
+
+    O(n) runtime where n is the size of the players hand
     """
     # player playing indicator placeholder graphic
     player_num = str(player.name[7])
@@ -126,7 +134,7 @@ def redraw_hand_visble(player, selected=None):
         start_pos = 150
 
     card_index = 0
-    for card in player.hand:
+    for card in player.hand:  # O(n)
         card.rect = def_rect
         if card_index == selected:
             card.rect = card.rect.move(start_pos, 600)
@@ -145,6 +153,8 @@ def redraw_hand_visble(player, selected=None):
 def redraw_hand_nonvisble(player, start_horz, start_vert=0):
     """
     Draws a players hand to be non-visible (face down cards).
+
+    O(n) runtime where n is the size of the players hand
     """
     # placeholder player num graphics
     player_num = str(player.name[7])
@@ -160,7 +170,7 @@ def redraw_hand_nonvisble(player, start_horz, start_vert=0):
         iterating_fact = 550 // player_handsize
 
     card_index = 0
-    for card in player.hand:
+    for card in player.hand:  # O(n)
         card.rect = def_rect
         card.rect = card.rect.move(start_horz, start_vert)
         card.rect = card.rect.move(iterating_fact * card_index, 0)
@@ -177,12 +187,16 @@ def redraw_hand_nonvisble_loop(players_temp):
     Loop function that orders rendering players_temps hands facedown onto the
     screen. redraw_hand_nonvisble is used within this loop to actually do the
     rendering. This loop simply orders each hands location on the screen.
+
+    O(m*n) runtime where m is the amount of players to be drawn and
+    n is the size of the players hand. Since both of these sizes should be
+    relatively small optimizing was considered negligible.
     """
     start_horz = 0
     start_vert = 0
     loop_iteration = 0
     # draw all active other hands in nice other places in the screen
-    for player in players_temp:
+    for player in players_temp:  # O(m*n)
 
         if len(player.hand) == 0:
             hand_size = card_width
@@ -199,7 +213,7 @@ def redraw_hand_nonvisble_loop(players_temp):
             start_horz = 0
             loop_iteration = 0
 
-        redraw_hand_nonvisble(player, start_horz, start_vert)
+        redraw_hand_nonvisble(player, start_horz, start_vert) # O(n)
 
         loop_iteration += 1
 
@@ -211,26 +225,33 @@ def redraw_screen(player_you, board, players_other):
     Renders the current players hand face up, the current card selected is
     raised, the most recentl played card on the board face up, and other
     players' hands face down.
+
+    O(m*n) runtime where m is the amount of players to be drawn and
+    n is the size of the players hand. Since both of these sizes should be
+    relatively small optimizing was considered negligible.
     """
+    # clear screen completely
     screen.fill(black)
-    # draw personal players hand
+
+    # draw personal players hand should only be O(n) as player_you should
+    # only be one person. n is the number of cards in player_you's hand
     for player in player_you:
         (player_dat, selected) = player
-        redraw_hand_visble(player_dat, selected)
+        redraw_hand_visble(player_dat, selected)  # O(n)
 
     # grab a list of all players excluding the currenly playing one
-    players_temp = players_other[:]
-    players_temp.remove(player_dat)
+    players_temp = players_other[:]  # O(n)
+    players_temp.remove(player_dat)  # O(n)
 
     # draw all players (excluding the currently playing player) hands facedown
     # an orderly fashion on the screen
-    redraw_hand_nonvisble_loop(players_temp)
+    redraw_hand_nonvisble_loop(players_temp)  # O(m*n)
 
     # draw the top card on the board
-    draw_top_stack_card(board)
+    draw_top_stack_card(board)  # O(1)
 
     # refreshing the screen
-    pygame.display.flip()
+    pygame.display.flip()  # O(1)?
 
 
 def redraw_screen_menu_color(selected=None):
@@ -239,6 +260,9 @@ def redraw_screen_menu_color(selected=None):
 
     Function clears the top half of the screen and clears display of nonvisible
     hands while it runs.
+
+    O(1) runtime as the number of colors is 4 thus the for loop only runs
+    4 times thus being negligible
     """
     # zero input catch
     if selected is None:
@@ -259,7 +283,7 @@ def redraw_screen_menu_color(selected=None):
 
     color_array = [card_g, card_b, card_y, card_r]
     color_index = 0
-    for card_c in color_array:
+    for card_c in color_array:  # O(4)
         card_c.rect = def_rect
         if color_index == selected:
             card_c.rect = card_c.rect.move(start_pos, 200)
@@ -281,6 +305,8 @@ def redraw_screen_menu_target(players, selected=None):
     refrences a target player to use a card effect on. Thus function clears
     the top half of the screen and clears  display of nonvisible hands while it
     runs.
+
+    O(n) runtime where n is the number of players that can be a proper target
     """
 
     # zero input catch
@@ -296,7 +322,7 @@ def redraw_screen_menu_target(players, selected=None):
         (200 * (len(players) - 1) + card_width) // 2
 
     target_index = 0
-    for player in players:
+    for player in players:  # O(n)
         player_num = str(player.name[7])
         card_disp = game_classes.Card(
             "red", "small_cards/red_" + player_num + ".png", None)
@@ -320,16 +346,18 @@ def draw_winners(winners):
     """
     Function that draws the winners in win placement from left to right.
     Left being the first winner and right being last place.
+
+    O(n) runtime where n is the size of the list winners
     """
     # clear screen (top half)
     screen.fill(black)
-    
+
     # get a "middle" start postion for bliting cards
     start_pos = ((screen_width) // 2) - \
         (200 * (len(winners) - 1) + card_width) // 2
 
     target_index = 0
-    for player in winners:
+    for player in winners:  # O(n)
         player_num = str(player.name[7])
         card_disp = game_classes.Card(
             "red", "small_cards/green_" + player_num + ".png", None)
