@@ -145,7 +145,6 @@ def card_played_type(board, deck, player, players):
 
     print("played", played_type, played_color,"by:", player.name)
 
-
     if played_color == "w":
         drop_again = True
         if played_type == "d":      # wild choose color draw 4 card played

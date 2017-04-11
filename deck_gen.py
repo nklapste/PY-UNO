@@ -94,7 +94,7 @@ def build_deck(deckname, card_list):
 def gen_rand_deck(deckname, size):
     """
     Function that Generates random uno deck with assigned size (how many copies
-    of one deck is included) and with name specified as input deckname
+    of one deck is included) and with name specified as input deckname.
 
     O(s*(m*n)^2) runtime where n is the number of colors and m is the number of types
     and s is the size of the dek to be generated.
