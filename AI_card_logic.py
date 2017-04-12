@@ -105,7 +105,7 @@ def AI_card_played_type(board, deck, player, players, target=None, selected_colo
     played_type = board.type
     played_color = board.color
 
-    print("Played:", played_type, played_color, "by:", player.name)
+    print("Played:", played_color, played_type, "by:", player.name)
 
 
     if played_color == "w":
