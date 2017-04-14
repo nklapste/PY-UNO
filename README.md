@@ -1,6 +1,22 @@
 # PY-UNO
 A pygame version of the fun board game UNO! In which a single human
-player can face off with 6 other decision tree based AIs.
+player can face off with 6 other decision tree based AIs. This was my final
+CMPUT 275 project for the 2017 winter semester.
+
+**Contributors:**
+
+CMPUT 275: LBL EB2 (WF)
+
+Nathan klapstein: #1449872
+
+Ramnik Sekhon:
+
+Work was divided into commits via github on this projects public gitub
+at:
+
+<pre>https://github.com/nklapste/PY-UNO</pre>
+
+One can see both students contributions via looking at the commit history.
 
 ## Install and Running Instructions:
 
@@ -39,6 +55,9 @@ After this PY-UNO should be running and you are free to enjoy.
 
 **Up Arrow Key:**  confirms and plays the selected card or target
 
+After a game of Uno is done the player can re-hit the up arrow key to restart
+to a new game of Uno.
+
 **Window Exit Button:** varies from each operating system but clicking on your
 operating window close button will exit the current instance of PY-UNO.
 
@@ -49,19 +68,28 @@ present. The other players (6 others) within the game are all AI's using an
 multiple decision tree AI method. Essentially, the AI's act like a large
 pachinko machine, in which the current board state is reviewed and actions are
 dependent on the current situation. The two main decision trees used within
-PY-UNO are a Main_Decision_Tree and Card_Choose_Tree. Another expiremental
+PY-UNO are a Main_Decision_Tree and Card_Choose_Tree. Another experimental
 memory tree  Card_Guess_Tree was also developed but its full implementation is
-not developed yet.
+not developed yet. The game AI as of know is developed to be a flash frame state
+AI in which only current events and the present state make an impact onto the
+AI's decisions. However, historic events are also used as the AI's will remember
+players that use negative actions against them and will on occasion attack them
+over other actions. Work was done to make this AI a future guessing AI but it
+was not developed within time.
 
 **Main_Decision_Tree:** Handles decisions that are critical to winning or losing
 (eg: playing a winning move, or countering a potential winner). If no critical
 decisions are nesicarry it passes turn decisions onto Card_Choose_Tree onto
-figuring out what the most effective card is to be played.
+figuring out what the most effective card is to be played. When a turn is played
+main diecision tree is the first to be traveled down to. And can result into
+different options being accessed. (eg: the main tree could be traveled into
+stopping a player from winning, or moving onto Card_Choose_Tree for an arbitrary
+card to be played).
 
 **Card_Choose_Tree:** Simply figures out what card would be the most helpful to
 be played for the current turn if no critical actions are required to be taken
 (eg: playing the most common color or type in the players hand in a attempt to
-maybe play another the next turn).
+maybe play another of the same color the next turn).
 
 **-BETA- Card_Guess_Tree:** Is a depth based tree method that keeps appending
 new cards to the tree. Within this appending memory tree card data such as
@@ -72,7 +100,12 @@ levels attached to it (color = depth, type = depth + 1, played by = depth
 the AI would check its memory it could only go so for to extract or
 interpolate data. Additionally, as more cards are added to the memory tree
 the past card memory values would increase in tree depth thus eventually
-becoming  "forgotten".
+becoming  "forgotten". Essentially if more time was permitted and if I had a
+a partner able to help, having an AI that could implement a future seeing AI
+could of likely been implemented with use of Card_Guess_Tree and the other
+decision trees. A small test function for Card_Guess_Tree is provided within
+its file for an example of its use and how it was properly constructed
+but never implemented.
 
 **Display Resizing:** Within PY-UNO the native supported and boot resolution is
 1600x900 (16:9 aspect ratio). Users are free to resize the window to their
