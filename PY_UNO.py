@@ -4,7 +4,7 @@ import game_AI
 import game_classes
 import game_logic
 
-
+# loop for allowing multiple games to be restarted
 while True:
     # initilizing the board to be used within the game
     board1 = game_classes.Board("board1")
