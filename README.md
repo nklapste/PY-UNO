@@ -3,19 +3,6 @@ A pygame version of the fun board game UNO! In which a single human
 player can face off with 6 other decision tree based AIs. This was my final
 CMPUT 275 project for the 2017 winter semester.
 
-**Contributors:**
-
-CMPUT 275: LBL EB2 (WF)
-
-Nathan klapstein: #1449872
-
-Work was divided into commits via github on this projects public gitub
-at:
-
-<pre>https://github.com/nklapste/PY-UNO</pre>
-
-One can see both students contributions via looking at the commit history.
-
 ## Install and Running Instructions:
 
 ### Requirements:
