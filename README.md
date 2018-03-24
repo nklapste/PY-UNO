@@ -9,8 +9,6 @@ CMPUT 275: LBL EB2 (WF)
 
 Nathan klapstein: #1449872
 
-Ramnik Sekhon:
-
 Work was divided into commits via github on this projects public gitub
 at:
 
@@ -91,7 +89,7 @@ be played for the current turn if no critical actions are required to be taken
 (eg: playing the most common color or type in the players hand in a attempt to
 maybe play another of the same color the next turn).
 
-**-BETA- Card_Guess_Tree:** Is a depth based tree method that keeps appending
+**Card_Guess_Tree:** Is a depth based tree method that keeps appending
 new cards to the tree. Within this appending memory tree card data such as
 card color, type, and the player who played are all stored. However, to
 emulate actual memory limitations all of these values have different depth
@@ -100,12 +98,9 @@ levels attached to it (color = depth, type = depth + 1, played by = depth
 the AI would check its memory it could only go so for to extract or
 interpolate data. Additionally, as more cards are added to the memory tree
 the past card memory values would increase in tree depth thus eventually
-becoming  "forgotten". Essentially if more time was permitted and if I had a
-a partner able to help, having an AI that could implement a future seeing AI
-could of likely been implemented with use of Card_Guess_Tree and the other
-decision trees. A small test function for Card_Guess_Tree is provided within
+becoming  "forgotten". A small test function for Card_Guess_Tree is provided within
 its file for an example of its use and how it was properly constructed
-but never implemented.
+but is never implemented.
 
 **Display Resizing:** Within PY-UNO the native supported and boot resolution is
 1600x900 (16:9 aspect ratio). Users are free to resize the window to their
