@@ -1,5 +1,4 @@
-import AI_card_logic
-import card_logic
+from pyuno import AI_card_logic, card_logic
 import random
 
 

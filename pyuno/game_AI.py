@@ -1,7 +1,6 @@
-import Card_Choose_Tree
-import Card_Guess_Tree
-import game_classes
-import Main_Decision_Tree
+from pyuno import game_classes, Card_Choose_Tree, Main_Decision_Tree, \
+    Card_Guess_Tree
+
 
 #TODO GET RUNTIME
 def make_AI_basic(deck, AI_name, mem_depth=0):

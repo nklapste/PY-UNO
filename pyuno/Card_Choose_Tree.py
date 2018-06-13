@@ -1,10 +1,7 @@
-import AI_card_logic
-from AI_classes import Branch
-from AI_classes import Leaf
-import AI_functs
-import card_logic
-from deck_gen import gen_rand_deck
-import game_classes
+from pyuno.AI_classes import Branch
+from pyuno.AI_classes import Leaf
+from pyuno import AI_functs, game_classes, AI_card_logic, card_logic
+from pyuno.deck_gen import gen_rand_deck
 
 
 def travel_Card_Choose_Tree(board, deck, player, players, Card_Choose_Tree):

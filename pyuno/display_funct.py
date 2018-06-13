@@ -1,4 +1,4 @@
-import game_classes
+from pyuno import game_classes
 import pygame
 from pygame.locals import *
 

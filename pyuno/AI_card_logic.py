@@ -1,6 +1,4 @@
-import AI_functs
-import game_logic
-import Main_Decision_Tree
+from pyuno import AI_functs, game_logic, Main_Decision_Tree
 
 
 def update_mem_trees(board, deck, player, players):

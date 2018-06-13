@@ -1,6 +1,6 @@
-from AI_classes import Branch
-from AI_classes import Leaf
-import game_classes
+from pyuno.AI_classes import Branch
+from pyuno.AI_classes import Leaf
+from pyuno import game_classes
 
 
 def travel_Card_Guess_Tree(Card_Tree, max_depth):

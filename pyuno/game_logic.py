@@ -1,8 +1,4 @@
-
-import card_logic
-import display_funct
-import game_control
-import Main_Decision_Tree
+from pyuno import game_control, Main_Decision_Tree, card_logic, display_funct
 import pygame
 
 # global list containing the winners in placement order

@@ -1,4 +1,4 @@
-import deck_gen
+from pyuno import deck_gen
 import pygame
 
 

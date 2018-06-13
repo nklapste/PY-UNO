@@ -1,4 +1,4 @@
-import display_funct
+from pyuno import display_funct
 import os
 import pygame
 
@@ -217,14 +217,14 @@ def select_move_hand(select_L, select_R, allowed_card_list, selected):
 
 
 def player_LR_selection_hand(player, selected, board=None, allowed_card_list=None):
-    '''
+    """
     Function that is a modification of player_LR_selection that decides the
     card the player is hovering over, additionally if the player selects the
     card they are hovering over; turn_done will be turned to true allowing for
     further progress within outside functions.
 
     O(1) runtime
-    '''
+    """
     select_L = False
     select_R = False
     select_UP = False
