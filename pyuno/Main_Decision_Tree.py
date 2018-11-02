@@ -2,7 +2,7 @@ from pyuno.AI_classes import Branch
 from pyuno.AI_classes import Leaf
 from pyuno import AI_functs, game_classes, AI_card_logic, Card_Choose_Tree, \
     card_logic
-from pyuno.deck_gen import gen_rand_deck
+from pyuno.deck import gen_rand_deck
 
 
 def travel_Main_Decision_Tree(board, deck, player, players, Dec_Tree):

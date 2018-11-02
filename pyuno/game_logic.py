@@ -1,4 +1,4 @@
-from pyuno import game_control, Main_Decision_Tree, card_logic, display_funct
+from pyuno import game_control, Main_Decision_Tree, card_logic, display
 import pygame
 
 # global list containing the winners in placement order
@@ -80,10 +80,10 @@ def check_update(board, allowed_card_list, selected, player, players, update):
     if update:
         update = False
         if selected is None:
-            display_funct.redraw_screen(
+            display.redraw_screen(
                 [(player, None)], board, players)
         else:
-            display_funct.redraw_screen(
+            display.redraw_screen(
                 [(player, allowed_card_list[selected])], board, players)
     return update
 
@@ -131,7 +131,7 @@ def check_game_done(players):
             print(place, player.name)
             place += 1
 
-        display_funct.draw_winners(winners)
+        display.draw_winners(winners)
 
         while 1:  # wait till the player exits out of the game
             for event in pygame.event.get():
@@ -160,7 +160,7 @@ def extern_player_turn(board, deck, player, players, turn):
         selected = None
 
         # redraw display at start of human turn
-        display_funct.redraw_screen([(player, None)], board, players)
+        display.redraw_screen([(player, None)], board, players)
 
         # grab the list of allowed_cards cards
         allowed_card_list = card_logic.card_allowed(board, player)

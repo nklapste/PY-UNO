@@ -1,4 +1,4 @@
-from pyuno import display_funct
+from pyuno import display
 import os
 import pygame
 
@@ -20,7 +20,7 @@ def get_keypress(event):
     if event.type == pygame.QUIT:
         os._exit(0)  # hard exit the program
     elif event.type == pygame.VIDEORESIZE:
-        display_funct.handle_resize(event) # O(1)
+        display.handle_resize(event) # O(1)
     if event.type == pygame.KEYDOWN:
 
         if event.key == pygame.K_LEFT:
@@ -97,11 +97,11 @@ def player_choice_color():
     # setuop intial value of selected
     # and initially render the menu screen
     selected = None
-    display_funct.redraw_screen_menu_color(None)  # O(4)
+    display.redraw_screen_menu_color(None)  # O(4)
     while True:
         (update, selected, turn_done) = player_LR_selection_color(selected) # O(1)
         if update:
-            display_funct.redraw_screen_menu_color(selected)  # O(4) ==> O(1)
+            display.redraw_screen_menu_color(selected)  # O(4) ==> O(1)
         if turn_done:
             if selected == 0:
                 print("choosing green")
@@ -176,12 +176,12 @@ def player_choice_target(players):
     instantly)
     """
     selected = None
-    display_funct.redraw_screen_menu_target(players, None) # O(n)
+    display.redraw_screen_menu_target(players, None) # O(n)
     while True:
         (update, selected, turn_done) = player_LR_selection_target(players,
                                                                    selected) # O(1)
         if update:
-            display_funct.redraw_screen_menu_target(players, selected) # O(n)
+            display.redraw_screen_menu_target(players, selected) # O(n)
         if turn_done:
             target = players[selected]
             return target

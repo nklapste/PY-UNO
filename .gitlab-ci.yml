@@ -1,0 +1,67 @@
+image: python:3.6
+
+stages:
+  - install
+  - test
+  - build
+  - deploy
+
+
+before_script:
+  - mkdir -p .venv
+  - python -m venv .venv
+  - source .venv/bin/activate
+
+
+install:
+  stage: install
+  artifacts:
+    paths:
+      - trivector.egg-info/
+  script:
+    - pip install -e .["docs","tests"]
+
+
+lint:
+  stage: test
+  script:
+    - pip install -e .["tests"]
+    - python setup.py lint  || if [ $? != 2 ] && [ $? != 1 ]; then echo "success"; else exit $?; fi
+
+
+test:
+  stage: test
+  artifacts:
+    paths:
+      - .pytest_cache/
+  script:
+    - pip install -e .["tests"]
+    - python setup.py test
+
+
+build:
+  stage: deploy
+  artifacts:
+    paths:
+    - dist/
+  script:
+    - python setup.py sdist
+
+
+document:
+  stage: deploy
+  artifacts:
+    paths:
+     - build/
+     - doc/api/
+  script:
+    - pip install -e .["docs"]
+    - sphinx-build doc/ build/
+
+
+upload:
+  stage: deploy
+  only:
+    - tags
+  script:
+    - echo TODO

@@ -1,4 +1,4 @@
-from pyuno import deck_gen
+from pyuno import deck
 import pygame
 
 
@@ -67,7 +67,7 @@ class Deck:  # calss defining a card deck
         if self.deck == []:  # self regeneration catch
             print("deck is empty...")
             print("regenerating deck...")
-            self.deck = deck_gen.gen_rand_deck(self.name, 1).deck
+            self.deck = deck.gen_rand_deck(self.name, 1).deck
 
         card = self.deck.pop()
         card.set_Owner(None)
