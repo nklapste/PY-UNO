@@ -4,6 +4,7 @@ player can face off with 6 other decision tree based AIs. This was my final
 CMPUT 275 project for the 2017 winter semester.
 
 ## Install and Running Instructions:
+[![Run on Repl.it](https://repl.it/badge/github/nklapste/PY-UNO)](https://repl.it/github/nklapste/PY-UNO)
 
 ### Requirements:
 
